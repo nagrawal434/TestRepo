@@ -1,0 +1,708 @@
+<apex:page showHeader="true" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" applyHtmlTag="true" standardController="Lead" extensions="ligtningLeadConversionController">
+    <apex:stylesheet value="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+           <title>Lead Conversion {!leadObject.name}</title>           
+           <script src="{!URLFOR($Resource.jquery)}"/>
+           <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-init.min.js')}"></script>
+           <script src="{!URLFOR($Resource.LJquery, '/jquery/moment.js')}"></script>
+           <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-modal.min.js')}"></script>           
+           <style> 
+               .lookupInput a{ 
+                    background-image: url("/img/setup/search-icon.png") !important; 
+                    background-position: center center !important; 
+                    background-repeat: no-repeat !important; 
+                    border: 0px !important;
+                    display: inline !important; 
+                    margin-left: -34px; 
+                    margin-top: 0px; 
+                    position: relative; 
+                    width: 30px !important; 
+                } 
+                .lookupInput input{ 
+                    width:100% !important; 
+                    height: 34px; 
+                } 
+                .lookupInput img{                    
+                    display:none !important; 
+                }
+                .lk select{
+                    display : none !important;
+                }                
+                .custPopup{
+                    left:50%;
+                    top:50%;
+                    z-index: 9999;
+                    position:fixed; 
+                    margin-top : -50px;
+                    margin-left : -50px;
+                    
+                }                 
+                .popupBackground{ 
+                    background-color:white;
+                    opacity: 0.30;
+                    filter: alpha(opacity = 30);
+                    position:fixed;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    z-index: 9998; 
+                }
+               .slds-form-element{
+                   margin-bottom:10px;
+               }           
+           </style> 
+            <script type="text/javascript">
+               $(document).ready(function() {
+                   $('.lk input').addClass('slds-input');  
+                   $('.lk a').addClass('slds-input');
+                   // This style for lightning design system
+                   new MenuButton('Actions', false);
+                      
+               });
+               function hideShowfun(){
+                       $(".menuClass").toggle();
+               }                      
+           </script>   
+       </head>
+       <body>
+           
+           <apex:form >
+           <!-- SPINNER -->
+            <apex:actionStatus id="lightningStatus">
+                <apex:facet name="start"> <apex:outputPanel id="tstpopup"> 
+                <div class="slds-spinner_container"> <div class="slds-spinner--brand slds-spinner slds-spinner--medium" role="alert"> 
+                <span class="slds-assistive-text">Loading</span> <div class="slds-spinner__dot-a"></div> 
+                <div class="slds-spinner__dot-b"></div> </div> </div> </apex:outputPanel> 
+                </apex:facet>  
+            </apex:actionStatus>
+           <!-- /Spinner -->     
+           <div class="slds">
+             <div class="slds-page-header slds-grid">
+                 <div class="slds-media__body slds-xx-small-size--1-of-2 slds-x-small-size--1-of-2  slds-large-size--10-of-12 slds-medium-size--3-of-4 slds-small-size--1-of-2">
+                     <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="this should match the Record Title">Convert Lead</h1>
+                     <p class="slds-text-title--caps slds-line-height--reset">{!leadObject.name}</p>
+                 </div>
+                 <div class="slds-xx-small-size--1-of-2 slds-x-small-size--1-of-2  slds-large-size--2-of-12 slds-medium-size--1-of-4 slds-small-size--1-of-2">
+                     <apex:commandButton styleclass="slds-button slds-button--neutral slds-button--brand" value="Cancel" status="lightningStatus"/>
+                     <apex:commandButton styleclass="slds-button slds-button--neutral slds-button--brand" value="Convert"/>
+                 </div>
+             </div>
+             <!-- Link Menu Button In Salesforce Classic -->
+             <!--
+             <apex:outputPanel style="padding-left: 3em;">
+                <div class="menuButton" id="Actions"><apex:outputPanel layout="none">
+                    <div class="menuButtonButton" id="ActionsButton"><span class="menuButtonLabel" id="ActionsLabel">Actions</span></div>
+             
+                    <div class="menuButtonMenu" id="ActionsMenu"><apex:outputPanel layout="none">
+                        <apex:outputLink value="#">Menu Link #1</apex:outputLink>
+                        <apex:outputLink value="#">Menu Link #2</apex:outputLink>
+                        <apex:outputLink value="#">Menu Link #3</apex:outputLink>
+                    </apex:outputPanel></div>
+                </apex:outputPanel></div>
+            </apex:outputPanel>
+            -->
+            <!-- / Link Menu Button in Salesforce Classic-->
+            <!-- Link Menu Button in lightning Design System -->
+                <div class="slds-dropdown-trigger">
+                    <button class="slds-button slds-button--icon-border-filled" aria-haspopup="true" title="Show More" onclick="hideShowfun();return false;">
+                    <svg class="slds-button__icon" aria-hidden="true">
+                      <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Show More</span>
+                    </button>
+                    <div class="slds-dropdown slds-dropdown--left menuClass">
+                        <ul class="slds-dropdown__list" role="menu">
+                          <li class="slds-dropdown__item" role="presentation">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                              <span class="slds-truncate">Menu Item One</span>
+                            </a>
+                          </li>
+                          <li class="slds-dropdown__item" role="presentation">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                              <span class="slds-truncate">Menu Item Two</span>
+                            </a>
+                          </li>
+                          <li class="slds-dropdown__item" role="presentation">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                              <span class="slds-truncate">Menu Item Three</span>
+                            </a>
+                          </li>
+                          <li class="slds-has-divider--top-space" role="separator"></li>
+                          <li class="slds-dropdown__item" role="presentation">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                              <span class="slds-truncate">Menu Item Four</span>
+                            </a>
+                          </li>
+                        </ul>
+                    </div>
+                </div>   
+            <!-- /Link Menu Button in lightning Design System -->
+             <apex:outputPanel id="mainPanel">
+             <!-- Owner -->  
+             <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="select-01">Record Owner</label>
+                    <div class="slds-form-element__control">
+                         <div class="slds-form-element__control">
+                            <apex:inputField styleclass="lk" value="{!leadObject.OwnerId}"/>
+                        </div>   
+                    </div>
+              </div>
+             <!-- /Owner -->
+             <!-- send to email -->
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <span class="slds-checkbox">
+                        <input type="checkbox" name="options" id="checkbox-146" checked=""/>
+                        <label class="slds-checkbox__label" for="checkbox-146">
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-text-heading--small" style="font-size: 15px;">send email to owner</span>
+                        </label>
+                    </span>
+                </div>
+            </div>
+             <!-- /send to email -->
+             <!-- contact -->
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="select-01">Contact</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <apex:selectList styleclass="slds-select" size="1">
+                              <apex:selectOptions value="{!contactsOptionList}"/>
+                            </apex:selectList>
+                        </div>
+                    </div>
+                </div>             
+             <!-- /contact -->
+             <!-- Account -->
+                 <div class="slds-form-element">
+                    <label cle1ass="slds-form-element__label" for="select-01">Account</label>
+                    <div class="slds-form-element__control">
+                         <div class="slds-form-element__control">
+                            <apex:inputField styleClass="slds-input" value="{!leadObject.Account__c}"/>
+                        </div>   
+                    </div>
+                </div> 
+             <!-- /Account -->
+             <!-- Do Not Crate Opportunity upon Conversion -->
+             <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <span class="slds-checkbox">
+                        <input type="checkbox" name="options" id="checkbox-146" checked=""/>
+                        <label class="slds-checkbox__label" for="checkbox-146">
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-text-heading--small" style="font-size: 15px;">Do not create Opportunity upon conversion</span>
+                        </label>
+                    </span>
+                </div>
+             </div>
+             <!-- /Do Not Crate Opportunity upon Conversion -->
+             <!-- Case record type -->
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="select-01">Case Record Type</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <apex:selectList styleclass="slds-select" size="1">
+                              <apex:selectOptions value="{!caseRecordTypeList}"/>
+                            </apex:selectList>
+                        </div>
+                    </div>
+                </div>              
+             <!-- /Case record type --> 
+             <!-- Converted Status -->
+             <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="select-01">Converted Status</label>
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <apex:selectList styleclass="slds-select" size="1">
+                              <apex:selectOptions value="{!caseRecordTypeList}"/>
+                            </apex:selectList>
+                        </div>
+                    </div>
+              </div>
+              </apex:outputPanel>              
+                 <!-- /Converted Status -->
+                 
+                            
+                </div>
+            </apex:form>
+<apex:form >
+<div class="slds-table--edit_container slds-is-relative">
+  <table class="slds-table slds-table--edit slds-table--bordered slds-table--fixed-layout slds-table--resizable-cols slds-no-cell-focus" role="grid" style="width:66.75rem;">
+    <thead>
+      <tr class="slds-line-height--reset">
+        <th scope="col" style="width:3.75rem;">
+          <div class="slds-th__action">
+            <span class="slds-assistive-text">Errors</span>
+          </div>
+        </th>
+        <th scope="col" style="width:2rem;">
+          <div class="slds-th__action slds-th__action--form">
+            <label class="slds-checkbox">
+              <input type="checkbox" name="options" tabindex="-1" />
+              <span class="slds-checkbox--faux"></span>
+              <span class="slds-assistive-text">Select All</span>
+            </label>
+          </div>
+        </th>
+        <th style="width:8.75rem;" class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+          <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="-1">
+            <span class="slds-assistive-text">Sort </span>
+            <span class="slds-truncate" title="Name">Name</span>
+            <div class="slds-icon_container">
+              <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#arrowdown')}"></use>
+              </svg>
+            </div>
+            <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+          </a>
+          <div class="slds-resizable">
+            <label for="cell-resize-handle-560" class="slds-assistive-text">Name column width</label>
+            <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-560" tabindex="-1" />
+            <span class="slds-resizable__handle">
+              <span class="slds-resizable__divider"></span>
+            </span>
+          </div>
+        </th>
+        <th style="width:8.75rem;" class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+          <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="-1">
+            <span class="slds-assistive-text">Sort </span>
+            <span class="slds-truncate" title="Account Name">Account Name</span>
+            <div class="slds-icon_container">
+              <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#arrowdown')}"></use>
+              </svg>
+            </div>
+            <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+          </a>
+          <div class="slds-resizable">
+            <label for="cell-resize-handle-561" class="slds-assistive-text">Account Name column width</label>
+            <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-561" tabindex="-1" />
+            <span class="slds-resizable__handle">
+              <span class="slds-resizable__divider"></span>
+            </span>
+          </div>
+        </th>
+        <th style="width:8.75rem;" class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+          <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="-1">
+            <span class="slds-assistive-text">Sort </span>
+            <span class="slds-truncate" title="Close Date">Close Date</span>
+            <div class="slds-icon_container">
+              <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#arrowdown')}"></use>
+              </svg>
+            </div>
+            <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+          </a>
+          <div class="slds-resizable">
+            <label for="cell-resize-handle-562" class="slds-assistive-text">Close Date column width</label>
+            <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-562" tabindex="-1" />
+            <span class="slds-resizable__handle">
+              <span class="slds-resizable__divider"></span>
+            </span>
+          </div>
+        </th>
+        <th style="width:8.75rem;" class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+          <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="-1">
+            <span class="slds-assistive-text">Sort </span>
+            <span class="slds-truncate" title="Stage">Stage</span>
+            <div class="slds-icon_container">
+              <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#arrowdown')}"></use>
+              </svg>
+            </div>
+            <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+          </a>
+          <div class="slds-resizable">
+            <label for="cell-resize-handle-563" class="slds-assistive-text">Stage column width</label>
+            <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-563" tabindex="-1" />
+            <span class="slds-resizable__handle">
+              <span class="slds-resizable__divider"></span>
+            </span>
+          </div>
+        </th>
+        <th style="width:8.75rem;" class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+          <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="-1">
+            <span class="slds-assistive-text">Sort </span>
+            <span class="slds-truncate" title="Confidence">Confidence</span>
+            <div class="slds-icon_container">
+              <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#arrowdown')}"></use>
+              </svg>
+            </div>
+            <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+          </a>
+          <div class="slds-resizable">
+            <label for="cell-resize-handle-564" class="slds-assistive-text">Confidence column width</label>
+            <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-564" tabindex="-1" />
+            <span class="slds-resizable__handle">
+              <span class="slds-resizable__divider"></span>
+            </span>
+          </div>
+        </th>
+        <th style="width:8.75rem;" class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+          <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="-1">
+            <span class="slds-assistive-text">Sort </span>
+            <span class="slds-truncate" title="Amount">Amount</span>
+            <div class="slds-icon_container">
+              <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#arrowdown')}"></use>
+              </svg>
+            </div>
+            <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+          </a>
+          <div class="slds-resizable">
+            <label for="cell-resize-handle-565" class="slds-assistive-text">Amount column width</label>
+            <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-565" tabindex="-1" />
+            <span class="slds-resizable__handle">
+              <span class="slds-resizable__divider"></span>
+            </span>
+          </div>
+        </th>
+        <th style="width:8.75rem;" class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+          <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="-1">
+            <span class="slds-assistive-text">Sort </span>
+            <span class="slds-truncate" title="Contact">Contact</span>
+            <div class="slds-icon_container">
+              <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#arrowdown')}"></use>
+              </svg>
+            </div>
+            <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+          </a>
+          <div class="slds-resizable">
+            <label for="cell-resize-handle-566" class="slds-assistive-text">Contact column width</label>
+            <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-566" tabindex="-1" />
+            <span class="slds-resizable__handle">
+              <span class="slds-resizable__divider"></span>
+            </span>
+          </div>
+        </th>
+        <th scope="col" style="width:3.25rem;">
+          <div class="slds-th__action">
+            <span class="slds-assistive-text">Actions</span>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="slds-hint-parent">
+        <td role="gridcell" class="slds-cell-edit slds-cell-error">
+          <button id="error-01" class="slds-button slds-button--icon slds-button--icon-error slds-m-horizontal--xxx-small slds-hidden" tabindex="-1" aria-hidden="true">
+            <span class="slds-assistive-text">Item 1 has errors</span>
+            <svg class="slds-button__icon" aria-hidden="true">
+              <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#warning')}"></use>
+            </svg>
+          </button>
+          <span class="slds-row-number slds-text-body--small slds-text-color--weak"></span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <label class="slds-checkbox">
+            <input type="checkbox" name="options" tabindex="-1" id="checkbox-01" />
+            <span class="slds-checkbox--faux"></span>
+            <span class="slds-assistive-text">Select item 1</span>
+          </label>
+        </td>
+        <th scope="row" tabindex="0" class="slds-cell-edit slds-has-focus">
+          <span class="slds-grid slds-grid--align-spread"><a href="javascript:void(0);" class="slds-truncate" tabindex="0" title="Acme - 1,200 Widgets">Acme - 1,200 Widgets</a>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="0">
+              <span class="slds-assistive-text">Edit Name: Item 1</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </th>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="Acme">Acme</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Account Name: Item 1</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="4/10/15">4/10/15</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Close Date: Item 1</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="Value Proposition">Value Proposition</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Stage: Item 1</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit" aria-readonly="true">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="30%">30%</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1" disabled="">
+              <span class="slds-assistive-text">Confidence: Item 1</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--lock slds-button__icon--small" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#lock')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="$25,000,000">$25,000,000</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Amount: Item 1</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="jrogers@acme.com">jrogers@acme.com</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Contact: Item 1</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <div class="slds-p-right--medium">
+            <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" tabindex="-1" title="Show More">
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--small" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+              </svg>
+              <span class="slds-assistive-text">Show More</span>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr class="slds-hint-parent">
+        <td role="gridcell" class="slds-cell-edit slds-cell-error">
+          <button id="error-02" class="slds-button slds-button--icon slds-button--icon-error slds-m-horizontal--xxx-small slds-hidden" tabindex="-1" aria-hidden="true">
+            <span class="slds-assistive-text">Item 2 has errors</span>
+            <svg class="slds-button__icon" aria-hidden="true">
+              <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#warning')}"></use>
+            </svg>
+          </button>
+          <span class="slds-row-number slds-text-body--small slds-text-color--weak"></span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <label class="slds-checkbox">
+            <input type="checkbox" name="options" tabindex="-1" id="checkbox-01" />
+            <span class="slds-checkbox--faux"></span>
+            <span class="slds-assistive-text">Select item 2</span>
+          </label>
+        </td>
+        <th scope="row" tabindex="-1" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread"><a href="javascript:void(0);" class="slds-truncate" tabindex="-1" title="Acme - 200 Widgets">Acme - 200 Widgets</a>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Name: Item 2</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </th>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="Acme">Acme</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Account Name: Item 2</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="1/31/15">1/31/15</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Close Date: Item 2</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="Prospecting">Prospecting</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Stage: Item 2</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit" aria-readonly="true">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="60%">60%</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1" disabled="">
+              <span class="slds-assistive-text">Confidence: Item 2</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--lock slds-button__icon--small" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#lock')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="$5,000,000">$5,000,000</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Amount: Item 2</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="bob@acme.com">bob@acme.com</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Contact: Item 2</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <div class="slds-p-right--medium">
+            <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" tabindex="-1" title="Show More">
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--small" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+              </svg>
+              <span class="slds-assistive-text">Show More</span>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr class="slds-hint-parent">
+        <td role="gridcell" class="slds-cell-edit slds-cell-error">
+          <button id="error-03" class="slds-button slds-button--icon slds-button--icon-error slds-m-horizontal--xxx-small slds-hidden" tabindex="-1" aria-hidden="true">
+            <span class="slds-assistive-text">Item 3 has errors</span>
+            <svg class="slds-button__icon" aria-hidden="true">
+              <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#warning')}"></use>
+            </svg>
+          </button>
+          <span class="slds-row-number slds-text-body--small slds-text-color--weak"></span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <label class="slds-checkbox">
+            <input type="checkbox" name="options" tabindex="-1" id="checkbox-01" />
+            <span class="slds-checkbox--faux"></span>
+            <span class="slds-assistive-text">Select item 3</span>
+          </label>
+        </td>
+        <th scope="row" tabindex="-1" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread"><a href="javascript:void(0);" class="slds-truncate" tabindex="-1" title="salesforce.com - 1,000 Widgets">salesforce.com - 1,000 Widgets</a>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Name: Item 3</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </th>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="salesforce.com">salesforce.com</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Account Name: Item 3</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="1/31/15 3:45PM">1/31/15 3:45PM</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Close Date: Item 3</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="Id. Decision Makers">Id. Decision Makers</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Stage: Item 3</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit" aria-readonly="true">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="70%">70%</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1" disabled="">
+              <span class="slds-assistive-text">Confidence: Item 3</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--lock slds-button__icon--small" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#lock')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="$25,000">$25,000</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Amount: Item 3</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <span class="slds-grid slds-grid--align-spread">
+            <span class="slds-truncate" title="nathan@salesforce.com">nathan@salesforce.com</span>
+            <button class="slds-button slds-button--icon slds-cell-edit__button slds-m-left--x-small" tabindex="-1">
+              <span class="slds-assistive-text">Edit Contact: Item 3</span>
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--edit" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+              </svg>
+            </button>
+          </span>
+        </td>
+        <td role="gridcell" class="slds-cell-edit">
+          <div class="slds-p-right--medium">
+            <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" tabindex="-1" title="Show More">
+              <svg class="slds-button__icon slds-button__icon--hint slds-button__icon--small" aria-hidden="true">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+              </svg>
+              <span class="slds-assistive-text">Show More</span>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</apex:form>            
+        </body>
+    </html>
+</apex:page>

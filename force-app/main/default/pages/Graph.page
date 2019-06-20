@@ -1,0 +1,16 @@
+<apex:page controller="Graph">
+    <apex:pageblock title="Members and their Years of experience" >
+        <apex:chart height="250" width="350" data="{!pieData}"> 
+            <apex:pieSeries tips="true" dataField="data" labelField="name"/> 
+            <apex:legend position="bottom"/>
+        </apex:chart>
+    </apex:pageblock>
+                        
+    <apex:pageblock title="Members and their Years of experience" >
+        <apex:chart height="250" width="350" data="{!pieData}"> 
+            <apex:axis type="Numeric" position="left" fields="data" title="Years of experience"/>    
+            <apex:axis type="Category" position="bottom" fields="name" title="Member"/>            
+            <apex:barSeries orientation="vertical" axis="left" xField="name" yField="data"/> 
+        </apex:chart>
+    </apex:pageblock>            
+</apex:page>

@@ -1,0 +1,11 @@
+<apex:page controller="ModelClassDemoControllerForTest">
+    <apex:form id="frm">
+        <apex:pageBlock >
+              <apex:pageBlockTable value="{!models}" var="model">
+                    <apex:column value="{!model.con.id}"/>
+                    <apex:column value="{!model.con.firstname}"/>
+                    <apex:column value="{!model.con.accountid}"/>
+               </apex:pageBlockTable>
+        </apex:pageBlock>   
+    </apex:form> 
+ </apex:page>

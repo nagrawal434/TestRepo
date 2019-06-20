@@ -1,0 +1,14 @@
+<aura:component controller="DisplayCaseController">
+   <aura:attribute name="record" type="Case[]"/>
+
+   <aura:iteration items="{!v.record.Subject}" var="c">
+       {!c.Subject}, {!c.Description}, {!c.Subject}, {!c.Status }
+   </aura:iteration>
+   
+   <aura:iteration items="{!v.record.Description}" var="c">
+       {!c.Subject}, {!c.Description}, {!c.Subject}, {!c.Status }
+   </aura:iteration>
+    <aura:iteration items="{!v.record.Status}" var="c">
+       {!c.Subject}, {!c.Description}, {!c.Subject}, {!c.Status }
+   </aura:iteration>
+</aura:component>

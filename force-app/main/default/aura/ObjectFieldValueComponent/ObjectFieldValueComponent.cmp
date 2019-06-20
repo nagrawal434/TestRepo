@@ -1,0 +1,4 @@
+<aura:component >
+    <aura:attribute name="objectName" type="String" />
+    <aura:attribute name="fieldSet" type="List" />
+</aura:component>

@@ -1,0 +1,27 @@
+<apex:page controller="PaginationContactController" tabStyle="Contact" Title="Contacts">
+    <style>
+        .st{
+            font-size:10px;
+            font-weight:bold;
+        }
+        .link_Button{
+            text-decoration :none;
+            pointer-events:none; opacity:0.7;
+        }
+    </style>
+    <apex:form >
+        <apex:pageblock >
+            <apex:pageBlockSection title="Contacts">
+                <Apex:pageBlockTable value="{!contactList}" var="con">
+                    <apex:column value="{!con.firstname}" styleClass="st"/>
+                    <apex:column value="{!con.lastname}" />
+                    <apex:column value="{!con.email}"/>
+                </Apex:pageBlockTable>
+            </apex:pageBlockSection>
+            <div style = "text-align:right;">
+            <apex:commandlink value="prev " action="{!prev}"   styleClass="{!if(Pre == true,'link_Button','')}"/>
+            <apex:commandLink value="Next" action="{!next}" styleClass="{!if(Nxt == true,'link_Button','')}"/>
+            </div>
+        </apex:pageblock>
+    </apex:form> 
+</apex:page>

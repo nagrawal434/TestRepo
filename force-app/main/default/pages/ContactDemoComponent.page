@@ -1,0 +1,12 @@
+<apex:page controller="ContactDemoComponentController">
+    <apex:form >
+        <apex:pageBlock >
+            <table width="100%" border="1">
+                <apex:repeat value="{!conlist}" var="c" >
+                    <c:NewComponent contacts="{!c}">
+                    </c:NewComponent>
+                </apex:repeat>
+          </table>
+        </apex:pageBlock>
+    </apex:form> 
+</apex:page>

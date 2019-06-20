@@ -1,0 +1,8 @@
+<apex:page controller="WeekDayCountController">
+    <apex:outputPanel >
+        <apex:outputText value="{!contactRecord.name}"/>
+        <apex:outputText value="{!contactRecord.Start_Date__c}"/>
+        <apex:outputText value="{!contactRecord.End_Date__c}"/>
+        
+    </apex:outputPanel>  
+</apex:page>

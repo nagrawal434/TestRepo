@@ -1,0 +1,20 @@
+<apex:page controller="VisualforceReportController" tabstyle="Opportunity">
+    <apex:sectionheader title="Opportunity Report" subtitle="Opportuities" />
+    <apex:form >
+        <apex:pageblock title="Opportunities" id="opportunityTable">
+            <apex:outputPanel rendered="{!hide}">
+                <c:MultiselectComponent leftOptions="{!leftoptionsFields}" leftLabel="Choose Option" 
+                rightLabel="Selected Options" rightOptions="{!rightOptions}" size="7" width="80%">
+                </c:MultiselectComponent>
+            </apex:outputPanel>
+            <apex:commandButton value="Next" action="{!nextMethod}" rendered="{!buttonHide}"/>
+            <apex:commandButton value="Previous" action="{!previousMethod}" rendered="{!!buttonHide}"/>
+            <apex:outputPanel rendered="{!!hide}">
+                <apex:pageBlockSection >
+                    
+                             
+                </apex:pageBlockSection>
+            </apex:outputPanel>     
+        </apex:pageblock>
+    </apex:form>
+</apex:page>

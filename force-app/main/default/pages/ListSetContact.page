@@ -1,0 +1,31 @@
+<apex:page controller="ListSetContactController">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockTable value="{!strls}" var="cont">
+                    <apex:column headerValue="FirstName">
+                        <apex:inputField value="{!cont.firstname}"/>
+                    </apex:column>
+                    <apex:column headerValue="LastName">
+                        <apex:inputField value="{!cont.lastname}" required="false"/>
+                    </apex:column>
+                    <apex:column headerValue="Email">
+                       <apex:inputField value="{!cont.email}"/>
+                    </apex:column>
+                    <apex:column headervalue="Phone">
+                    <apex:inputField value="{!cont.phone}"/>
+                    </apex:column>
+                    </apex:pageBlockTable>
+                    </apex:pageBlockSection>
+                    
+                    <apex:pageBlockButtons location="top">
+                    <apex:commandButton value="save" action="{!savecontact}"/>
+                    <apex:commandButton value="addrow" action="{!add}"/>
+                    <apex:commandButton value="deleterow" action="{!deleteRec}"/>
+                    </apex:pageBlockButtons>
+                    
+                   
+        
+       </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,10 @@
+<apex:page standardController="Contact" extensions="InLineVfPageController"   >
+  <apex:form >
+      <apex:pageBlock Title="Inline page" >
+            {!conList.firstname}
+             {!conList.lastname}
+              {!conList.email}
+              {!conList.phone}
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

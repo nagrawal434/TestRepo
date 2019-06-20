@@ -1,0 +1,80 @@
+<apex:page controller="RecordtypeCollageController">
+
+    <apex:form >
+         <apex:pageBlock >
+             <apex:commandButton value="New Record" action="{!newRecord}"   />
+             <apex:pageBlockSection columns="3">
+             <apex:actionStatus startStyle="color:red" startText="Processsing..." id="process"></apex:actionStatus>
+                    <apex:selectList value="{!selectValue}"  size="1" >
+                        <apex:selectOptions value="{!RecordName}"/>
+                    </apex:selectList>
+                 <apex:commandButton value="Go" action="{!search}" />
+               </apex:pageBlockSection>
+               <apex:pageBlockSection >               
+                  <apex:outputPanel id="collageRecord">
+                            <apex:pageBlockTable value="{!collageRecord1}" var="cr">
+                                <apex:column value="{!cr.College_Name__c}" />
+                                <apex:column value="{!cr.Principal_Name__c}" />
+                                <apex:column value="{!cr.CollegeLink__c}" />
+                                <apex:column value="{!cr.CollegeAddress__c}" />
+                                <apex:column value="{!cr.CollegeId__c}" />
+                                <apex:column value="{!cr.College_No__c}" />
+                                <apex:column value="{!cr.Year_Of_Establish__c}" />
+                                <apex:column value="{!cr.No_Of_Branch__c}" rendered="{!flag}"/>
+                                <apex:column value="{!cr.No_Of_Student__c}" rendered="{!flag}"/>
+                                <apex:column value="{!cr.NoOfTeacher__c}" rendered="{!flag}"/>
+                            </apex:pageBlockTable>
+                  </apex:outputPanel>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection >
+                         <table>
+                           <tr>
+                               <td>College Name</td>
+                               <td><apex:inputField value="{!clg.College_Name__c}"/></td>
+                           </tr>
+                            <tr>
+                               <td>Principle Name</td>
+                               <td><apex:inputField value="{!clg.Principal_Name__c}"/></td>
+                           </tr>
+                            <tr>
+                               <td>College Link</td>
+                               <td><apex:inputField value="{!clg.CollegeLink__c}"/></td>
+                           </tr>
+                            <tr>
+                               <td>College Address</td>
+                               <td><apex:inputField value="{!clg.CollegeAddress__c}"/></td>
+                           </tr>
+                            <tr>
+                               <td>College Id</td>
+                               <td><apex:inputField value="{!clg.CollegeId__c}"/></td>
+                           </tr>
+                            <tr>
+                               <td>College Number</td>
+                               <td><apex:inputField value="{!clg.College_No__c}"/></td>
+                           </tr>
+                            <tr>
+                               <td>Year Of Establish</td>
+                               <td><apex:inputField value="{!clg.Year_Of_Establish__c}"/></td>
+                           </tr>
+                             <tr>
+                               <td>Branch of Number</td>
+                               <td><apex:inputField value="{!clg.No_Of_Branch__c}"/></td>
+                           </tr>
+                            <tr>
+                               <td>Student of Number</td>
+                               <td><apex:inputField value="{!clg.No_Of_Student__c}"/></td>
+                           </tr>
+                            <tr>
+                               <td>Number Of Teacher</td>
+                               <td><apex:inputField value="{!clg.NoOfTeacher__c}"/></td>
+                           </tr>
+                           <tr>
+                               <td colspan="2"><apex:commandButton value="Save" action="{!save}" /></td>
+                           </tr>
+                </table>
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>   
+    </apex:form> 
+    
+</apex:page>

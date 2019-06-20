@@ -1,0 +1,10 @@
+<apex:page standardController="Stu__c" extensions="MasterDetailController">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:dataTable value="{!feeList}" var="f">
+              <apex:column value="{!f.Amount__c}"/>
+                <apex:column value="{!f.Date__c}"/>
+            </apex:dataTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

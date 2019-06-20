@@ -1,0 +1,18 @@
+<apex:page controller="EmailSendingController">
+     <apex:form >
+      <apex:pageBlock >
+     
+          <apex:pageBlockSection >
+              <apex:inputText value="{!address}" label="Email Id"/>
+              <apex:inputText value="{!sub}" label="Subject"/>
+              <apex:inputText value="{!textbody}" label="Body"/>
+              <apex:inputFile fileName="{!file}"  value="{!b}"/>
+           
+           </apex:pageBlockSection>       
+                  <apex:pageBlockButtons location="bottom" >
+                      <apex:commandButton Value="Send Mail" action="{!sendEmail}"/>
+                  </apex:pageBlockButtons>
+       
+      </apex:pageBlock>
+    </apex:form>      
+</apex:page>

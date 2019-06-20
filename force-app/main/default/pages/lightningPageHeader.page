@@ -1,0 +1,99 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Opportunity" extensions="lightningOpportuningController">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tabs Demo | Appiphony Lightning JS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+    <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-all.min.js')}"></script>
+    <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-lookup.min.js')}"></script>
+    <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+
+    <script>
+      
+    </script>
+</head>
+
+<body>
+    <apex:form >
+        <div class="slds">
+         <div class="slds-page-header" role="banner">
+  <div class="slds-grid">
+    <div class="slds-col slds-has-flexi-truncate">
+      <div class="slds-media slds-media--center slds-no-space slds-grow">
+        <div class="slds-media__figure">
+          <svg aria-hidden="true" class="slds-icon slds-icon-standard-user">
+            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#user"></use>
+          </svg>
+        </div>
+        <div class="slds-media__body">
+          <p class="slds-text-heading--label">Record Type</p>
+          <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle" title="Record Title">Record Title</h1>
+        </div>
+      </div>
+    </div>
+    <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+      <button class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive">
+        <span class="slds-text-not-selected">
+          <svg aria-hidden="true" class="slds-button__icon--stateful slds-button__icon--left">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#add"></use>
+          </svg>Follow</span>
+        <span class="slds-text-selected">
+          <svg aria-hidden="true" class="slds-button__icon--stateful slds-button__icon--left">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+          </svg>Following</span>
+        <span class="slds-text-selected-focus">
+          <svg aria-hidden="true" class="slds-button__icon--stateful slds-button__icon--left">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+          </svg>Unfollow</span>
+      </button>
+      <div class="slds-button-group" role="group">
+        <button class="slds-button slds-button--neutral">Edit</button>
+        <button class="slds-button slds-button--neutral">Delete</button>
+        <button class="slds-button slds-button--neutral">Clone</button>
+        <div class="slds-button--last">
+          <button class="slds-button slds-button--icon-border-filled">
+            <svg aria-hidden="true" class="slds-button__icon">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+            </svg>
+            <span class="slds-assistive-text">More</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+<ul class="slds-grid slds-page-header__detail-row">
+    <li class="slds-page-header__detail-block">
+      <p class="slds-text-heading--label-normal slds-truncate slds-m-bottom--xx-small" title="Field 1">Field 1</p>
+      <p class="slds-text-body--regular slds-truncate" title="Description that demonstrates truncation with a long text field">Description that demonstrates truncation with a long text field.</p>
+    </li>
+    <li class="slds-page-header__detail-block">
+      <p class="slds-text-heading--label-normal slds-truncate slds-m-bottom--xx-small" title="Field2 (3)">Field 2 (3)
+        <button class="slds-button slds-button--icon-bare">
+          <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small">
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+          </svg>
+          <span class="slds-assistive-text">More Actions</span>
+        </button>
+      </p>
+      <p class="slds-text-body--regular">Multiple Values</p>
+    </li>
+    <li class="slds-page-header__detail-block">
+      <p class="slds-text-heading--label-normal slds-truncate slds-m-bottom--xx-small" title="Field 3">Field 3</p><a href="javascript:void(0);">Hyperlink</a></li>
+    <li class="slds-page-header__detail-block">
+      <p class="slds-text-heading--label-normal slds-truncate slds-m-bottom--xx-small" title="Field 4">Field 4</p>
+      <p>
+        <span title="Description (2-line truncation—must use JS to truncate).">Description (2-line truncat...</span>
+      </p>
+    </li>
+  </ul> 
+        </div>
+        <!-- Main SLDS End -->  
+    </apex:form>
+</body>
+    
+
+</html>
+</apex:page>

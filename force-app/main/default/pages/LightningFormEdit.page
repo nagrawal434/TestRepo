@@ -1,0 +1,318 @@
+<apex:page applyBodyTag="false" sidebar="false" showHeader="false" docType="html-5.0" controller="AccountParentChildEditController">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">   
+    <head>
+        <title>My Page</title>
+        <apex:stylesheet value="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}"/>
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"/>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>  
+        
+        <script src="{!URLFOR($Resource.LJquery, 'jquery/jquery.aljs-lookup.min.js')}"></script>
+        <!-- For Date Picker -->
+        <!-- MomentJS CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+        <!-- Important To Include ALJS init File-->
+        <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-init.min.js')}"></script>
+        <!-- ALJS Datepicker Module-->
+        <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-datepicker.min.js')}"></script>
+        
+        <!-- Hide the standard date link -->
+        <style> span.dateFormat { display:none; } </style>
+        
+        <!-- /For DatePicker -->
+        <script type="text/javascript">
+        </script>
+        
+      
+        <script>
+            var j$ = jQuery.noConflict();
+            var assetsLoc = '{!URLFOR($Resource.assets)}';
+              
+            //ALJS Initialization   
+                   
+            j$.aljsInit({
+              assetsLocation: assetsLoc,
+              scoped: true
+            });
+               
+            j$(document).ready(function() {
+             
+            //Initializing Datepicker with options To The SLDS Input on document ready.
+             
+             j$('#date').datepicker({
+                onChange: function(datepicker) {
+                j$('#SelectedDate').html('Selected Date: <strong>'+datepicker.selectedFullDate._i+'</strong>');
+               }
+              });
+            });
+            </script>            
+    <script>
+        // Remove onload focus from the datepicker input element
+        function setFocusOnLoad() { } 
+        // Take the href from the target link and set it to the custom icon link
+        jQuery(document).ready(function(){
+            jQuery('#myPickerToday').attr('href', jQuery('#myPickerWrapper span.dateFormat a').attr('href'));
+        });
+    </script>
+        <!--
+        <style>
+            .lookupInput a{
+              background-image: url("/img/setup/search-icon.png") !important;
+              background-position: center center !important;
+              background-repeat: no-repeat !important;
+              border: medium none;
+              display: inline-flex !important;
+              margin-left: -34px;
+             
+              position: absolute;
+              width: 33px !important;
+            }
+            .lookupInput input{
+              width:50% !important;
+               height: 39px;
+            }                        
+            .lookupInput img{
+              display:none !important;
+              
+            }
+        </style>
+        -->
+    </head>
+    <body>
+    <apex:form id="frm">
+            <apex:actionstatus id="statusWaiting">
+                        <apex:facet name="start">
+                            <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+                                <div class="waitingHolder" style="top: 100px; width: 91px;">
+                                    <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                                    <span class="waitingDescription">Loading...</span>
+                                </div>
+                            </div>
+                        </apex:facet>
+             </apex:actionstatus>  
+        <div class="slds">
+            <!-- MASTHEAD -->
+                <p class="slds-text-heading--label slds-m-bottom--small">Salesforce Lightning Design System Trailhead Module</p>
+            <!-- / MASTHEAD -->
+            
+            <!-- PAGE HEADER -->
+                <div class="slds-page-header" role="banner">
+                 <!-- LAYOUT GRID -->
+                    <div class="slds-grid">
+                        <!-- GRID COL -->
+                        <div class="slds-col">
+                            <!-- HEADING AREA -->
+                            <!-- MEDIA OBJECT = FIGURE + BODY -->
+                            <div class="slds-media">
+                                <div class="slds-media__figure">
+                                    <span class="slds-avatar slds-avatar--large">
+                                      <img src="{!URLFOR($Resource.assets, '/assets/images/avatar1.jpg')}" alt="portrait" />
+                                    </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                    <p class="slds-text-heading--label">Contacts</p>
+                                    <h1 class="slds-text-heading--medium">Edit Contacts</h1>
+                                </div>  
+                            </div>
+                            <!-- / MEDIA OBJECT -->
+                            <!-- /HEADING AREA -->
+                        </div>
+                    <!-- GRID COL -->
+                    <div class="slds-col slds-no-flex slds-align-middle">
+                        <div class="slds-button-group" role="group">
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" value="Save Contact" action="{!saveContacts}"/>
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" value="New Contact" onclick="$('.modal-box').show();return false;"/>
+
+                        </div>
+                    </div>
+                    <!-- / GRID COL -->
+                </div>
+                <!-- / LAYOUT GRID -->
+                </div>
+            <!-- / PAGE HEADER -->
+            <!-- PRIMARY CONTENT WRAPPER -->
+                <div class="myapp">
+                 <!-- ACCOUNT LIST TABLE -->
+                         <!-- CARD BODY = TABLE -->
+                            <section class="slds-card__body" styleClass="height=100%">
+                              <div class="">
+                                  <apex:outputPanel id="myData">
+                                <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal">
+                                  <thead>
+                                    <tr class="slds-no-hover">                                    
+                                          <th  scope="col">Index</th>                                     
+                                          <th style="text-align:center" class="slds-text-heading--label" scope="col">FirstName</th>
+                                          <th style="text-align:center" class="slds-text-heading--label" scope="col">LastName</th>
+                                          <th style="text-align:center" class="slds-text-heading--label" scope="col">Email</th>
+                                          <th style="text-align:center" class="slds-text-heading--label" scope="col">Phone</th>
+                                          <th style="text-align:center;right:60px" class="slds-text-heading--label" scope="col">Account</th>
+                                          <th style="text-align:center" class="slds-text-heading--label" scope="col">Picklist</th>
+                                          <th style="text-align:center" class="slds-text-heading--label" scope="col">DatePicker</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <apex:repeat value="{!modelList}" var="modelObj">
+                                          <tr>
+                                              <td>
+                                                  <apex:outputLabel value="{!modelObj.serialNo}"/>
+                                              </td>
+                                              <td>
+                                                  <apex:inputText styleClass="slds-input" value="{!modelObj.contactChild.firstname}"/> 
+                                              </td>
+                                              <td>
+                                                  <apex:inputText styleClass="slds-input" value="{!modelObj.contactChild.lastname}"/> 
+                                              </td>
+                                              <td>
+                                                  <apex:inputText styleClass="slds-input" value="{!modelObj.contactChild.email}"/> 
+                                              </td>
+                                              <td>
+                                                  <apex:inputText styleClass="slds-input" value="{!modelObj.contactChild.phone}"/>
+                                              </td>
+                                              <td> 
+                                                  <div class="slds-form-element slds-lookup" data-select="single" >
+                                                       <div class="slds-form-element__control">
+                                                           <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                               <apex:inputField style="height:20px;" styleClass="slds-lookup__search-input slds-input" value="{!modelObj.contactChild.accountid}"/>
+                                                           </div>
+                                                       </div>
+                                                  </div>  
+                                              </td>
+                                              <td style="width:15%">
+                                                  <!-- Standard PickList -->
+                                                  <!-- <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-select_container">
+                                                            <apex:inputField value="{!modelObj.contactChild.LeadSource}" styleClass="slds-select slds-input slds-input--small" />
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                                <!-- Custom Picklist -->
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-select_container">
+                                                            <apex:selectList size="1" value="{!selectedCountry}" styleClass="slds-select">
+                                                                <apex:selectOptions value="{!countrieLst}" />
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                              </td> 
+                                              <td>
+                                                 <table>
+                                                 <div class="slds">
+                                                 <div class="slds-form-element"> 
+                                                  <div class="slds-form-element__control" style="width:200px;">
+                                                   <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                    <svg aria-hidden="true" class="slds-input__icon slds-icon-text-default">
+                                                     <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#event')}"></use>
+                                                    </svg> 
+                                                     <input id="date" class="slds-input" type="text" placeholder="Pick a Date" label="Date Picker Label"/>
+                                                   </div>
+                                                  </div>
+                                                 </div>
+                                                 </div>
+                                                 </table>
+                                              </td>                                                                                               
+                                          </tr>                                                                                
+                                      </apex:repeat>      
+                                  </tbody>
+                                </table>
+                                </apex:outputPanel>
+                              </div>
+                            </section>
+                        <!-- / CARD BODY = SECTION + TABLE -->
+                    <!-- /ACCOUNT LIST TABLE -->            
+                </div>
+            <!-- / PRIMARY CONTENT WRAPPER -->
+             <!-- FOOTER -->
+            <footer role="contentinfo" class="slds-p-around--large" style="background:#737f9a;">
+              <!-- LAYOUT GRID -->
+              <div class="slds-grid slds-grid--align-spread">
+                <p class="slds-col" Style="color:white">Salesforce Lightning Design System Example</p>
+                <p class="slds-col" Style="color:white">&copy; Ibirds Software Service Pvt. Ltd.</p>
+              </div>
+              <!-- / LAYOUT GRID -->
+            </footer>
+            <!-- / FOOTER -->
+<!-- Modal --->
+    <div class="slds-hide modal-box">
+      <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+          <div class="slds-modal__header">
+            <h2 class="slds-text-heading--medium">Create Account</h2>
+            <button class="slds-button slds-modal__close" onclick="$('.modal-box').hide()">
+              <svg aria-hidden="true" class="slds-button__icon slds-button__icon--inverse slds-button__icon--large">
+                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+              </svg>
+              <span class="slds-assistive-text">Close</span>
+            </button>
+          </div>
+         <div class="slds-modal__content" style="padding:10px;">
+         <form class="slds-form--stacked">
+          <div class="slds-form-element">
+              <label class="slds-form-element__label">Account</label>
+              <div class="slds-form-element__control">
+                  <input type="hidden" id="accountid" />
+                  <div class="slds-lookup" data-select="multi" data-scope="single" data-typeahead="true">
+                      <div class="slds-form-element">
+                        <div class="slds-lookup__control slds-input-has-icon slds-input-has-icon--right">
+                          <svg aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user">
+                              <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#approval')}" />
+                            </svg>
+                          <input id="lookup" class="slds-input--bare" onkeyup="accountLookup(this)" type="text" aria-label="lookup" label="Lookup Label" aria-haspopup="true" aria-autocomplete="list" role="combobox" />
+                        </div>
+                      </div>
+                      <div class="slds-lookup__menu slds-hide" role="listbox">
+                        <ul class="slds-lookup__list" role="presentation">
+                          
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          <div class="slds-form-element">
+              <label class="slds-form-element__label">First Name</label>
+              <div class="slds-form-element__control">
+                  <apex:inputText value="{!newContact.firstname}" styleClass="slds-input firstname" html-placeholder="FirstName"/>
+                  <!-- <input type="text" class="slds-input firstname" placeholder="First Name" /> --> 
+              </div>
+          </div>
+          <div class="slds-form-element slds-is-required">
+              <label class="slds-form-element__label">Last Name</label>
+              <div class="slds-form-element__control">
+                  <apex:inputText value="{!newContact.lastname}" styleClass="slds-input lastname" html-placeholder="LastName"/>
+                  <!-- <input type="text" class="slds-input lastname" placeholder="Last Name" />  -->
+                  <span id="lastname_error" class="slds-form-element__help slds-hide">This field is required</span>
+              </div>
+          </div>
+          <div class="slds-form-element">
+              <label class="slds-form-element__label">phone</label>
+              <div class="slds-form-element__control">
+                  <apex:inputText value="{!newContact.phone}" styleClass="slds-input phone" html-placeholder="Phone"/>
+                  <!-- <input type="text" class="slds-input phone" placeholder="Phone" /> --> 
+              </div>
+          </div>
+          <div class="slds-form-element">
+              <label class="slds-form-element__label">Email</label>
+              <div class="slds-form-element__control">
+                  <apex:inputText value="{!newContact.Email}" styleClass="slds-input email" html-placeholder="Email"/>
+                  <!-- <input type="text" class="slds-input email" placeholder="Email" /> --> 
+              </div>
+          </div>
+           </form>
+          </div>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button--neutral"  onclick="$('.modal-box').hide();return false;">Cancel</button>
+            <!--<button class="slds-button slds-button--neutral slds-button--brand"  onclick="insertContact()">Save</button> -->
+            <apex:commandButton value="Save" action="{!InSertNewContact}" styleClass="slds-button slds-button--neutral"/>
+          </div>
+        </div>
+      </div>
+      <div class="slds-modal-backdrop slds-modal-backdrop--open"></div>
+    </div>
+    
+           <!-- /Model -->                                  
+        </div>  
+    </apex:form>
+    </body>
+</html>
+</apex:page>

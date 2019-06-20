@@ -1,0 +1,277 @@
+<apex:page showHeader="false" standardStylesheets="false">
+    <apex:form >
+         <head>
+            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+            <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+            
+            <style>
+              body {
+                  position: relative;
+              }
+              #OurWork {padding:50px 20px;height:auto; background-color: #feffbc;}
+              #GetInvolved {padding:50px 20px;height:auto; background-color: #fdffdf;}
+              #AboutUs {padding:50px 20px;height:auto; background-color: #feffbc;}
+              #JoinUs {padding:50px 20px;height:auto; background-color: #fdffdf;}
+              
+              .carousel-inner>.item>img, .carousel-inner>.item>a>img {
+                    line-height: 1;
+                    width: 100%;
+                    height: 400px;
+                }
+              .modal-header, h4, .close {
+                  background-color: #5cb85c;
+                  color:white !important;
+                  text-align: center;
+                  font-size: 30px;
+                  padding-top:20px;
+              }
+              .modal-footer {
+                  background-color: #f9f9f9;
+              }
+           </style>
+        </head>
+        <body data-spy="scroll" data-target=".navbar" data-offset="50">
+            <div class="container-fluid">
+<!-- NAVIGATION BAR -->
+                <nav class="navbar navbar-inverse navbar-fixed-top" style="margin:0px 15px;">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span> 
+                            </button>
+                            <a class="navbar-brand" href="#"><img style="border-radius:50%;margin-top:-10px;" src="http://us.123rf.com/450wm/scottff72/scottff721306/scottff72130600008/20430232-saving-nature-concept-hands-holding-a-tree-in-a-protected-bubble.jpg" height="40px" width="40px;"/> Nature Conservancy</a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#OurWork">Our Work</a></li>
+                                <li><a href="#GetInvolved">Get Involved</a></li>
+                                <!--<li class="dropdown">
+                                    <a href="#section2" class="dropdown-toggle" data-toggle="dropdown">Menu 2
+                                    <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                      <li><a href="#">Menu 2.1</a></li>
+                                      <li><a href="#">Menu 2.2</a></li>
+                                    </ul>
+                                </li>-->
+                                <li><a href="#AboutUs">About Us</a></li>
+                                <li><a href="#JoinUs">Join Us</a></li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#" data-toggle="modal" data-target="#mySignupModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#myloginModal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+
+<!-- IMAGE SLIDER -->               
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                  <!-- Indicators -->
+                  <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                    <li data-target="#myCarousel" data-slide-to="3"></li>
+                  </ol>
+
+                  <!-- Wrapper for slides -->
+                  <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                      <img src="http://www.dream-wallpaper.com/free-wallpaper/nature-wallpaper/hd-landscape-3-wallpaper/1280x800/free-wallpaper-5.jpg" alt="Nature 1"/>
+                    </div>
+                
+                    <div class="item">
+                      <img src="http://onehdwallpaper.com/wp-content/uploads/2015/07/Sunrise-HD-Picture-Beautiful-Nature.jpg" alt="Nature 2"/>
+                    </div>
+                
+                    <div class="item">
+                      <img src="http://wallpapercave.com/wp/etUJXCP.jpg" alt="Nature 3"/>
+                    </div>
+                
+                    <div class="item">
+                      <img src="http://theartinspiration.com/wp-content/uploads/2013/08/hd-wallpaper-nature11.jpg" alt="Nature 4"/>
+                    </div>
+                  </div>
+                
+                  <!-- Left and right controls -->
+                  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+                
+<!-- WEBSITE DATA -->                
+                <div id="OurWork" class="container-fluid">
+                  <h1>Where We Work</h1><br/><br/>
+                  <h3>We work to protect a myriad of habitats so we can preserve the diversity of life on Earth</h3><br/><br/>
+                  <p>
+                      From coral reefs to deserts, we work to protect the lands and waters that plants and animals need to survive—for us and for future generations.<br/>
+                      Learn more about where we work, and see how we’re protecting nature to preserve life.
+                  </p><br/>
+                  <dl>
+                      <dt>Protecting Water for People and Nature</dt>
+                      <dd>Global demands for food, energy and material goods are putting unprecedented pressure on our planet. Water is at the heart of this crisis. While traditional solutions — such as the building of dams, reservoirs and other types of infrastructure — attempt to meet these needs, they are proving too costly and unsustainable on their own.</dd>
+                  </dl><br/>
+                  <dl>
+                      <dt>Protecting Healthy Oceans and Coasts for People and Nature</dt>
+                      <dd>Oceans provide half of the oxygen we breathe, food and livelihoods for millions around the globe, medicines to treat disease and support for our thriving coastal economies. And we look to the oceans to provide even more; new economic opportunities, sustainable seafood, and coastal habitats that reduce our risk from coastal storms and flooding. Balancing these growing demands on ocean sustainably is one of the greatest conservation challenges we face. </dd>
+                  </dl><br/>
+                  <dl>
+                      <dt>Conserving land at an unprecedented scale.</dt>
+                      <dd>Sustaining the world’s land resources is where The Nature Conservancy’s story began. It is our legacy and our future. Today, we are guided by our vision to conserve land at an unprecedented scale — for the benefit of people, wildlife, and our climate. Our mission — to transform how land is developed, used and conserved — has never been more urgent. As the global population increases, a doubling of demand for food, fiber and fuel will weigh upon our forests, our grasslands, our wetlands — on all our natural resources. </dd>
+                  </dl><br/>
+                  <dl>
+                      <dt>Global Cities - Natural Solutions for Nature and People</dt>
+                      <dd>Across the globe, people are moving into cities at a faster rate than ever in our history. And cities are in a precarious position — rapid growth has the potential to make them deeply unlivable places, at the mercy of floods, droughts and storms. We know that nature can help cities manage the challenges they face.Our vision is to fundamentally change the relationship between cities and nature, so that both can thrive.</dd>
+                  </dl><br/>
+                </div>
+                
+                <div id="GetInvolved" class="container-fluid">
+                  <h1>We cant save nature without you! And we have easy ways that you can get involved right now.</h1>
+                  <div class="row">
+                      <div class="col-sm-3"><img src="http://www.nature.org/cs/groups/webcontent/@web/@newyork/documents/media/prd_037902.jpg" height="100%" width="100%"/></div>
+                      <div class="col-sm-9">
+                          <ul>
+                              <li>Search for events and preserves near you, and lend a hand in protecting the places we love.</li>
+                              <li>Learning more about our feathered friends keep you in-the-know on their habitat needs and behaviors!</li>
+                              <li>Want to see the beautiful places we protect right now? Take a virtual reality tour of our preserves!</li>
+                              <li>One Gift. One Tree. One Planet. Lets get planting!</li>
+                              <li>You know that investing in conservation is the only way we can help keep America beautiful, strong, prosperous and healthy, so speak up for nature!</li>
+                              <li>Calculate your carbon footprint with our free calculator, and then offset the carbon you produce with a donation.</li>
+                              <li>Dont miss the latest updates from The Nature Conservancy by adding our RSS feeds to your reader. </li>
+                              <li>Dont miss the latest updates from The Nature Conservancy by adding our RSS feeds to your reader. </li>
+                          </ul>
+                      </div>
+                  </div>
+                </div>
+                
+                <div id="AboutUs" class="container-fluid">
+                      <h1>What We Do</h1>
+                      <p>The Nature Conservancy is the leading conservation organization working around the world to protect ecologically important lands and waters for nature and people.
+    
+                        We address the most pressing conservation threats at the largest scale. Thanks to the support of our more than 1 million members, we’ve built a tremendous record of success since our founding in 1951:
+                        We've protected more than 119 million acres of land and thousands of miles of rivers worldwide — and we operate more than 100 marine conservation projects globally.
+                        We are impacting conservation in 69 countries — protecting habitats from grasslands to coral reefs, from Australia to Alaska to Zambia. See where we work.
+                        We address threats to conservation involving climate change, fresh water, oceans, and conservation lands. Learn how we're responding.
+                     </p>
+                     <br/><br/>
+                     <h1>Why We are Successful</h1>
+                     <p>Its who we are and how we work that has made the Conservancy so successful — and makes us optimistic that we can expand that great conservation work to meet the challenges ahead:
+    
+                        Everything we do is rooted in good science — aided by our hundreds of staff scientists. Dive deeper into our science.
+                        We pursue non-confrontational, pragmatic solutions to conservation challenges. Learn why were so effective.
+                        We partner with indigenous communities, businesses, governments, multilateral institutions, and other non-profits. Learn more about our partnerships.
+                        We have the support of more than 1 million members who enable us to continue working on a scale that matters and implement solutions that endure. Find out how you can support our work.
+                     </p>
+                </div>
+                
+                <div id="JoinUs" class="container-fluid">
+                    <h1>Join Us</h1>
+                    <p>We address the most urgent conservation challenges at the largest scale. Today, more of our natural world is at risk than ever before. So our work is crucial to keep vital habitats and unique species from being lost forever.
+
+                        But we can’t achieve the large-scale conservation victories necessary without the support and involvement of those who share our passion for preserving our last great places.
+                        
+                        There are many ways to support the work of The Nature Conservancy. With so much at stake, we hope you will get involved now:
+                        <ul>
+                            <li>Become a member</li>
+                            <li>Give a gift membership</li>
+                            <li>Become a Conservation Champion</li>
+                            <li>Or Adopt an Acre, Adopt a Coral Reef or Plant a Billion Trees</li>
+                            <li>If you have a question about the Conservancy, please call us at (800) 628-6860 or contact us for more information.</li>
+                        </ul>
+                    </p>
+                </div>
+                <br/><br/>
+            </div>
+            
+            
+<!-- LOGIN MODAL-->
+          <div class="modal" id="myloginModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <img style="border-radius:50%;" src="http://us.123rf.com/450wm/scottff72/scottff721306/scottff72130600008/20430232-saving-nature-concept-hands-holding-a-tree-in-a-protected-bubble.jpg" height="100px" width="100px;"/>
+                                </div>
+                                <div class="col-xs-9">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4><span class="glyphicon glyphicon-lock"></span> Login</h4></div>
+                                </div>
+                        </div>
+                        <div class="modal-body" style="padding:40px 50px;">
+                              <form role="form">
+                                <div class="form-group">
+                                  <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+                                  <input type="text" class="form-control" id="usrname" placeholder="Enter email"/>
+                                </div>
+                                <div class="form-group">
+                                  <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                                  <input type="password" class="form-control" id="psw" placeholder="Enter password"/>
+                                </div>
+                                <div class="checkbox">
+                                  <label><input type="checkbox" value="" checked="true"/>Remember me</label>
+                                </div>
+                                  <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+                              </form>
+                        </div>
+                        <div class="modal-footer">
+                              <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                              <p>Not a member? <a href="#">Sign Up</a></p>
+                              <p>Forgot <a href="#">Password?</a></p>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+<!-- SIGNUP MODAL-->
+          <div class="modal" id="mySignupModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <img style="border-radius:50%;" src="http://us.123rf.com/450wm/scottff72/scottff721306/scottff72130600008/20430232-saving-nature-concept-hands-holding-a-tree-in-a-protected-bubble.jpg" height="100px" width="100px;"/>
+                                </div>
+                                <div class="col-xs-9">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4><span class="glyphicon glyphicon-lock"></span> SIGN UP</h4>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="modal-body" style="padding:40px 50px;">
+                              <form role="form">
+                                <div class="form-group">
+                                  <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+                                  <input type="text" class="form-control" id="usrname" placeholder="Enter email"/>
+                                </div>
+                                <div class="form-group">
+                                  <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                                  <input type="password" class="form-control" id="psw" placeholder="Enter password"/>
+                                </div>
+                                <div class="form-group">
+                                  <label for="repsw"><span class="glyphicon glyphicon-eye-open"></span> Confirm Password</label>
+                                  <input type="password" class="form-control" id="repsw" placeholder="Retype password"/>
+                                </div>
+                                  <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Register</button>
+                              </form>
+                        </div>
+                        <div class="modal-footer">
+                              <button type="submit" class="btn btn-danger pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                              <p>Already have an account? <a href="#" data-toggle="modal" data-target="#myloginModal">Login</a></p><br/>
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+    </apex:form>
+</apex:page>

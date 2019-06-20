@@ -1,0 +1,106 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Tabs Demo | Appiphony Lightning JS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+    <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-all.min.js')}"></script>
+    <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+  
+</head>
+
+<body>
+    <div class="slds" style="width:40%;border-width:15px;border-style: solid;border-color: ghostwhite;">
+        <div class="slds-panel slds-grid slds-grid--vertical slds-nowrap">
+            <div class="slds-form--stacked slds-grow slds-scrollable--y">
+                <div class="slds-panel__section slds-has-divider--bottom">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                          <label class="slds-checkbox" for="completed">
+                            <input name="checkbox" type="checkbox" id="completed" />
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-assistive-text">Complete Task</span>
+                          </label>
+                        </div>
+                        <div class="slds-media__body">
+                          <p class="slds-truncate slds-text-heading--small" ><a href="javascript:void(0);">Follow up on &#x27;15 contact</a></p>
+                          <p class="slds-truncate slds-text-body--small">Jun 18</p>
+                          <div class="slds-button-group slds-m-top--small" role="group">
+                            <button class="slds-button slds-button--neutral slds-grow">Edit</button>
+                            <button class="slds-button slds-button--neutral slds-grow">Follow Up</button>
+                            <button class="slds-button slds-button--neutral slds-grow">Delete</button>
+                            <button class="slds-button slds-button--icon-border-filled">
+                              <svg aria-hidden="true" class="slds-button__icon">
+                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                              </svg>
+                              <span class="slds-assistive-text">More Actions</span>
+                            </button>
+                          </div>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="slds-panel__section">
+                        <h3 class="slds-text-heading--small slds-m-bottom--medium">Task Information</h3>
+                        <div class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">Subject</span>
+                        <div class="slds-form-element__control">
+                          <span class="slds-form-element__static">Follow up on &#x27;15 Contract</span>
+                        </div>
+                        </div>
+                        <div class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">Due Date</span>
+                        <div class="slds-form-element__control">
+                          <span class="slds-form-element__static">6/18/16</span>
+                        </div>
+                        </div>
+                        <div class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">Assigned TO</span>
+                        <div class="slds-form-element__control">
+                          <span class="slds-form-element__static">Jason Dewar</span>
+                        </div>
+                        </div>
+                        <div class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">Name</span>
+                        <div class="slds-form-element__control">
+                          <span class="slds-form-element__static">Adam Choi</span>
+                        </div>
+                        </div>
+                        <div class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">Related To</span>
+                        <div class="slds-form-element__control">
+                          <span class="slds-form-element__static">Tesla Cloudhub + Anypoint Connectors</span>
+                        </div>
+                        </div>
+                        <div class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">Comments</span>
+                        <div class="slds-form-element__control">
+                          <span class="slds-form-element__static slds-text-longform">Adam was open to doing more business in the 4th quarter. Follow up with marketing demo and email templates.</span>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="slds-panel__section">
+                        <h3 class="slds-text-heading--small slds-m-bottom--medium">Additional Information</h3>
+                        <div class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">Status</span>
+                        <div class="slds-form-element__control">
+                          <span class="slds-form-element__static">Not Started</span>
+                        </div>
+                        </div>
+                        <div class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">Priority</span>
+                        <div class="slds-form-element__control">
+                          <span class="slds-form-element__static">Normal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    
+</body>
+
+</html>
+</apex:page>

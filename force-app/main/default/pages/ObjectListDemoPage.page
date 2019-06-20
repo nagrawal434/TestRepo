@@ -1,0 +1,13 @@
+<apex:page Controller="ObjectListDemoController">
+    <apex:form id="Describe">
+        <apex:pageBlock id="block2" >
+            <apex:pageblocksection >
+            <apex:selectList value="{!selectedObject}" size="1">
+                 <apex:selectOptions value="{!ObjectNames}"/>
+            </apex:selectList>
+            </apex:pageblocksection>
+
+
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

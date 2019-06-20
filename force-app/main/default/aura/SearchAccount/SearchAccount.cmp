@@ -1,0 +1,70 @@
+<aura:component controller="SearchAccount">
+    <aura:attribute name="searchKeyword" type="String" description="use for store user search input"/>
+    <aura:attribute name="searchResult" type="List" description="use for store and display account list return from server"/>
+    <aura:attribute name="message" type="Boolean" default="false"/>
+    
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+		<!--loading spinner start... style=Brand Medium (blue dots)-->
+         <aura:if isTrue="{!v.Spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container">
+               <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                 <span class="slds-assistive-text">Loading</span>
+                 <div class="slds-spinner__dot-a"></div>
+                 <div class="slds-spinner__dot-b"></div>
+               </div>
+            </div>
+         </aura:if>
+		<!-- Loading spinner end-->    
+    <form class="slds-form--inline">
+    	<div class="slds-form-element">
+        	<label class="slds-form-element__label" for="search"></label>
+            <div class="slds-form-element__control">
+                    <ui:inputText placeholder="Type here..." class="slds-input" value="{!v.searchKeyword}" aura:id="searchId"/>
+            </div>
+        </div>
+        <div class="slds-form-element">
+        	<button type="button" class="slds-button slds-button--brand" onclick="{!c.search}">Search</button>
+        </div>        
+    </form>    
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+    	<thead>
+        	<tr class="slds-text-title--caps">
+            	<th class="slds-is-sortable slds-text-title--caps" scope="col">
+               		<div class="slds-truncate" title="Id">Id</div> 
+                </th>
+                <th class="slds-is-sortable slds-text-title--caps" scope="col">
+               		<div class="slds-truncate" title="Account Name">Name</div> 
+                </th>
+                <th class="slds-is-sortable slds-text-title--caps" scope="col">
+               		<div class="slds-truncate" title="Type">type</div> 
+                </th>
+                <th class="slds-is-sortable slds-text-title--caps" scope="col">
+               		<div class="slds-truncate" title="Industry">industry</div> 
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        	<aura:if isTrue="{!v.message}">
+            	<div class="slds-text-color--error"> No Result Found...</div>
+            </aura:if>
+            <aura:iteration items="{!v.searchResult}" var="acc">
+                <tr class="slds-text-title--caps">
+                	<td>
+                    	<div class="slds-truncate" title="Id">{!acc.Id}</div> 	
+                    </td>
+                    <td>
+                    	<div class="slds-truncate" title="Account Name">{!acc.Name}</div> 	
+                    </td>
+                    <td>
+                    	<div class="slds-truncate" title="Type">{!acc.Type}</div> 	
+                    </td>
+                    <td>
+                    	<div class="slds-truncate" title="Industry">{!acc.industry}</div> 	
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

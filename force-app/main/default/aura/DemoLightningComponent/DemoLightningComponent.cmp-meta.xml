@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>36.0</apiVersion>
+    <description>&lt;!-- helloWorld.cmp --&gt;
+&lt;aura:component implements=&quot;force:appHostable&quot;&gt; 
+    &lt;h1&gt;Hello Lightning Component!&lt;/h1&gt; 
+&lt;/aura:component&gt;</description>
+</AuraDefinitionBundle>

@@ -1,0 +1,87 @@
+<apex:page controller="SendMailToContact" showHeader="false">
+    <apex:form id="frm">
+        <apex:outputPanel id="op1">
+        <apex:pagemessages ></apex:pagemessages>
+        <script>
+        function OpenVfpage(){
+             window.open('/apex/Email_Attachment','_blank', 'toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=700, height=700')
+            
+        }
+        function RefreshAttachmnet(doc,attach){
+            refresh(doc,attach);
+        }
+        function closeWindow(){
+            var a ='{!subjectFlag}';
+            if(a == 'false'){
+                window.top.close();
+                window.opener.empty();
+                //window.opener.location.href="/apex/SendEmailAndPdf?contactd={!contactId}";  
+            }
+        }
+     </script>
+    </apex:outputPanel>
+        <apex:actionFunction action="{!refresh}" name="refresh" reRender="attach">
+            <apex:param name="par" value="" assignTo="{!documnetId}"/>
+            <apex:param name="par1" value="" assignTo="{!attachmnetId}"/>
+        </apex:actionFunction>
+        
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Send" action="{!sendEmail}" oncomplete="closeWindow();" reRender="op1"/>
+                <apex:commandButton value="Attach a File" onclick="OpenVfpage();" />
+                <apex:commandButton value="Cancel" onclick="closeWindow();"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Email" columns="1">
+                <apex:outputPanel layout="none">
+                    <table width="100%">
+                        <apex:repeat value="{!contactList}" var="obj">
+                            <tr>
+                                <th>To:</th>
+                                <td><apex:outputField label="To:" value="{!obj.email}"/></td>
+                            </tr>
+                        </apex:repeat>
+                        <tr>
+                            <th>Subject:</th>
+                            <td>
+                                <apex:outputPanel styleClass="requiredInput" layout="block">
+                                    <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                                    <apex:inputText value="{!subject}"/>
+                                </apex:outputPanel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Body:</th>
+                            <td><apex:inputTextarea richText="true" value="{!body}"/></td>
+                        </tr>
+                    </table>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            <apex:outputPanel id="attach">
+                <apex:pageBlockSection title="AttachmentList" columns="1"   rendered="{!viewEmailAttachment}">
+                    <apex:outputPanel layout="none">
+                        <table width="100%" cellspacing="0px" class="list">
+                            <tr class="headerRow">
+                                <th class="DateElement zen-deemphasize">File Name</th>
+                            </tr>
+                            <apex:repeat value="{!attachmentList}" rendered="{!if(attachmentList == null,false,true)}" var="obj">
+                                <tr>
+                                    <td>{!obj.name}</td>
+                                </tr>
+                            </apex:repeat>
+                            <apex:repeat value="{!documentList}" rendered="{!if(documentList == null,false,true)}" var="obj">
+                                <tr> 
+                                    <td>{!obj.name}</td>
+                                </tr>
+                            </apex:repeat>
+                            <apex:outputPanel layout="none" rendered="{!file}">
+                                <tr>
+                                    <td>{!fileName}</td>
+                                </tr>
+                            </apex:outputPanel>
+                        </table>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

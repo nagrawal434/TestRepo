@@ -1,0 +1,25 @@
+<aura:component controller="ContactController" >
+    <aura:attribute name="contactRow" type="Object[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="container">
+        <p>All Contacts</p>	
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr> 
+                    <th><strong>Name</strong></th> 
+                    <th><strong>Email</strong></th>
+                    <th><strong>Phone</strong></th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration var="cell" items="{!v.contactRow}">
+                    <tr>
+                        <td>{!cell.Name}</td>
+                        <td>{!cell.Email}</td>
+                        <td>{!cell.phone}</td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </div>                    
+</aura:component>

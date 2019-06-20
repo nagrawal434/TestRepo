@@ -1,0 +1,8 @@
+<aura:component >
+
+    <ui:button label="Today" press="{!c.TodayAccount}"/>
+    <ui:button label="This Week" press="{!c.thisWeekAccount}"/>
+    <ui:button label="This Month" press="{!c.thisMonthAccount}"/>
+    <ui:button label="This Year" press="{!c.thisYearAccount}"/> 
+        
+</aura:component>

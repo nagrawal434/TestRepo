@@ -1,0 +1,89 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" Controller="Multi_Lookup_Controller">
+    <!--Name	:	Multi_Lookup
+    Auther  :	Raghuveer(iBirds)
+    Description : this Component can be used to get input of Multilookup field-->
+    <aura:attribute name="objects" type="Object[]" default="[{'objectAPIName' :'','sortDesciptionField':'',pluralLabel:'',iconName:''}]" required="true"/>
+    <aura:attribute name="slectedsObject" type="Object" />
+    <aura:attribute name="slectedRecord" type="Boolean" default="false"/>
+    <aura:attribute name="slectedRecordName" type="String" default=""/>
+    <aura:attribute name="label" type="String" default="Selcect a sObject" required="true"/>
+    <aura:attribute name="value" type="String"/>
+    <aura:attribute name="required" type="Boolean" default="false"/>
+    <aura:attribute name="inputVal" type="String" default=""/>
+    <aura:attribute name="RecordsList" type="Multi_Lookup_Controller[]"/>
+    <aura:attribute name="messages" type="Aura.Component[]" access="GLOBAL"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInIt}"/>
+    <div class="slds-form-element">
+        <aura:if isTrue="{!!v.slectedRecord}">
+            <!--<label class="slds-form-element__label" for="text-input-id-1">Select sObject</label>-->
+            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                <ui:menu class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default brh_sel_icon">
+                    <ui:menuTriggerLink aura:id="trigger" label="Opportunity Status" click="{!c.handleClickOfMenuTriggerLink}">
+                        <div id="selctedsobjectdiv" style="margin-top: 16px;">
+                            <a id="url" class="field">
+                                <lightning:icon aura:id="myIcon" size="small" iconName="{!'standard:'+v.slectedsObject.iconName}" variant="inverse"/>
+                                <div class="sattleIcon" >
+                                    <lightning:icon aura:id="myIcon" size="x-small" iconName="utility:down" variant="utility"/>
+                                </div>
+                                <!--<img Style="margin-left: 25px;margin-top: -33px;" src="https://barhma-dev-ed.my.salesforce.com/img/icon/t4v35/utility/down_60.png" class="icon " alt="down" title="Down"></img>
+                            <lightning:icon size="x-small" iconName="utility:down,utility:down" variant="utility"/> 	-->
+                            </a>
+                        </div>
+                    </ui:menuTriggerLink>
+                    <ui:menuList class="actionMenu" aura:id="actionMenu">
+                        <aura:iteration items="{!v.objects}" var="Record">
+                            <ui:actionMenuItem class="applyheight" label="{!Record.pluralLabel}" aura:id="item1"  click="{!c.updateTriggerLabel}">
+                                <lightning:icon iconName="{!'standard:'+Record.iconName}" variant="inverse" size="small"/>&nbsp; <span class="truncate entityLabel slds-align-middle slds-p-top--xx-small" title="{!Record.pluralLabel}">{!Record.pluralLabel}</span>
+                            </ui:actionMenuItem>
+                        </aura:iteration>
+                    </ui:menuList>
+                </ui:menu>
+                <div class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default">
+                    
+                </div>
+                <ui:inputText placeholder="{!'Search '+v.slectedsObject.pluralLabel}" aura:id="input-lookup" required="{!v.required}" label="{!v.label}" labelClass="slds-form-element__label" keyup="{!c.getRecordsAndFill}" blur="{!c.handleBlur}" click="{!c.getRecordsAndFill}" class="slds-input adjestInput" value="{!v.inputVal}" updateOn="keyup"/>
+                <aura:if isTrue="{!v.RecordsList.length > 0}">
+                    <div id="listbox-unique-id" role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
+                            <aura:iteration items="{!v.RecordsList}" var="Record">
+                                <li class="slds-listbox__item" onclick="{!c.selectListItem}">
+                                    <span id="{!Record.id}" class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta" role="option">
+                                        <span id="{!Record.id}" class="slds-media__figure">
+                                            <lightning:icon class="slds-icon_container" size="small" iconName="{!'standard:'+v.slectedsObject.iconName}" variant="inverse"/>
+                                        </span>
+                                        <span class="slds-media__body">
+                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity" id="{!Record.id}" >{!Record.name}</span>
+                                            <span class="slds-listbox__option-meta slds-listbox__option-meta_entity" id="{!Record.id}" >{!Record.sortDesciption}</span>
+                                        </span>
+                                    </span>
+                                </li>
+                            </aura:iteration>
+                        </ul>
+                    </div>
+                </aura:if>
+            </div>
+            <div>
+                {!v.messages}
+            </div>
+            <aura:set attribute="else">
+                <label class="slds-form-element__label" for="text-input-id-1">
+                    <aura:if isTrue="{!v.required}"><span class="required ">*</span></aura:if>{!v.label}</label>
+                <div class="pillContainerWrapper singlePill noSeparator" data-aura-rendered-by="301:1814;a">
+                    <div role="application" class="uiPillContainer--default uiPillContainer noinput maxAllowed focused" data-aura-class="uiPillContainer--default uiPillContainer" >
+                        <div class="pillWrap">
+                            <ul class="orderedList">
+                                <li class="pillContainerListItem">
+                                    <lightning:pill class="uiPill--default.pill" label="{!v.slectedRecordName}" href="javascript:void(0);" onremove="{!c.handleRemove}">
+                                        <aura:set attribute="media">
+                                            <lightning:icon class="addjestIcon" iconName="{!'standard:'+v.slectedsObject.iconName}"  alternativeText="{!v.slectedsObject.pluralLabel}"/>
+                                        </aura:set>
+                                    </lightning:pill>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

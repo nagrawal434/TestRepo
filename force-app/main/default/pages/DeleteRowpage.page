@@ -1,0 +1,6 @@
+<apex:page controller="DeleteAttchmentController" showHeader="false" sidebar="false" id="page" >
+    <apex:form >
+        <apex:commandButton value="Ok" action="{!ok}"/>
+        <apex:commandButton value="Cancel" action="{!cancel}"/>
+    </apex:form> 
+</apex:page>

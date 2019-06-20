@@ -1,0 +1,128 @@
+<apex:page controller="SiteController"  showHeader="false"  sidebar="false">
+    <html>
+         <head>
+         </head>
+         <style>
+         #menu{
+                width: 100%;
+                height: 50px;
+                font-size: 16px;
+                font-weight: bold;
+                background-color: #474747;
+                color: white;
+                text-align: center
+         } 
+         #menu ul {
+                height: auto;
+                margin: 2px;
+                padding: 15px 0px;
+                
+        }
+         #menu li { 
+                display: inline; 
+                padding: 1px;
+                
+        }
+        #menu a {
+                text-decoration: none;
+               
+        }
+        #logo { 
+               float: left;
+               left:250px;
+               width: 100px;
+               height:150px;
+               margin-top:5px;
+               display: inline-block;
+               position: relative;
+               z-index: 5000;
+        }
+        #form{
+               background-color: #FFCC66;     
+               color: white;
+               font-weight: italic;
+               height: 1000px;
+               margin-left  : 400px;
+      }
+      #table{
+            
+      
+      }
+     </style>
+     <script>
+             function frmvalidation(){
+                if (inputAlphabet(firstchk, "* For your name please use alphabets only *"))
+                {
+                return true;
+                }
+                else
+                {
+                return false;
+                }
+                function inputAlphabet(inputtext, alertMsg){
+                    var alphaExp = /^[a-zA-Z]+$/;
+                    if (inputtext.value.match(alphaExp)) {
+                    return true;
+                   }else{
+                        document.getElementById('p1').innerText = alertMsg; 
+                        inputtext.focus();
+                        return false;
+                    }
+                }
+              }
+     
+     </script>
+     
+     
+     
+     
+     
+     
+        <body>
+              <div id = "menu">
+                 <img src = "https://pbs.twimg.com/profile_images/511932045665107968/YGXmyWvv_400x400.png" id ="logo" />
+             <ul>
+                     <li>ABOUT US</li>
+                     <li>COACH</li>
+                     <li>PARTNER</li>
+                     <li>ADVOCATE</li>
+                     <li>BLOG</li>
+                     <li>RESOURCE</li>
+                     <li>SUPPORT US</li>
+            </ul>
+             </div> 
+                 
+        </body>
+    </html>
+    <div id= "form">
+        <div id= "table">
+            <apex:form >
+                <table  align ="center">
+                        <tr>
+                            <td>FirstName</td>
+                            <td><apex:inputText value="{!fname}"  id="firstchk"/></td>
+                        </tr>
+                        <tr>
+                            <td>LastName</td>
+                            <td><apex:inputText value="{!lname}" id="lastchk"/></td>
+                         </tr>
+                         <tr>
+                            <td>Email</td>
+                            <td><apex:inputText value="{!emailadd}" id="emailchk"/></td>
+                         </tr>
+                         <tr>
+                            <td>Phone</td>
+                            <td><apex:inputText value="{!phoneno}" id="phonechk"/></td>
+                         </tr>
+                         <tr></tr>
+                         <tr></tr>
+                         <tr></tr>
+                         <tr></tr>
+                         <tr>
+                              <td><apex:commandButton value="SUBMIT" action="{!submit}" onclick="return frmvalidation()" /></td>
+                         </tr>
+                </table>
+            </apex:form>   
+     </div> 
+   </div>   
+</apex:page>

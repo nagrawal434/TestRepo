@@ -1,0 +1,19 @@
+<apex:page controller="ModelClassDemoController">
+ <apex:form id="frm">
+     <apex:actionStatus startText="Processing........" id="process" />
+     <apex:actionFunction name="assignId" reRender="frm" status="process">
+         <apex:param assignTo="{!conId}" name="arg1" value=""/>
+     </apex:actionFunction>
+     <apex:pageBlock title="{!conid}" >
+        <apex:pageBlockTable value="{!models}" var="model">
+            <apex:column value="{!model.sno}"/>
+            <apex:column value="{!model.con.name}"/>
+            <apex:column >
+                <apex:commandButton onclick="assignId('{!model.con.id}'); return false;" 
+
+value="Get Id"/>
+            </apex:column>
+        </apex:pageBlockTable>
+     </apex:pageBlock>
+  </apex:form> 
+ </apex:page>

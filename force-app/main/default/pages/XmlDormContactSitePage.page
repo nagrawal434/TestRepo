@@ -1,0 +1,11 @@
+<apex:page controller="XmlDormContactSiteController" contenttype="application/xml" >
+     <contact>
+         <apex:repeat value="{!contactModels}" var="con">
+             <contact>
+                 <firstname>{!con.firstname}</firstname>
+                 <lastname>{!con.lastname}</lastname>
+                 <email>{!con.email}</email>
+             </contact>
+         </apex:repeat>
+     </contact>     
+</apex:page>

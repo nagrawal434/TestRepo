@@ -1,0 +1,6 @@
+<aura:component >
+	<aura:registerEvent name="searchkeychange" type="c:searchkeychange"/>
+    <input type="text" class="form-control" onkeyup="{!c.searchkeychange}" 
+           placeholder="Enter contact Name">
+    </input>
+</aura:component>

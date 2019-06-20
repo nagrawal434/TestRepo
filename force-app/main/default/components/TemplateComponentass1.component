@@ -1,0 +1,20 @@
+<apex:component controller="SendEmailAss1Component" access="global">
+     <apex:attribute name="stu" assignTo="{!stuId}" description="Student Information" type="String"/>
+     <table width='100%' border='3'>
+         <tr> 
+                <td>FirstName</td>
+                <td>LastName</td>
+                <td>Email</td>
+              
+         </tr>
+         <tr> 
+                 <apex:repeat value="{!Student}"  var="st">
+                     <td>{!st.First_Name__c}</td>
+                     <td>{!st.Last_Name__c}</td>
+                     <td>{!st.email__c}</td>   
+                     
+                     
+                 </apex:repeat> 
+         </tr>              
+   </table>
+</apex:component>

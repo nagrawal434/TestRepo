@@ -1,0 +1,83 @@
+.THIS .clsfillcolor {
+    fill : black !important;
+}
+.THIS .applyheight a :hover{
+    
+}
+.THIS .applyheight a{
+    height : 35px;
+    text-decoration: none !important;
+    text-transform:capitalize;
+}
+.THIS .brh_sel_icon{
+    margin-left: -5px;
+    margin-top: -17px !important;
+}
+.THIS .brh_sel_icon div{
+    margin-bottom:-5px !important;
+}
+.THIS .addjest_side_icon{
+    padding : 0px !important;
+    background : white !important;
+    margin-top: -8px;
+    border: none;
+}
+.THIS .actionMenu{   
+    min-width: 100px;
+    max-width: 400px;
+}
+.THIS .adjestInput{
+    padding-left: 55px !important;
+}
+.THIS .required {
+    float: left;
+    padding-right: 2px;
+    color: rgb(194, 57, 52);
+    font-weight: 700;
+}
+.THIS .uiPill--default.pill {
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 4px;
+    display: block;
+        width: 100%;
+    white-space: nowrap;
+}
+.THIS .pillWrap{
+    padding: 5px;
+    border: 1px #ccc solid;
+    background: #fff;
+    border-radius: 7px;
+}
+.THIS .orderedList {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+.THIS .slds-pill__action{
+    padding: 7px;
+}
+.THIS .slds-pill--link{
+    width: 100%;
+}
+.THIS .addjestIcon{
+    margin-left:5px;
+}
+.THIS .slds-pill__label{
+     margin-left: 27px;
+}
+.THIS .slds-pill__remove{
+       margin-right: 8px !important;
+}
+.THIS .sattleIcon{
+    margin-left: 25px!important;
+    margin-top: -17px!important;
+    padding-bottom: 10px!important;
+}
+.THIS .pillContainerListItem{
+    width:100%;
+	margin-bottom:0px !important;
+}
+.THIS .orderedList{
+    overflow-y: hidden !important;
+}

@@ -1,0 +1,121 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Tabs Demo | Appiphony Lightning JS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+    <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-all.min.js')}"></script>
+    <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+    <script>
+        var assetsLocation = '{!URLFOR($Resource.assets)}';
+        $.aljsInit({
+            assetsLocation: assetsLocation,
+            scoped: false
+        });
+        $(document).ready(function() {
+            $('[data-aljs="tabs"]').tabs();
+            
+        });
+        
+    </script>
+</head>
+<body>
+    <div class="slds"> 
+    <!-- Scoped Tab -->
+        <div class="slds-tabs--scoped" data-aljs="tabs">
+          <ul class="slds-tabs--scoped__nav" role="tablist">
+            <li class="slds-tabs--scoped__item slds-text-title--caps slds-active" title="Item One" role="presentation">
+            <a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" data-aljs-show="tab-scoped-1" id="tab-scoped-1__item">Item One</a></li>
+            <li class="slds-tabs--scoped__item slds-text-title--caps" title="Item Two"
+              role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" data-aljs-show="tab-scoped-2" id="tab-scoped-2__item">Item Two</a></li>
+            <li class="slds-tabs--scoped__item slds-text-title--caps" title="Item Three"
+              role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" data-aljs-show="tab-scoped-3" id="tab-scoped-3__item">Item Three</a></li>
+          </ul>
+          <div id="tab-scoped-1" class="slds-tabs--scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-1__item">Item One Content</div>
+          <div id="tab-scoped-2" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-2__item">Item Two Content</div>
+          <div id="tab-scoped-3" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-3__item">Item Three Content</div>
+        </div>
+     <!-- /Scoped Tab -->
+     <!-- Default Tab -->
+        <div class="slds-tabs--default" data-aljs="tabs">
+            <ul class="slds-tabs--default__nav" role="tablist" style="width: 40%">
+                <li class="slds-tabs--default__item slds-text-heading--label" title="Item One" role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" data-aljs-show="tab-default-1">Item One</a></li>
+                <li class="slds-tabs--default__item slds-text-heading--label" title="Item Two" role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" data-aljs-show="tab-default-2">Item Two</a></li>
+                <li class="slds-tabs--default__item slds-text-heading--label" title="Item Three" role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" data-aljs-show="tab-default-3">Item Three</a></li>
+            </ul>
+            <div id="tab-default-1" class="slds-tabs--default__content slds-hide" role="tabpanel">
+                helloMy
+            </div>
+            <div id="tab-default-2" class="slds-tabs--default__content slds-hide" role="tabpanel">
+                helloThere 
+            </div>
+            <div id="tab-default-3" class="slds-tabs--default__content slds-hide" role="tabpanel">
+                <h4> hello </h4>
+            </div>    
+        </div> 
+       <!-- /Default Tab --> 
+        <!-- Nested Tab -->
+                <div class="slds-tabs--default" data-aljs="tabs">
+                  <ul class="slds-tabs--default__nav" role="tablist">
+                    <li class="slds-tabs--default__item slds-text-title--caps slds-active" title="Item One" role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" data-aljs-show="tab-default-1" id="tab-default-1__item">Item One</a></li>
+                    <li class="slds-tabs--default__item slds-text-title--caps" title="Item Two"
+                      role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" data-aljs-show="tab-default-2" id="tab-default-2__item">Item Two</a></li>
+                    <li class="slds-tabs--default__item slds-text-title--caps" title="Item Three"
+                      role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" data-aljs-show="tab-default-3" id="tab-default-3__item">Item Three</a></li>
+                  </ul>
+                  <div id="tab-default-1" class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+                    <div class="slds-tabs--scoped" data-aljs="tabs">
+                      <ul class="slds-tabs--scoped__nav" role="tablist">
+                        <li class="slds-tabs--scoped__item slds-text-title--caps slds-active" title="Item One" role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" data-aljs-show="tab-scoped-1" id="tab-scoped-1__item">Item One</a></li>
+                        <li class="slds-tabs--scoped__item slds-text-title--caps" title="Item Two"
+                          role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" data-aljs-show="tab-scoped-2"  id="tab-scoped-2__item">Item Two</a></li>
+                        <li class="slds-tabs--scoped__item slds-text-title--caps" title="Item Three"
+                          role="presentation"><a class="slds-tabs--scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" data-aljs-show="tab-scoped-3"  id="tab-scoped-3__item">Item Three</a></li>
+                      </ul>
+                      <div id="tab-scoped-1" class="slds-tabs--scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-1__item">Item One Content</div>
+                      <div id="tab-scoped-2" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-2__item">Item Two Content</div>
+                      <div id="tab-scoped-3" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-3__item">Item Three Content</div>
+                    </div>
+                  </div>
+                  <div id="tab-default-2" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">Item Two Content</div>
+                  <div id="tab-default-3" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-3__item">Item Three Content</div>
+                </div> 
+         <!-- /Nested Tab -->
+<!-- Nested Tab -->
+                <div class="slds-tabs--default" data-aljs="tabs" style="padding-left: 118px;width: 62%;">
+                  <ul class="slds-tabs--default__nav" role="tablist">
+                    <li class="slds-tabs--default__item slds-text-title--caps slds-active" title="Activity" role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" data-aljs-show="tab-default-1" id="tab-default-1__item">Activity</a></li>
+                    <li class="slds-tabs--default__item slds-text-title--caps" title="Collaborate"
+                      role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" data-aljs-show="tab-default-2" id="tab-default-2__item">Collaborate</a></li>
+                    <li class="slds-tabs--default__item slds-text-title--caps" title="Details"
+                      role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" data-aljs-show="tab-default-3" id="tab-default-3__item">Details</a></li>
+                  </ul>
+                  <div id="tab-default-1" class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+                    <div class="slds-tabs--scoped" data-aljs="tabs">
+                      <ul class="slds-tabs--scoped__nav" role="tablist">
+                        <li class="slds-tabs--scoped__item slds-text-title--caps slds-active" title="Log a Call" role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" data-aljs-show="tab-scoped-1" id="tab-scoped-1__item">Log a Call</a></li>
+                        <li class="slds-tabs--scoped__item slds-text-title--caps" title="New Task"
+                          role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" data-aljs-show="tab-scoped-2"  id="tab-scoped-2__item">New Task</a></li>
+                        <li class="slds-tabs--scoped__item slds-text-title--caps" title="New Event"
+                          role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" data-aljs-show="tab-scoped-3"  id="tab-scoped-3__item">New Event</a></li>
+                        <li class="slds-tabs--scoped__item slds-text-title--caps" title="Email"
+                          role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-4" data-aljs-show="tab-scoped-4"  id="tab-scoped-4__item">Email</a></li>
+                      </ul>
+                      <div id="tab-scoped-1" class="slds-tabs--scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-1__item">Item One Content</div>
+                      <div id="tab-scoped-2" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-2__item">Item Two Content</div>
+                      <div id="tab-scoped-3" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-3__item">Item Three Content</div>
+                      <div id="tab-scoped-4" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-4__item">Item Four Content</div>
+                    </div>
+                  </div>
+                  <div id="tab-default-2" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">Item Two Content</div>
+                  <div id="tab-default-3" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-3__item">Item Three Content</div>
+                </div> 
+            <!-- /Nested Tab -->            
+         
+             
+    </div>    
+</body>
+</html>
+</apex:page>

@@ -1,0 +1,123 @@
+<apex:page controller="AccConHideShowController" sidebar="false">
+<apex:actionstatus id="counterStatus">
+    <apex:facet name="start">
+        <div class="waitingSearchDiv" id="el_loading" style="position: fixed;top:0;background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+            <div class="waitingHolder" style="top: 50%x; width: 91px;">
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+    </apex:facet>
+</apex:actionstatus>
+<style>
+    .dataCell.firstTd {
+        width: 10%;
+    } 
+    .waitingImage {
+            width: 20px;
+        }
+    .dataCell > img{
+        border: 0 none;
+        cursor: pointer;
+        width: 24px;
+    }  
+    input[type="text"] {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        width: 201px;
+    } 
+    body.overviewPage .bPageBlock .pbTitle, body.overviewPage .bRelatedList .bPageBlock .pbTitle, body.homeTab .bPageBlock .pbTitle, body.homeTab .bRelatedList .bPageBlock .pbTitle{
+        width : 40%;
+    }
+    input[type="text"]:focus {
+        border: 1px solid #1797c0;
+    }
+    /*.dataCell > img:hover{
+        border: 1px solid #1797c0;
+        width: 23px;
+    }*/
+    .errorStyle, .errorMsg, .importantWarning, .pbBody .errorStyle a, .pbBody .errorMsg a {
+        color: #d74c3b;
+        display: none;
+    }
+    .btn{
+        background:none !important;
+        font-size: 16px !important;
+        font-weight: normal !important;
+        height: 35px;
+        width: 131px;
+    }
+    .btn:hover{
+        background-color:#325d88 !important;
+        border-color: transparent;
+        color:#FFF;
+    }
+</style>
+<apex:form id="frm">
+    <apex:actionFunction name="add" action="{!addAccount}" status="counterStatus" reRender="frm" immediate="true"/>
+    <apex:actionFunction name="remove1" action="{!RemoveAccount}" status="counterStatus" reRender="frm" immediate="true">
+       <apex:param name="a" value="a" assignTo="{!indxacc}"/>
+    </apex:actionFunction>
+    <apex:actionFunction name="add1" action="{!addContact}" status="counterStatus" reRender="frm" immediate="true">
+      <apex:param name="a" value="a" assignTo="{!indxval}"/>
+    </apex:actionFunction>
+    <apex:actionFunction name="remove2" action="{!RemoveContact}" status="counterStatus" reRender="frm" immediate="true">
+       <apex:param name="acc" value="" assignTo="{!indxval}"/>
+       <apex:param name="con" value="" assignTo="{!indxcon}"/>       
+    </apex:actionFunction>
+<apex:pageBlock >
+<apex:pageMessages ></apex:pageMessages>
+    <apex:pageBlockButtons >
+        <apex:commandButton value="Save All" action="{!save}"/>
+        <apex:commandButton value="Clear All" action="{!deleteall}" immediate="true" />
+    </apex:pageBlockButtons>
+    <table border="0" width="100%"  cellpading="5px" cellspacing="0" align="left" class="list">
+       <tr class="headerRow">
+           <td class="dataCell" style='width: 9%;'></td>
+           <td class="dataCell" >Account Name</td>
+           <td class="dataCell">Account Number</td>
+           <td  class="dataCell"  >Phone</td>                       
+       </tr>
+       <apex:repeat value="{!modelListAcc}" var="accList">
+       <tr class="dataRow even first">
+           <td class="dataCell" width="5%" ><Apex:image value="{!$Resource.plus}" onclick="add();return false"  rendered="{!if(accList.indexacc==modelListAcc.size-1,true,false)}" />
+              &nbsp;&nbsp;
+           <apex:image value="{!$Resource.minus}" onclick="remove1({!accList.indexAcc});return false" rendered="{!if(modelListAcc.size>1,true,false)}"/></td>
+           <td class="dataCell"  ><apex:inputfield value="{!accList.acc.name}"/></td>
+           <td class="dataCell"  ><apex:inputField value="{!accList.acc.accountnumber}"/></td>
+           <td  class="dataCell" ><apex:inputField value="{!accList.acc.phone}"/></td>
+      </tr>
+      <tr>
+        <td colspan="4" style="padding-left:10%">
+            <apex:outputPanel styleClass="dataCell" rendered="{!IF(accList.conList.size<=0,true,false)}">
+                <Apex:image value="{!$Resource.minus}" onclick="add1({!accList.indexAcc});return false" />    
+            </apex:outputPanel>
+        <apex:outputPanel rendered="{!IF(accList.conList.size<=0,false,true)}">
+        <table border="0" style="width:100%" cellpading="0" cellspacing="0" class="list" >
+            <tr class="headerRow">
+               <td   align="center" width="7%"></td >
+               <td  class=" dataCell" ><apex:outputPanel >First Name</apex:outputPanel></td >
+               <td  class=" dataCell  " ><apex:outputPanel >Last Name</apex:outputPanel></td >
+               <td  class=" dataCell  " ><apex:outputPanel >Email</apex:outputPanel></td >
+               <td  class=" dataCell  " ><apex:outputPanel >Phone</apex:outputPanel></td >
+             </tr>
+         <apex:repeat value="{!accList.conList}" var="conLi"> 
+              <tr class="dataRow even first">
+                   <td class="dataCell firstTd"><Apex:image value="{!$Resource.plus}" onclick="add1({!accList.indexAcc});return false"  rendered="{!if(conLi.indexcon==accList.conList.size-1 ,true,false)}" />
+                    &nbsp;&nbsp;<apex:image value="{!$Resource.minus}" onclick="remove2({!accList.indexAcc},{!conLi.indexCon});return false" rendered="{!if(accList.conList.size>1,true,false)}" /></td>
+                   <td class=" dataCell" ><apex:inputfield value="{!conLi.con.firstname}"/></td>
+                   <td class=" dataCell"  ><apex:inputfield value="{!conLi.con.lastname}"/></td>
+                   <td class=" dataCell" ><apex:inputfield value="{!conLi.con.email}"/></td>
+                   <td class=" dataCell" ><apex:inputfield value="{!conLi.con.phone}"/></td>
+               </tr> 
+           </apex:repeat>
+           </table>
+           </apex:outputPanel>
+           </td>
+       </tr>
+       </apex:repeat>
+       </table>
+       </apex:pageblock>
+   </apex:form> 
+</apex:page>

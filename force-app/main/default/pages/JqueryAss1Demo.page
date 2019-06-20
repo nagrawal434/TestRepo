@@ -1,0 +1,39 @@
+<apex:page docType="html-5.0">
+    <html>
+    <head>
+        <Script  type="text/javascript">
+             <apex:includeScript value="{!$Resource.JqueryLibrary}"/>
+             $(document).ready(function(){
+                 $('#show').click(function(){
+                     $("#p1").show();
+                 });
+                 $('#hide').click(function(){           
+                    $("#p1").hide();
+                 });
+                 $('#hideshow').click(function(){
+                     $("#p1").toggle();
+                 });
+             });
+        </Script>
+        <Style>
+            .spnaClass{
+                color:blue;
+                
+            }
+            .lastNameClass{
+                color:Green
+            }
+        </Style> 
+    </head>
+    <body>
+        <apex:form >
+            Hello Neha <Span class="spnaClass">Its Your Firstname</Span>And LastName is <Span class="lastNameClass">Agrawal</Span>
+            <br/><p id="p1"><b>This Paragrapth Show After Button Click</b></p>
+            <input type="button" value="Show" id="show"/>
+            <input type="button" value="Hide" id="hide"/>
+            <input type="button" value="Hide/show" id="hideshow"/>
+
+        </apex:form>    
+    </body>
+    </html>
+</apex:page>

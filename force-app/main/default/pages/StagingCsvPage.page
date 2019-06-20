@@ -1,0 +1,29 @@
+<apex:page controller="StagingCsvController" title="CsvToUploadStagingObject">
+  <apex:actionstatus id="counterStatus">
+                    <apex:facet name="start">
+                        <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+                            <div class="waitingHolder" style="top: 100px; width: 91px;">
+                                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                                <span class="waitingDescription">Loading...</span>
+                            </div>
+                        </div>
+                    </apex:facet>   
+        </apex:actionstatus>
+    <apex:form >
+    <apex:pageMessages ></apex:pageMessages>
+        <apex:pageBlock title="Add CSV File To Be Insered" tabStyle="Staging__c">
+            <apex:pageBlockSection id="pbs1" title="Insert">
+                <div align="center">
+                    <apex:inputFile value="{!inputFileBolb}">
+                    
+                    </apex:inputFile>
+                </div>               
+            </apex:pageBlockSection>
+            <apex:actionRegion >
+            <apex:outputPanel id="op">
+             </apex:outputPanel>
+            <apex:commandButton value="Insert Record" action="{!insertCSV}"/>
+            </apex:actionRegion>
+        </apex:pageBlock>
+    </apex:form> 
+</apex:page>

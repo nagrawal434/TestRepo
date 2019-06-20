@@ -1,0 +1,15 @@
+<apex:page standardController="Account" extensions="AccountDetailController">
+     <apex:form >
+    <apex:pageBlock title="Inline Page Of Account" >
+                  <apex:pageBlockButtons location="bottom" >
+                      <apex:commandButton value="Save" action="{!save}"/>
+                  </apex:pageBlockButtons>
+                      <apex:pageBlockSection >
+                         <apex:inputText value="{!contactlist.firstname}" label="Firstname" title="FirstName"  />
+                         <apex:inputText value="{!contactlist.lastname}" label="LastName" title="LastName"  />
+                         <apex:inputText value="{!contactlist.email}" label="Email"  title="Email" />
+                         <apex:inputText value="{!contactlist.phone}" Label="Phone" title="Phone" />
+                   </apex:pageBlockSection>
+          </apex:pageBlock>
+    </apex:form>  
+</apex:page>

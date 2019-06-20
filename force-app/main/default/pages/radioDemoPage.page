@@ -1,0 +1,19 @@
+<apex:page controller="radioDemo">
+    <apex:pageBlock id="pb">
+        <apex:pageBlockSection columns="4">
+            <apex:actionStatus id="status" startText="Pleapse Wait..........."></apex:actionStatus>
+            <apex:pageBlockTable value="{!conList}" var="con" id="pbt">
+                <apex:column >                    
+                       <apex:actionsupport action="{!selectcon}" event="onclick"  status="status"  rerender="pb,pbt" >  
+                        <input type="radio" name="<strong>selectRadio</strong>" />                    
+                            <apex:param name="conid" value="{!con.Id}">
+                        </apex:param></apex:actionsupport>                            
+                    </apex:column>
+                <apex:column value="{!con.firstname}"/>
+                <apex:column value="{!con.Lastname }"/>
+                <apex:column value="{!con.email}"/>  
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+    
+    </apex:pageBlock>
+</apex:page>

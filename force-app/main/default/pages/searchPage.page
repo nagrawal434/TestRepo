@@ -1,0 +1,11 @@
+<apex:page controller="Search">
+    <apeX:form >
+    <apex:inputText value="{!con}"/>
+    <apex:commandButton value="Search" action="{!searchMe}"/>
+    <apex:pageBlock >
+    <apex:pageBlockTable value="{!listCon}" var="c"> 
+        <apex:column value="{!c.firstname}"/>
+    </apex:pageBlockTable>
+    </apex:pageBlock> 
+    </apeX:form> 
+</apex:page>

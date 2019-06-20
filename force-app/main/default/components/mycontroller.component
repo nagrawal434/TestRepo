@@ -1,0 +1,10 @@
+<apex:component >
+    <apex:attribute name="contlist" description="List Display" required="true"  type="Contact"/>
+     <tr> 
+            <td>{!contlist.firstname}</td>
+            <td>{!contlist.lastname}</td>
+            <td>{!contlist.email}</td>
+            <td>{!contlist.phone}</td>
+       </tr>     
+
+</apex:component>

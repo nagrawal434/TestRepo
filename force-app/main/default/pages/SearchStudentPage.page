@@ -1,0 +1,50 @@
+<apex:page controller="SearchStudentController" docType="html-5.0" >
+   <apex:form id="valueform">
+        <apex:actionStatus startText="Processing..." id="processid"/>
+            <apex:pageBlock id="details">
+            
+             <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="Name"/>
+                    <apex:inputText value="{!nameSearch}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="Father Name"/>
+                    <apex:inputText value="{!fatherName}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="DOB"/>
+                    <apex:inputField value="{!condb.birthdate}"/>
+                </apex:pageBlockSectionItem>
+                <apex:commandButton value="Search" action="{!searchMethod}" disabled="{!}"/>
+                <apex:selectList multiselect="false" size="1" value="{!selectedOption}">
+                    <apex:selectOptions value="{!SearchOptions}"/>
+                    <apex:actionSupport event="onchange" reRender="DetailsTable" action="{!searchMethod}"/>   
+                </apex:selectList>
+            </apex:pageBlockSection>
+                <apex:pageBlockTable value="{!conList}" var="m" id="DetailsTable">
+                       <apex:column headerValue="Student Name" >
+                            <apex:facet name="header">
+                              <apex:commandLink value="Student Name" action="{!toggleSort}" rerender="DetailsTable" >
+                                  <apex:param name="sortField" value="Student Name" assignTo="{!sortField}"/>
+                                  <apex:outputPanel rendered="{!BEGINS(sortField,'Student Name')}">
+                                      &nbsp;<apex:image value="{!IF(sortDir = 'desc','/img/arrowDown.gif','/img/arrowUp.gif')}"/>
+                                 </apex:outputPanel>
+                             </apex:commandLink>
+                </apex:facet>   
+                            <apex:outputText value="{!m.name}" />
+                       </apex:column>
+                        <apex:column value="{!m.Father_Name__c}"/>
+                        <apex:column value="{!m.birthdate}"/>
+                        <apex:column value="{!m.Status__c }"/>
+                        
+                 </apex:pageBlockTable>
+                  <apex:commandButton value="first" rerender="details" action="{!beginning}" disabled="{!prev}"/>
+                  <apex:commandButton value="Previous" rerender="details" action="{!previous}" disabled="{!prev}"/>
+                  <apex:commandButton value="Next" rerender="details" action="{!next}" disabled="{!nxt}"/>
+                  <apex:commandButton value="Last" rerender="details" action="{!end}" disabled="{!nxt}"/>  
+           </apex:pageBlock>
+    </apex:form>
+</apex:page>

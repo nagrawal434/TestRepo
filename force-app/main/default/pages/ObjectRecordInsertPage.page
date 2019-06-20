@@ -1,0 +1,89 @@
+<apex:page id="pg" controller="ObjectRecordInsertController">
+    <script src="{!$Resource.jslib}" />
+    <script>
+        var i = 2;
+        function fType(val,obj){
+            var x = jQuery.trim($(obj).closest('tr').find("[id$=Sno]").text()); 
+            actionFieldType(val,x);           
+        }
+    </script>
+    <apex:form id="frm"> 
+      <apex:pageBlock id="pblock" >
+          <apex:pageBlockSection id="pageblocksection1" title="ObjectList" collapsible="true" columns="1" rendered="{!pbs1}">
+              <apex:pageBlockSectionItem >
+                  <apex:outputlabel value="Object Names :"/> 
+                      <apex:actionRegion >      
+                           <apex:selectList value="{!selectedObject}" size="1">
+                                    <apex:selectOption itemLabel="--Select--" itemValue=""/>
+                                    <apex:selectOptions value="{!ObjectNames}"/>
+                                    <apex:actionSupport event="onchange" rerender="myFields, myTable" action="{!TableRecord}" />
+                            </apex:selectList>
+                     </apex:actionRegion>                         
+              </apex:pageBlockSectionItem>
+          </apex:pageBlockSection>
+          <apex:pageBlockSection columns="1" id="pageblocksection2" title="Fields" collapsible="true" rendered="{!pbs2}">
+          <apex:actionFunction name="actionFieldType" action="{!dynamicFieldType}" rerender="myTable">
+              <apex:param name="selectedField" assignTo="{!selectedField}" value=""/>
+              <apex:param name="selectedIndex" assignTo="{!selectedIndex}" value=""/>
+          </apex:actionFunction>
+          <apex:outputlabel value="Related List :"/>   
+              <apex:outputPanel id="myTable">   
+                  <apex:actionRegion > 
+                        <apex:pageBlockTable value="{!ObjectModelList}" var="OML"> 
+                            <apex:column headerValue="S.No" >
+                                <apex:outputLabel id="Sno" value="{!OML.Sno}"/>
+                            </apex:column> 
+                            <apex:column headerValue="Field Names">
+                                <apex:selectList disabled="{!OML.displayField}" value="{!selectedField}" size="1" onchange="fType(this.value,this)" >                                                               
+                                    <apex:selectOptions value="{!OML.reqFieldNames}"/>
+                                </apex:selectList>
+                            </apex:column>
+                            <!--<apex:column headerValue="FieldLabel">
+                                <apex:outputText value="{!OML.fieldLabel}"/>
+                            </apex:column>-->
+                            <apex:column headerValue="Field Type">
+                                <apex:outputPanel id="fType">
+                                    <apex:outputText value="{!OML.reqFieldType}"/>
+                                </apex:outputPanel>
+                            </apex:column>
+                            <apex:column headerValue="FieldValue">
+                                <apex:inputText value="{!OML.fieldValue}"/>
+                            </apex:column>                       
+                        </apex:pageBlockTable>
+                  <apex:commandButton value="Add Row" action="{!NewRow}"/>
+                </apex:actionRegion>      
+             </apex:outputPanel>
+              <apex:commandButton action="{!NextPage}" value="Next-->" />
+          </apex:pageBlockSection> 
+       </apex:pageBlock>              
+       <apex:pageBlock rendered="{!pbs3}">
+          <!--<apex:pageBlockSection columns="1" id="pageblocksection3" title="Bulk Insert" collapsible="true" rendered="{!pbs3}" >-->
+          
+             <table border="2">
+                 <thead>
+                     <tr>
+                         <apex:repeat value="{!ObjectModelList}" var="b">
+                             <th>{!b.fieldLabel}</th>
+                         </apex:repeat>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <apex:repeat value="{!sObjList}" var="s">
+                         <tr>
+                             <apex:repeat value="{!ObjectModelList}" var="br">
+                                 <td>
+                                     <apex:inputText style="border-left-color:red;" value="{!br.fieldValue}"/>
+                                 </td>
+                             </apex:repeat>
+                         </tr>
+                    </apex:repeat>                                         
+                </tbody>                    
+             </table>
+             <apex:pageBlockSection >
+                 <apex:commandButton value="Add Row" action="{!addRow}"/>
+                 <apex:commandButton value="Save" action="{!saveBulkRecord}"/>
+             </apex:pageBlockSection>
+          <!--</apex:pageBlockSection>-->
+        </apex:pageBlock>          
+  </apex:form>
+</apex:page>

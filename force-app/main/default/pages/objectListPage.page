@@ -1,0 +1,49 @@
+<apex:page controller="ObjectListController" showHeader="false" sidebar="false"> 
+  <apex:form id="frm">
+        <apex:actionStatus startText="processing...." id="st" />
+            <apex:actionFunction action="{!fieldRecord}" name="field" reRender="frm" status="st"/>
+         <apex:actionStatus startText="Fething...." id="st1" />
+            <apex:actionFunction action="{!fieldType}" name="fieldtypemethod" reRender="frm,ListRow" status="st1"/>    
+            <apex:param assignTo="{!rowIndex}"  name="ikj" value=""/>
+         <apex:pageBlock id="blk1">
+            <apex:pageBlockSection id="Section1" columns="1" rendered="{!pbs1}">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="ObjectName"/>
+                    <apex:actionRegion >    
+                        <apex:selectList value="{!selectedObject}" id="selectListId" size="1" onchange="field()" >
+                            <apex:selectOption itemValue="" itemLabel="--Select--"/>
+                            <apex:selectOptions value="{!ObjectName}"/>
+                      </apex:selectList>
+                    </apex:actionRegion>    
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection id="Section2" columns="1" rendered="{!pbs2}">
+                <apex:outputLabel value="Required Field"/>
+                    <apex:outputPanel id="RequiredField">
+                        <apex:pageBlockTable value="{!modelList}" var="m">
+                         <apex:column headerValue="S.No">
+                             <apex:outputText value="{!m.count}"/>
+                         </apex:column>    
+                          <apex:column headerClass="FieldName">
+                          <apex:outputPanel id="ListRow">
+                                <apex:selectList value="{!m.currentField}" size="1" disabled="{!m.displayList }" onchange="fieldtypemethod('{!m.count}');return false" >
+                                    <apex:selectOptions value="{!m.requireFields}"/>
+                                </apex:selectList>
+                          </apex:outputPanel>      
+                            </apex:column>
+                            <apex:column headerValue="FieldType">
+                                <apex:outputPanel id="fType">
+                                    <apex:outputText value="{!m.fieldType}"/>
+                                </apex:outputPanel>
+                            </apex:column>
+                           <apex:column headerValue="Enter Value">
+                               <apex:inputText value="{!m.inputDegaultReq}"/>
+                           </apex:column>
+                        </apex:pageBlockTable>
+                       <apex:commandButton value="Add Row" action="{!addRow}" reRender="frm"/> 
+                    </apex:outputPanel>
+                    <apex:commandButton value="Next Page" action="{!nextPage}"/>  
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>     
+</apex:page>

@@ -1,0 +1,41 @@
+<apex:page controller="MemoManagerController" showHeader="false"  sidebar="false">
+    <apex:form >
+        <apex:pageBlock >
+         <apex:pageMessages id="showmsg"></apex:pageMessages>
+            <table>
+                <tr>
+                    <td><font size = "5">Login First</font></td>
+                </tr>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr>
+                    <td><font size = "3">Email</font></td>
+                </tr>
+                <tr>
+                    <td><apex:inputText value="{!e1}"/></td>
+                </tr>
+                <tr/>
+                <tr/>
+                <tr>
+                    <td><font size = "3">PassWord</font></td>
+                </tr>
+                <tr>
+                    <td><apex:inputSecret value="{!p1}"/></td>
+                </tr>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr/>
+           </table>
+           <apex:pageBlockSection >
+               <apex:commandButton value="Login" action="{!loginPage}"/>
+               <apex:commandButton value="New User" action="{!NewUser}"/>
+           </apex:pageBlockSection>
+        </apex:pageBlock>
+        </apex:form>
+</apex:page>

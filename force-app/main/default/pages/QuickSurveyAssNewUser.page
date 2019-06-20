@@ -1,0 +1,44 @@
+<apex:page controller="QuickSurveyAssController" showHeader="false"  sidebar="false" extensions="QuickSurveyAssController" >
+   
+    <apex:form >
+        <apex:pageBlock >
+            <table>
+                <tr>
+                    <td><font size = "5">New User</font></td>
+                </tr>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr>
+                    <td><font size = "3">First Name</font></td>
+                </tr>
+                <tr>
+                    <td><apex:inputText value="{!f1}"/></td>
+                </tr>
+                <tr/>
+                <tr/>
+                <tr>
+                    <td><font size = "3">Last Name</font></td>
+                </tr>
+                <tr>
+                    <td><apex:inputText value="{!l1}"/></td>
+                </tr>
+                <tr/>
+                <tr/>
+                <tr>
+                    <td><font size = "3">Email</font></td>
+                </tr>
+                <tr>
+                    <td><apex:inputText value="{!newemail}"/></td>
+                </tr>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr/>
+           </table>
+           <apex:commandButton value="Login" action="{!loginPage}" />
+        </apex:pageBlock>
+        </apex:form>
+</apex:page>

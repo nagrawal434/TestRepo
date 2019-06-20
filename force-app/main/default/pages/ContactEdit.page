@@ -1,0 +1,34 @@
+<apex:page controller="ContactEditController">
+    <apex:form >
+        <apex:actionFunction name="acid" />    
+            <apex:pageBlock Title="Editable Contact"  >
+                <apex:pageBlockTable value="{!models}" var="clist">
+                      <apex:column headerValue="Action">
+                                <apex:inputCheckbox value="{!clist.modelflag}" id="ckeck" />
+                      </apex:column>
+                        <apex:column >
+                            <apex:inputField value="{!clist.conList.firstname}"   />
+                            <apex:outputField rendered="false"/>
+                        </apex:column>
+                        
+                        <apex:column > 
+                            <apex:inputField value="{!clist.conList.lastname}"/>
+                             <apex:outputField rendered="false"/>
+                        </apex:column>
+                            
+                        <apex:column >
+                            <apex:inputField value="{!clist.conList.email}"/>
+                             <apex:outputField rendered="false"/>
+                        </apex:column>    
+                        <apex:column >
+                            <apex:inputField value="{!clist.conList.phone}"/>
+                             <apex:outputField rendered="false"/>
+                        </apex:column>  
+                          
+               </apex:pageBlockTable>
+                          
+                                    
+                                
+    </apex:pageBlock>
+</apex:form> 
+</apex:page>

@@ -1,0 +1,19 @@
+<apex:page controller="ctrlInactivetest"> 
+ <apex:form id="form">
+        <apex:pageBlock id="block">
+          <apex:pageBlockButtons id="buttons">
+            <apex:actionStatus id="mySaveStatus1">
+             <apex:facet name="stop">
+                    <apex:commandButton value="Save" action="{!save}" rerender="pm" status="mySaveStatus1"/> 
+             </apex:facet>
+             <apex:facet name="start">
+                 <apex:outputPanel >
+                       <apex:image value="/img/loading32.gif" style="height: 15px;"/>
+                       <apex:commandButton value="Processing..." status="mySaveStatus1" disabled="true"/>
+                   </apex:outputPanel>
+               </apex:facet>
+            </apex:actionStatus>            
+            </apex:pageBlockButtons>  
+        </apex:pageBlock>
+     </apex:form>            
+</apex:page>

@@ -1,0 +1,7 @@
+<aura:event type="APPLICATION" 
+            description="Event template">
+
+    <aura:attribute name="searchkey1"
+                    type="String">
+    </aura:attribute>
+</aura:event>

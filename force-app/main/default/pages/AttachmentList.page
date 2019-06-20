@@ -1,0 +1,22 @@
+<apex:page controller="AttachmentsController">
+    <apex:form >  
+        <apex:pageBlock title="Attachment List">
+       <apex:selectList size="1"  value="{!selectoption}" multiselect="false">
+                         <apex:selectOption itemLabel="Select One" itemValue=""  />  
+                         <apex:selectOption itemValue="account" itemLabel="Account" />
+                         <apex:selectOption itemValue="contact"  itemLabel="Contact" />
+                         <apex:selectOption itemValue="opportunity"  itemLabel="Opportunity" />
+                   </apex:selectList> 
+       <apex:commandButton value="GOSEARCH"  reRender="selectList" action="{!goSearch}" />
+    <apex:outputPanel id="selectList">
+        <apex:pageBlockTable value="{!attachlist}" var="alist" >
+               
+                <apex:column value="{!alist.name}"/>
+                <apex:column value="{!alist.createddate}"/>
+                <apex:column value="{!alist.ownerid}"/>
+                <apex:column value="{!alist.contenttype}"/>
+          </apex:pageBlockTable>
+     </apex:outputPanel>
+       </apex:pageBlock>
+  </apex:form> 
+</apex:page>

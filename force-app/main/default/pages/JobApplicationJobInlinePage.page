@@ -1,0 +1,122 @@
+<apex:page extensions="JobApplicationInlineController" standardController="Job__c" showHeader="false" sidebar="false">
+    <head>
+        <!-- Style start -->
+        <style>
+            .extra {
+                background-color:orange;
+            }            
+            .available{
+                background-color:green;
+                color:white;
+            }          
+            .not_available{
+                background-color:red;
+            }     
+            div{
+                width: 50px;
+                float: left;
+                height: 3px;
+                display: inline-block;
+                padding: 1em;
+                border: 2px solid #fff;
+                line-height: 7px;
+                text-align:center;
+                font-size:small;
+            }       
+        </style>
+        <!-- Style End -->
+    </head>
+    <body>
+        <!-- table tag used to show details and score -->
+        <table width="100%" style="border-spacing: 0px;">
+            <tr> 
+                <th style="text-align:center;font-size:large;" colspan="{!jobScore+4}">
+                    Resource Scoring Board
+                </th>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF" style="line-height:10px;font-size:small;" colspan="{!jobScore+4}">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr style="border-bottom: 1pt solid black;font-size:small;background-color:#ACB9CA">
+                <td colspan="3">
+                    &nbsp;&nbsp;
+                    Job &nbsp;&nbsp; : &nbsp;&nbsp;  {!job__c.post_name__c}
+                </td>                 
+                <td colspan="3">
+                    &nbsp;&nbsp;
+                     Qualification &nbsp;&nbsp; : &nbsp;&nbsp; {!job__c.skills__c}
+                </td>    
+                <td colspan="3">
+                    &nbsp;&nbsp;
+                    Experience  &nbsp;&nbsp; : &nbsp;&nbsp; {!job__c.Experience__c}
+                </td>
+                <td colspan="6">
+                    &nbsp;&nbsp;
+                   Domain &nbsp;&nbsp; : &nbsp;&nbsp; {!job__c.Domain__C}
+                </td>
+                <td colspan="2">
+                    &nbsp;&nbsp;
+                    Score
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#FFFFFF" style="line-height:10px;" colspan="{!jobScore+4}">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr style="font-size:small;">
+                <th colspan="3" style="border: 1pt solid black;">
+                    Resource Name   
+                </th>
+                <th colspan="3" style="border: 1pt solid black;background-color:#FFE699">
+                     Qualification
+                </th>
+            
+                <th colspan="3" style="border: 1pt solid black;background-color:#FFE699"> 
+                    Experience
+                </th>            
+                <th colspan="6" style="border: 1pt solid black;background-color:#FFE699">
+                   Domain
+                </th>
+                <th style="border: 1pt solid black;" colspan="2">
+                </th>
+            </tr>
+            <apex:repeat value="{!jobList}" var="jobApplicant">
+                <tr style="font-size:small;">
+                    <td colspan="3" style="background-color:#FCE4D6;border: 1pt solid black;">
+                        {!jobApplicant.applicant}
+                    </td>                 
+                    <td colspan="3" style="border: 1pt solid black;">
+                         <apex:repeat value="{!jobApplicant.Qualifications}" var="Qua">
+                             <div class="{!jobApplicant.Qualifications[Qua]}">
+                                 {!Qua}
+                             </div>
+                         </apex:repeat>
+                    </td>                    
+                    <td colspan="3" style="border: 1pt solid black;">
+                        <div class="available" style="display:{!if(jobApplicant.Experience!=0,'block','none')}; border: 0px solid #fff;width:{!jobApplicant.Experience * 100 / Job__c.Experience__c}px">
+                            {!jobApplicant.Experience}
+                        </div>
+                        <div class="not_available" style="border: 0px solid #fff;text-align:center;width:{!(((Job__c.Experience__c - jobApplicant.Experience) * 100) / Job__c.Experience__c)}px ;display:{!if(Job__c.Experience__c - jobApplicant.Experience != 0,'block','none')}">
+                            {!Job__c.Experience__c - jobApplicant.Experience}
+                        </div>
+                    </td>                    
+                    <td colspan="6" style="border: 1pt solid black;">
+                         <apex:repeat value="{!jobApplicant.Domains}" var="domain">
+                             <div class="{!jobApplicant.Domains[domain]}">
+                                 {!domain}
+                             </div>
+                         </apex:repeat>
+                    </td>
+                    <td  style="border: 1pt solid black;text-align:center" colspan="2">
+                        <div class="available">
+                            {!jobApplicant.score}%
+                        </div>
+                    </td>
+                </tr>
+            </apex:repeat>
+        </table> 
+    </body>  
+</apex:page>

@@ -1,0 +1,21 @@
+<apex:page controller="objectListControllerTest" sidebar="false" showHeader="false">
+    <apex:form >   
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}"/>
+             </apex:pageBlockButtons>   
+                <apex:pageBlockSection >
+                    <table>
+                        <tr>
+                            <th>
+                                <apex:repeat value="{!objfieldtypereturn}" var="mr"> 
+                               <!-- {!mr.fieldSet} -->
+                                </apex:repeat> 
+                            </th>
+                            
+                        </tr>
+                   </table>    
+                 </apex:pageBlockSection> 
+        </apex:pageBlock>
+    </apex:form>  
+</apex:page>

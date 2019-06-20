@@ -1,0 +1,56 @@
+<apex:page controller="WrapperClassDemo" tabStyle="Contact">
+    <script>
+        function newCheck(id){
+            alert('id: ' + id);
+        }
+    </script>
+    <apex:form id="frm">
+        <apex:pageMessages ></apex:pageMessages>
+        <apex:actionStatus startText="..." id="st"> </apex:actionStatus>
+        <apex:actionFunction name="btnInsert" action="{!insertContact}" reRender="frm" status="st"/>
+        <apex:actionFunction name="chkUpdate" action="{!check}" reRender="frm" status="st">
+            <apex:param assignTo="{!status}" value="" name="prm" />
+        </apex:actionFunction>
+        <apex:pageBlock >
+            
+            <!-- Button -->
+        
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!saveRecord}"/>
+                <apex:commandButton value="Insert Record" onclick="btnInsert();return false;"/>
+            </apex:pageBlockButtons>
+            
+            <!-- TextBox for insert record.. -->
+            
+            <apex:pageBlockSection title="New Contact">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >First Name</apex:outputLabel>
+                    <apex:inputField value="{!conInsert.FirstName}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Last Name</apex:outputLabel>
+                    <apex:inputField value="{!conInsert.LastName}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+            <!-- Show record.. -->
+            <apex:outputPanel id="op">
+                <apex:pageBlockSection columns="1" id="pgblk">
+                    <apex:pageBlockTable value="{!lstWrap}" var="lt" id="adc">
+                        <apex:column headerValue="S No.">
+                            <apex:outputText value="{!lt.s_no}"/>
+                        </apex:column>
+                        <apex:column headerValue="Name">
+                            <apex:outputText value="{!lt.con.name}" rendered="{!!lt.flag}"/>
+                            <apex:inputText value="{!lt.con.name}" rendered="{!lt.flag}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:inputCheckbox value="{!lt.flag}" onchange="chkUpdate('{!lt.con.id}'); return false;"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

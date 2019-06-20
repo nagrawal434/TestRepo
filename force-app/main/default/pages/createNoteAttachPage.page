@@ -1,0 +1,62 @@
+<apex:page controller="createNoteAttachController">
+    
+    <apex:form >
+        <apex:pageBlock title="Note Edit" id="block">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!saveRecord}"/>
+                <apex:commandButton value="Cancel" action="{!cancelRecord}"/>
+                <apex:commandButton value="Copy Note" action="{!copyNote}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection >
+                <apex:inputField value="{!note.Contact__c}" label="Subject"/>
+                <apex:inputField value="{!note.Private__c}" label="Open Issue"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:inputField value="{!note.Type__c}" label="Communication Type" required="true"/>
+                <apex:inputFile value="{!AttchFile.body}" fileName="{!AttchFile.name}"/> 
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:inputField value="{!note.Body__c}"/>
+                    <table>
+                        <tr><td colspan = "2"><apex:outputText value="Task Data"/></td></tr>
+                        <tr><td colspan = "2"><apex:inputField value="{!task.activityDate}"/></td></tr>
+                        <tr><td colspan = "2"><apex:inputField value="{!task.reminderDateTime}"/></td></tr>
+                        <tr>
+                            <apex:outputLabel >
+                                <apex:inputCheckbox value="{!isChkManager}"/>
+                                <apex:outputText value="Assign Task To Manager"/>
+                            </apex:outputLabel> 
+                        </tr>
+                        <tr>
+                            <apex:outputLabel >
+                                <apex:inputCheckbox value="{!isChkMyself}"/>
+                                <apex:outputText value="Assign task To Myself"/>
+                            </apex:outputLabel>
+                        </tr>
+                        <tr>
+                            <apex:outputLabel >
+                                <apex:actionRegion >
+                                    <apex:inputCheckbox value="{!isChkuser}">
+                                        <apex:actionSupport event="onchange" action="{!myMethod}" reRender="multiList"/>
+                                    </apex:inputCheckbox>
+                                    <apex:outputText value="Assign Task To:"/>
+                                </apex:actionRegion>
+                            </apex:outputLabel>
+                        </tr>
+                        <tr>
+                            <td colspan = "2"> <apex:outputLabel id="multiList">
+                            <c:MultiselectComponent rendered="{!isChkuser}"   
+                                leftLabel="Available" 
+                                leftOptions="{!alluserlist}"
+                                rightLabel="Selected" 
+                                rightOptions="{!selectedUser}"
+                                size="14"
+                             width="150px"/>
+                             </apex:outputLabel>
+                            </td> 
+                        </tr>
+                    </table>
+             </apex:pageBlockSection>                     
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

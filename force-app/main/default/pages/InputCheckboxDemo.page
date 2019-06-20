@@ -1,0 +1,28 @@
+<apex:page standardController="Contact" extensions="deleteBlog" >
+<apex:form >
+
+  <apex:pageblock title="Member" >
+    <apex:pageblockButtons >
+      <apex:commandButton value="Find" action="{!find}" reRender="SearchList"/>
+    </apex:pageblockButtons>
+    <apex:pageblocksection >
+      <apex:inputfield value="{!Contact.Name}"/>
+    </apex:pageblocksection>
+  </apex:pageblock>
+ 
+  <apex:pageblock id="SearchList" title="Member List"  >
+    <apex:pageBlocktable value="{!memList}" var="memLst" >
+      <apex:column title="Select" > 
+        <apex:inputCheckbox value="{!memLst.checked}" ></apex:inputcheckbox>
+      </apex:column>
+      <apex:column value="{!memLst.themem.Name}" title="Member Name" />
+      <apex:column value="{!memLst.themem.phone}" title="E-Mail Id"/>
+      <apex:column value="{!memLst.themem.email}" title="Mobile Number"/>
+    </apex:pageBlocktable>   
+    <apex:pageblockButtons >
+      <apex:commandButton value="Delete" action="{!Del}" reRender="SearchList"/>
+    </apex:pageblockButtons>      
+  </apex:pageblock>
+ 
+</apex:form> 
+</apex:page>

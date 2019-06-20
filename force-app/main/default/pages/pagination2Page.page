@@ -1,0 +1,93 @@
+<apex:page controller="pagination2Controller">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <style>
+        .custPopup{ 
+               background-color: white; 
+               border-width: 0px; 
+               border-radius:10px; 
+               z-index: 9999; 
+               left: 50%; 
+               padding:20px; 
+               position: fixed; 
+               /* These are the 3 css properties you will need to change so the popup displays in the center of the screen. 
+               First set the width. 
+               Then set margin-left to negative half of what the width is. 
+               You can add the height property for a fixed size pop up if you want.
+               */ 
+               margin-left: -100px; 
+               top:40%; 
+           } 
+           .popupBackground{ 
+               background-color:black; 
+               opacity: 0.30; 
+               filter: alpha(opacity = 30); 
+               position: fixed; 
+               width: 100%; 
+               height: 100%; 
+               top: 0; 
+               left: 0; 
+               z-index: 9998; 
+           }
+    </style>
+<apex:form >
+        <apex:actionStatus id="statusBar"> 
+        <apex:facet name="start"> 
+           <apex:outputPanel id="tstpopup"> 
+               <apex:outputPanel styleClass="popupBackground" layout="block"/> 
+               <apex:outputPanel styleClass="custPopup" layout="block"> 
+                   <img src="/img/loading24.gif" style="vertical-align:middle; horizontal-align:middle"/> 
+                   <span>Please wait...</span> 
+               </apex:outputPanel> 
+           </apex:outputPanel> 
+        </apex:facet> 
+        </apex:actionStatus>
+        <apex:pageBlock >
+            <apex:commandButton value="Send Mail" action="{!sendMailMethod}" />
+            <apex:outputPanel rendered="{!if(invoiceList.size > 0,true,false)}" layout="none">
+                <apex:outputPanel id="tableContent">
+                    <apex:pageBlockTable value="{!invoiceList[pageNo]}" var="inv"> 
+                        <apex:inputCheckbox value="{!isSendMail}"/>
+                        <apex:column value="{!inv.name}"/>     
+                        <apex:column value="{!inv.Email}"/>
+                        <apex:column value="{!inv.phone}"/>   
+                        <apex:column value="{!inv.Account.name}"/>       
+                    </apex:pageBlockTable> 
+                    
+                    <apex:outputPanel rendered="{!if(invoiceList.size > 0,false,true)}" layout="none">
+                        <tr>
+                            <td colspan="4"><strong>No records to display</strong></td>
+                        </tr>
+                    </apex:outputPanel>        
+                    <!--</div>-->
+                    <hr size="115" style="color:#1ab394;margin-top:0px"/>
+                    <apex:outputPanel layout="block" styleClass="row" rendered="{!invoiceList.size > 0}">
+                        <div class="row" style="margin-bottom:2% !important;">
+                            <div class="col-sm-12 text-right">
+                                <div class="pages">
+                                     <ul class="pagination">
+                                        <apex:variable value="{!0}" var="pgNo"/>
+                                        <li style="display:{!IF(0 != pageNo,'inline','none')}">
+                                            <apex:commandLink value="«" reRender="tableContent" status="statusBar" >
+                                              <apex:param name="arg2" assignTo="{!pageNo}" value="{!pageNo-1}"/>
+                                           </apex:commandLink>
+                                        </li>
+                                        <li class="disabled" style="display:{!IF(0 == pageNo,'inline','none')}"><a href="#">&laquo;</a></li>
+                                       <li class="active"><a>{!pageNo + 1}</a></li>
+                                       <li style="display:{!IF((invoiceList.size-1) != pageNo,'inline','none')}">
+                                            <apex:commandLink value="»" reRender="tableContent" status="statusBar">
+                                              <apex:param name="arg2" assignTo="{!pageNo}" value="{!pageNo+1}"/>
+                                           </apex:commandLink>
+                                        </li>
+                                        <li class="disabled" style="display:{!IF((invoiceList.size-1) == pageNo,'inline','none')}"><a href="#">&raquo;</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </apex:outputPanel> 
+        </apex:outputPanel>
+    </apex:pageBlock>       
+</apex:form>
+</apex:page>

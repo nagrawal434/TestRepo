@@ -1,0 +1,130 @@
+<apex:page controller="createReportController" sidebar="false" showHeader="false"> 
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/jquery.min.js')}"></script> 
+        <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/bootstrap.min.js')}"></script> 
+        <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap.min.css')}" /> 
+        <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap-theme.min.css')}" />
+    </head> 
+        <apex:actionstatus id="counterStatus">
+        <apex:facet name="start">
+           <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+               <div class="waitingHolder" style="top: 100px; width: 91px;">
+                   <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                   <span class="waitingDescription">Loading...</span>
+               </div>
+           </div>
+        </apex:facet>
+       </apex:actionstatus>
+        <apex:form id="frm" >
+            <apex:actionFunction name="addRow" action="{!addNewRow}" status="counterStatus" reRender="frm" immediate="true"/>
+            <apex:actionFunction name="remove1" action="{!RemoveAccount}" status="counterStatus" reRender="frm" immediate="true">
+                <apex:param name="a" value="a" assignTo="{!IndexReportCriteria}"/>
+            </apex:actionFunction>
+            <apex:pageBlock >
+            <apex:pageMessages ></apex:pageMessages>
+                <div class = "container">
+                    <!------ Start of Report Definition Section ----->
+                    <div class="panel panel-success">
+                        <div class="panel-heading"><h4>Report Definition</h4></div>
+                        <div class="panel-body">
+                            <div class="row">
+                                 <div class="col-xs-6">
+                                     <apex:inputField value="{!reportDefinition.Name__c}" styleClass="form-control" html-placeholder="Name" required="true"/>
+                                 </div>
+                                <div class="col-sm-6">
+                                    <apex:inputField value="{!reportDefinition.Row_label__c}" styleClass="form-control" html-placeholder="Row Label"/>
+                                </div>
+                            </div>
+                            <br/> 
+                            <div class= "row">
+                                <div class = "col-xs-12">
+                                    <apex:inputField value="{!reportDefinition.Range__c}" styleClass="form-control" html-placeholder="Name"/>                                
+                                </div>
+                            </div>
+                            <br/>
+                            <div class = "row">
+                                <div class = "col-xs-6">
+                                    <apex:inputField value="{!reportDefinition.StartDate__c}"/>
+                                </div>
+                                <div class = "col-xs-6">
+                                    <apex:inputField value="{!reportDefinition.End_Date__c}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                <!------ End Of Report Definition Section ----> 
+                <!------ Start of Report  criteria --->     
+                    <div class="panel panel-success">
+                        <div class="panel-heading"><h4>Report Criteria</h4></div>
+                        <div class="panel-body">
+                            <table class = "table table-bordered">
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Field</th>
+                                    <th>Operator</th>
+                                    <th>Value</th>
+                                    <th>Action</th>
+                                </tr>
+                                <br/>
+                                <apex:repeat value="{!ModelReportCriteriaList}" var="rc">
+                                    <tr>
+                                        <td><apex:variable value="{!rc.indexReportCreiteria+1}" var="i"/>{!i}</td>
+                                        <td><apex:inputField value="{!rc.reportCriteria.Field__c}"/></td>
+                                        <td><apex:inputField value="{!rc.reportCriteria.Operator__c}"/></td>
+                                        <td><apex:inputField value="{!rc.reportCriteria.Value__c}"/></td>
+                                        <td style = "text-align:center;"><apex:image value="{!$Resource.plus}" onclick="addRow();return false"  rendered="{!if(rc.indexReportCreiteria==ModelReportCriteriaList.size-1,true,false)}" height="30"/>
+                                        &nbsp;&nbsp;
+                                        <apex:image value="{!$Resource.minus}" height="30" onclick="remove1({!rc.indexReportCreiteria});return false" rendered="{!if(ModelReportCriteriaList.size>1,true,false)}"/></td>                                                                   
+                                    </tr>
+                                </apex:repeat>
+                            </table>        
+                        </div>        
+                    </div>
+                <!----- End of Report Criteria Section --->
+                <!---- Start of Pod Section ----->
+                    <div class = "panel panel-success">
+                        <div class ="panel panel-heading"><h4>Pods</h4>
+                            <apex:commandButton onclick="$('#modelDialogPod').modal('show'); return false;"   value="Create Pods" styleClass="myclass" html-data-toggle="modal" style="float:right;"/>
+                        </div>
+                        <div class= "panel-body">
+                                    
+                        </div>    
+                    </div>
+                <!------ End Of Pod Section ---->
+                <!------- Pod ModelStart ----->
+                    <div class="container">
+                        <div class="modal fade" id="modelDialogPod" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                              <div class="modal-content">
+                              <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Pods</h4>
+                            </div>
+                            <div class="modal-body">
+                              <table>
+                                    <tr><apex:outputText value="Label"/></tr><br/>
+                                    <tr><apex:inputField value="{!pod.Label__c}"/></tr><br/>
+                                    <tr><apex:outputText value="Row Label"/></tr><br/>
+                                    <tr><apex:inputField value="{!pod.Row_label__c}"/></tr><br/>
+                                    <tr><apex:outputText value="Order"/></tr><br/>
+                                    <tr><apex:inputField value="{!pod.Order__c}"/></tr>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                              <apex:commandButton value="Save" action="{!savePod}" styleClass="btn btn-primary"/>
+                            </div>
+                          </div>  
+                        </div>
+                      </div>
+                    </div>
+                <!----- Pod Model End ----->    
+                </div>
+            </apex:pageBlock>
+        </apex:form>         
+</apex:page>

@@ -1,0 +1,160 @@
+<apex:page standardController="Account" applyBodyTag="false" sidebar="false" showHeader="false" docType="html-5.0" extensions="AccountParentChildController">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">   
+    <head>
+        <title>My Page</title>
+        <apex:stylesheet value="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}"/>
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"/>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="{!URLFOR($Resource.boots,'/js/bootstrap.min.js')}"></script> 
+        <apex:styleSheet value="{!URLFOR($Resource.boots,'/css/bootstrap.min.css')}" /> 
+        <apex:styleSheet value="{!URLFOR($Resource.boots,'/css/bootstrap-theme.min.css')}" />
+
+        <script type="text/javascript">
+            j$ = jQuery.noConflict();
+            function isChecked(e){
+                if(j$(".checkBoxClass:checked").length == 0){                   
+                    e.preventDefault();
+                    alert('Please Select at Least one');
+                }else{
+                    alert('&&&&&&&&&&');
+                    createSalesMethod();
+                }            
+            } 
+            
+            function checkAll(cb)
+            {
+              var inputElem = document.getElementsByTagName("input");
+              for(var i=0;i<inputElem.length;i++)
+              {
+                  if(inputElem[i].id.indexOf("checkBoxClass")!=-1)
+                      inputElem[i].checked = cb.checked;
+              }
+            }
+            </Script>
+        
+    </head>
+    <body>
+    <apex:form id="frm">
+        <apex:actionFunction name="searchMethod"  reRender="myData" action="{!searchContact}" status="statusWaiting"/>
+        <apex:actionFunction status="statusWaiting" name="createSalesMethod" reRender="myData" action="{!EditContacts}"/>
+            <apex:actionstatus id="statusWaiting">
+                        <apex:facet name="start">
+                            <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+                                <div class="waitingHolder" style="top: 100px; width: 91px;">
+                                    <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                                    <span class="waitingDescription">Loading...</span>
+                                </div>
+                            </div>
+                        </apex:facet>
+             </apex:actionstatus>  
+        <div class="slds">
+            <!-- MASTHEAD -->
+                <p class="slds-text-heading--label slds-m-bottom--small">Salesforce Lightning Design System Trailhead Module</p>
+            <!-- / MASTHEAD -->
+            
+            <!-- PAGE HEADER -->
+                <div class="slds-page-header" role="banner">
+                 <!-- LAYOUT GRID -->
+                    <div class="slds-grid">
+                        <!-- GRID COL -->
+                        <div class="slds-col">
+                            <!-- HEADING AREA -->
+                            <!-- MEDIA OBJECT = FIGURE + BODY -->
+                            <div class="slds-media">
+                                <div class="slds-media__body">
+                                    <div  class="slds-form-element">
+                                        <div class="slds-form-element__control" style="width:20%;">
+                                            <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                <svg aria-hidden="true" class="slds-input__icon" onclick="searchMethod(); return false;">
+                                                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+                                                </svg>
+                                                <!--<input id="lookup-330" class="slds-lookup__search-input slds-input" type="search" placeholder="Search Accounts" aria-owns="lookup-330" role="combobox" aria-activedescendent="" aria-expanded="false" aria-autocomplete="list" />-->
+                                                <apex:inputText html-placeholder="Search Account" value="{!SearchString}" id="searchBox" styleclass="slds-lookup__search-input slds-input" />
+                                            </div>
+                                            <!--<apex:commandButton styleClass="slds-button slds-button--neutral " value="Search" onclick="crateSales();"/> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / MEDIA OBJECT -->
+                            <!-- /HEADING AREA -->
+                        </div>
+                    <!-- GRID COL -->
+                    <div class="slds-col slds-no-flex slds-align-middle">
+                        <div class="slds-button-group" role="group">
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" value="Create Sales" onclick="isChecked(event)" />
+                            <!--<apex:commandButton styleClass="slds-button slds-button--neutral" value="Create Sales" action="{!createRecord}" />-->
+                        </div>
+                    </div>
+                    <!-- / GRID COL -->
+                </div>
+                <!-- / LAYOUT GRID -->
+                </div>
+            <!-- / PAGE HEADER -->
+            <!-- PRIMARY CONTENT WRAPPER -->
+                <div class="myapp">
+                    <!-- ACCOUNT LIST TABLE -->
+                         <!-- CARD BODY = TABLE -->
+                            <section class="slds-card__body" styleClass="height=100%">
+                              <div class="slds-scrollable--x">
+                                  <apex:outputPanel id="myData">
+                                <table class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal">
+                                  <thead>
+                                    <tr class="slds-no-hover">
+                                          <th class="slds-text-heading--label slds-size--1-of-4" scope="col">
+                                              <apex:inputcheckbox onclick="checkAll(this)"/>
+                                          </th>
+                                          <th class="slds-text-heading--label slds-size--1-of-4" scope="col">Index</th>                                     
+                                          <th class="slds-text-heading--label slds-size--1-of-4" scope="col">FirstName</th>
+                                          <th class="slds-text-heading--label slds-size--1-of-4" scope="col">LastName</th>
+                                          <th class="slds-text-heading--label slds-size--1-of-4" scope="col">Email</th>
+                                          <th class="slds-text-heading--label slds-size--1-of-4" scope="col">Phone</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <apex:repeat value="{!modelList}" var="modelObj">
+                                          <tr>
+                                              <td class="slds-size--1-of-4">
+                                                  <apex:inputcheckbox id="checkBoxClass" styleclass="slds-checkbox checkBoxClass" value="{!modelObj.Chk}"/>
+                                              </td>
+                                              <td class="slds-size--1-of-4">
+                                                  <apex:outputLabel value="{!modelObj.serialNumber}"/>
+                                              </td>
+                                              <td  class="slds-size--1-of-4">
+                                                  <apex:outputLabel value="{!modelObj.contactChild.firstname}"/> 
+                                              </td>
+                                              <td class="slds-size--1-of-4">
+                                                  <apex:outputLabel value="{!modelObj.contactChild.lastname}"/> 
+                                              </td>
+                                              <td class="slds-size--1-of-4">
+                                                  <apex:outputLabel value="{!modelObj.contactChild.email}"/> 
+                                              </td>
+                                              <td class="slds-size--1-of-4" >
+                                                  <apex:outputLabel value="{!modelObj.contactChild.phone}"/>
+                                              </td>                                                                                             
+                                          </tr>                                                                                
+                                      </apex:repeat>      
+                                  </tbody>
+                                </table>
+                                </apex:outputPanel>
+                              </div>
+                            </section>
+                        <!-- / CARD BODY = SECTION + TABLE -->
+                    <!-- /ACCOUNT LIST TABLE -->     
+                </div>
+            <!-- / PRIMARY CONTENT WRAPPER -->
+             <!-- FOOTER -->
+            <footer role="contentinfo" class="slds-p-around--large" style="background:#737f9a;">
+              <!-- LAYOUT GRID -->
+              <div class="slds-grid slds-grid--align-spread">
+                <p class="slds-col" Style="color:white">Salesforce Lightning Design System Example</p>
+                <p class="slds-col" Style="color:white">&copy; Ibirds Software Service Pvt. Ltd.</p>
+              </div>
+              <!-- / LAYOUT GRID -->
+            </footer>
+            <!-- / FOOTER -->                               
+        </div>  
+    </apex:form>
+    </body>
+</html>
+</apex:page>

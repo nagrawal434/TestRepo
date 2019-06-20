@@ -1,0 +1,129 @@
+<apex:page >
+    <apex:remoteObjects jsNamespace="RemoteObjectModel">
+        <apex:remoteObjectModel name="Contact" fields="Id,Phone" jsShorthand="contactR">
+            <apex:remoteObjectField name="FirstName" jsShorthand="first"/>
+            <apex:remoteObjectField name="LastName" jsShorthand="last"/>
+        </apex:remoteObjectModel>
+    </apex:remoteObjects>
+    <script>
+        <!-- CREATE CONTACT -->
+        var ctDetails = { FirstName: 'Makhan', LastName: 'Agrawal'};
+        var ct = new RemoteObjectModel.contactR();
+
+        ct.create(ctDetails, function(err) {
+            if(err) { 
+                console.log(err);
+                alert(err.message);
+            }
+        });
+        <!-- /CREATE CONTACT -->
+        
+        <!-- FETCH RECORD WITHOUT ANY QUERY -->
+            var fetchCantacts = function(){
+                // Create a new Remote Object
+                var wh = new RemoteObjectModel.contactR();
+                
+                // Use the Remote Object to query for 10 warehouse records
+                wh.retrieve({ limit: 10 }, function(err, records, event){
+                    if(err) {
+                        alert(err.message);
+                    }
+                    else {
+                        var ul = document.getElementById("contactList");
+                        records.forEach(function(record) {
+                            // Build the text for a warehouse line item
+                            var whText = record.get("first");
+                            whText += " -- ";
+                            whText += record.get("last");
+                            // Add the line item to the warehouses list
+                            var li = document.createElement("li");
+                            li.appendChild(document.createTextNode(whText));
+                            ul.appendChild(li);
+                        });
+                    }
+                });
+            };
+        <!-- /FETCH RECORD WITHOUT ANY QUERY -->
+        
+        <!-- FETCH RECORD USING FILTER  WHERE FIRSTNAME AND LASTNAME  IS EQUAL TO-->
+        var fetchCantacts = function(){
+            var ct = new RemoteObjectModel.contactR();
+            ct.retrieve( 
+                { where: { 
+                    FirstName: {eq: 'Makhan'}, 
+                    LastName: {eq: 'Agrawal'} 
+                  }, 
+                  orderby: [ {LastName: 'ASC'}, {FirstName: 'ASC'} ],
+                  limit: 5 },  
+            
+                function(err, records) { 
+                    if (err) { 
+                        alert(err); 
+                    } else { 
+                        var ul = document.getElementById("contactList");
+                        records.forEach(function(record) {
+                            // Build the text for a warehouse line item
+                            var whText = record.get("FirstName");
+                            whText += " -- ";
+                            whText += record.get("LastName");
+                            // Add the line item to the warehouses list
+                            var li = document.createElement("li");
+                            li.appendChild(document.createTextNode(whText));
+                            ul.appendChild(li);
+                        });
+                    } 
+                } 
+        )};
+        
+        <!-- /FETCH RECORD USING FILTER  WHERE FIRSTNAME AND LASTNAME  IS EQUAL TO-->
+        
+        <!-- FETCH RECORD USING FILTER  WHERE FIRSTNAME AND LASTNAME  IS EQUAL TO-->
+        var fetchCantacts = function(){
+        var ct = new RemoteObjectModel.contactR();
+        ct.retrieve( 
+                { where: 
+                    { 
+                        or:
+                        {
+                            FirstName: {eq: 'Ma'}, 
+                            LastName: {eq: 'Ag'} 
+                        }
+                    }, 
+                  orderby: [ {LastName: 'ASC'}, {FirstName: 'ASC'} ],
+                  limit: 5 },  
+            
+                function(err, records) { 
+                    if (err) { 
+                        alert(err); 
+                    } else { 
+                        var ul = document.getElementById("contactList");
+                        records.forEach(function(record) {
+                            // Build the text for a warehouse line item
+                            var whText = record.get("FirstName");
+                            whText += " -- ";
+                            whText += record.get("LastName");
+                            // Add the line item to the warehouses list
+                            var li = document.createElement("li");
+                            li.appendChild(document.createTextNode(whText));
+                            ul.appendChild(li);
+                        });
+                    } 
+                } 
+        )};
+        <!-- /FETCH RECORD USING FILTER  WHERE FIRSTNAME AND LASTNAME  IS EQUAL TO-->        
+        
+        <!-- DELETE A RECORD -->
+            ctDetails = {FirstName: "Tobe", LastName: "Ornottobe"};
+            ct = new RemoteObjectModel.Contact(ctDetails);
+            ct.create();
+            
+            // After some though, and the async operation completes...
+            // It's not to be; delete the contact
+            ct.del();
+        <!-- DELETE A RECORD -->
+    </script>
+    
+    <ul id="contactList">
+    </ul>
+    <button onclick="fetchCantacts()">Retrieve Contact</button>
+</apex:page>

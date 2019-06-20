@@ -1,0 +1,113 @@
+<apex:page docType="html-5.0">
+    <html lang="en">
+        <head>
+            <Style>
+            
+            <!-- set the color of * -->
+            .span{
+                color: red;
+            }
+            .selectListSizeClass{
+                width: 100%;
+            }
+            .submitStyle{
+            }
+            </Style>
+            <Script type="text/javascript">
+                <!-- Include JQuryFile -->
+                                
+                <apex:includeScript value="{!$Resource.JqueryLibrary}"/>
+                
+                <!-- On Load Of Document -->  
+                $(document).ready(function(){
+                    
+                    <!-- Active Of Submit Button -->
+                    $(".checkBoxClass").click(function(){                       
+                        if($('.checkBoxClass').is(':checked')){
+                            $("#b1").prop("disabled", "");
+                        }
+                        else{
+                            $("#b1").prop("disabled", "disabled"); 
+                        }
+                    });
+                    
+                    <!-- Onchange Of State Selected List -->
+                    $(".selectStateClass").change(function(){
+                        var selectedOptnValue = $( ".selectStateClass option:selected" ).text();
+                        if(selectedOptnValue == "Rajsthan"){
+                            $(".selectCityClass").html('<option value="op1">Jaipur</option><option value="op2">Kota</option><option value="op2">Udaipur</option>');                
+                        }
+                        else if(selectedOptnValue == "MP"){
+                            $(".selectCityClass").html('<option value="op1">Mp1</option><option value="op2">Mp2</option><option value="op2">MP3</option>');
+                        }else if(selectedOptnValue == "UP"){
+                            $(".selectCityClass").html('<option value="op1">Up1</option><option value="op2">Up2</option><option value="op2">UP3</option>');
+                        }
+                    });
+                    
+                    <!-- Onclick of Submit Button -->
+                    
+                    $(".submitButtonClass").click(function(){
+                        var pass = $('#passwordId').val();
+                        var cnfrmpass = $('#cnfrmPassId').val();
+                        if(pass != cnfrmpass){
+                            $('.cnfrmPass').show();
+                            return false;                                                               
+                        }
+                        
+                    });
+                });
+            </Script>
+            
+        </head>
+        <body>
+            <apex:form >
+                <table align ="center">
+                    <tr>
+                        <td><span class="span">*</span>FirstName</td>
+                        <td><input type="text" required="true" id="firstNameId"/></td>
+                        
+                    </tr>
+                    <tr>
+                        <td><span class="span">*</span>LastName</td>
+                        <td><input type="text" required="true" id="lastNameId"/></td>
+                    </tr>
+                    <tr>
+                        <td>PassWord</td>
+                        <td><input type="password" id="passwordId" required="true"/></td>    
+                    </tr>
+                    <tr>
+                        <td>Confirm Password</td>
+                        <td><input type="password" id="cnfrmPassId"/><br/><span style= "display:none;color:red" class="cnfrmPass">*PassWord MisMatch</span></td>
+                    </tr>
+                    <tr>
+                        <td>Age</td>
+                        <td><input type="number" max="75" min="12" step="any"/></td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td><apex:selectList id="selectListId" multiselect="false" size="1" styleClass="selectStateClass">
+                            <apex:selectOption itemValue="Select State"/>
+                            <apex:selectOption itemValue="Rajsthan" itemLabel="Rajsthan"/>
+                            <apex:selectOption itemValue="MP" itemLabel="MP"/>
+                            <apex:selectOption itemValue="UP" itemLabel="UP"/>
+                            <apex:selectOption itemValue="Maharashtra" itemLabel="Maharashtra"/>
+                        </apex:selectList></td>                                               
+                    </tr>
+                    <tr>
+                        <td>City</td>
+                        <td><apex:selectList id="cityListId" multiselect="false" size="1" styleClass="selectCityClass">
+                            <apex:selectOption itemValue="Select City"/>
+                        </apex:selectList></td>
+                    </tr>
+                    <tr>
+                        <td colSpan="2"><apex:inputCheckbox id="chkboxId" styleClass="checkBoxClass" />I Accept the term and Conditions</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="Right"><input type="Submit" id= "b1" value="Submit" disabled="disabled" class="submitButtonClass"/></td>  
+                    </tr>
+                </table>
+            </apex:form>
+        
+        </body>    
+    </html>
+</apex:page>

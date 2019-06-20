@@ -1,0 +1,202 @@
+<apex:component >
+  
+  <script>
+      var __sfdcSessionId = '{!GETSESSIONID()}';
+  </script>
+  <script src="/soap/ajax/28.0/connection.js" type="text/javascript"></script>
+  <script src="/soap/ajax/28.0/apex.js" type="text/javascript"></script>
+  
+  <script>
+      //script for multi lookup
+            
+        //variable for create more than one multi lookup on one page
+        var dropdownIcon = "{!URLFOR($Resource.assets, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}";
+        var lookupSCount = 0;
+        
+        var objectIconMap = {};
+        var iconClassMap = {};
+        var inputName = new Array();
+        var inputId = new Array();
+        var lk = new Array();
+      
+        //variable for pass selected object in populateLookup function on keyup on input field
+        var lookupObject;
+         
+        function createMultiLookup(divId,inputN,inputI,objectIconMapTemp,iconClassMapTemp){
+            //fill global maps & variables
+            objectIconMap = objectIconMapTemp;
+            iconClassMap = iconClassMapTemp;
+            
+            lookupSCount += 1;
+            inputName[lookupSCount-1] = inputN;
+            inputId[lookupSCount-1] = inputI;
+         
+            //empty given div
+            $("[id$=" + divId + "]").html('');
+            
+            //give important attributes and class to given div
+            $("[id$=" + divId + "]").addClass('slds-lookup');
+            $("[id$=" + divId + "]").attr('data-select','multi');
+            $("[id$=" + divId + "]").attr('data-scope','single');
+            $("[id$=" + divId + "]").attr('data-typeahead','true');
+            
+            //Make lightning required multi lookup elements
+            var elementMain = '<div class="slds-form-element">';
+            elementMain += '<div class="slds-form-element__control">';
+            elementMain += '<div class="slds-lookup__control slds-input-has-icon slds-input-has-icon--left Lookup' + lookupSCount + ' slds-input--small">'
+            elementMain += '<svg aria-hidden="true" class="objectIcon' + lookupSCount + ' slds-icon slds-icon-standard-account slds-icon--small slds-m-top--x-small slds-m-left--x-small">';
+            elementMain += '<use xlink:href=""></use>';
+            elementMain += '</svg>';
+            elementMain += '<span onclick="if($(\'.MenuRec' + lookupSCount + '\').hasClass(\'slds-hide\') == false) $(\'.MenuRec' + lookupSCount + '\').addClass(\'slds-hide\');openCloseLookup(\'MenuObj' + lookupSCount + '\');return false;" class="dropdown' + lookupSCount + '">';
+            elementMain += '<svg aria-hidden="true" class="slds-button__icon slds-m-top--x-small slds-m-left--x-small">';
+            elementMain += '<use xlink:href="' + dropdownIcon + '"></use>';
+            elementMain += '</svg>';
+            elementMain += '</span>';
+            elementMain += '</div>';
+            elementMain += '</div>';
+            elementMain += '<div class="slds-lookup__menu MenuRec' + lookupSCount + ' slds-hide" role="listbox">';
+            elementMain += '</div>';
+            elementMain += '<div class="slds-lookup__menu MenuObj' + lookupSCount + ' slds-hide" role="listbox">';
+            elementMain += '</div>';
+            elementMain += '</div>';
+            
+            //Put these elements to given div
+            $("[id$=" + divId + "]").html(elementMain);
+            
+            //get input field and replace it from its own place to lookup control div
+            var inputField = $("[id$=" + inputName[lookupSCount-1] + "]").get();
+            $("[id$=" + inputName[lookupSCount-1] + "]").remove();
+            $(".dropdown" + lookupSCount).after(inputField); 
+            $("[id$=" + inputName[lookupSCount-1] + "]").addClass("slds-input--bare");
+            $("[id$=" + inputName[lookupSCount-1] + "]").attr("onfocus","showLookup("+ lookupSCount + ")");
+            $("[id$=" + inputName[lookupSCount-1] + "]").attr('style','margin-left:0px;padding-left:12px');
+            
+            $("[id$=" + inputName[lookupSCount-1] + "]").attr("onkeyup","$('.MenuRec" + lookupSCount + "').html('') ; populateLookup('MenuRec" + lookupSCount + "',"+ lookupSCount + ");");
+            $("[id$=" + inputName[lookupSCount-1] + "]").attr('placeholder','Input Here');
+            
+                            
+            fillMultiLookupObjects(lookupSCount);
+        }
+        function openCloseLookup(cls){
+            if($('.'+cls).hasClass('slds-hide')){
+                $('.'+cls).removeClass('slds-hide');
+            }else{
+                $('.'+cls).addClass('slds-hide');
+            }
+            
+        }
+        function fillMultiLookupObjects(count){
+                var objectOptions = '<ul class="slds-lookup__list objectOptions'+ count +'" role="presentation">';
+                var objectsArray = Object.keys(objectIconMap);
+                var map ={};
+                map = objectIconMap;
+                
+                for(var j=0; j < objectsArray.length ; j++){
+                    var describeSObjectResults = sforce.connection.describeSObject(objectsArray[j]);
+                    
+                    objectOptions = objectOptions + '<li class="slds-lookup__item" role="presentation">';
+                    objectOptions = objectOptions + '<a href="javascript:void(0)" role="option" onclick="$(\'[id$='+ inputName[count-1] +']\').val(\'\');setObjectIcon(\''+ objectsArray[j] +'\',\''+ iconClassMap[objectIconMap[objectsArray[j]]] +'\' ,'+ count +');">';
+                    objectOptions = objectOptions + '<svg aria-hidden="true" class="slds-icon slds-icon--small '+ iconClassMap[objectIconMap[objectsArray[j]]]+'">';
+                    objectOptions = objectOptions + '<use xlink:href="'+ objectIconMap[objectsArray[j]] + '"></use>';
+                    objectOptions = objectOptions + '</svg> ' + describeSObjectResults.label + '</a>';
+                    objectOptions = objectOptions + '</li>';                    
+                }
+                objectOptions = objectOptions + '</ul>';
+                
+                $('.MenuObj'+ count).html(objectOptions);
+                if(objectsArray.length > 0)
+                    setObjectIcon(objectsArray[0],iconClassMap[objectIconMap[objectsArray[0]]],count);
+         }
+         
+         function setObjectIcon(key,iconClass,count){
+            
+            ele = '<use xlink:href="'+objectIconMap[key]+'"></use>';
+            
+            $(".objectIcon" + count).attr('class', 'objectIcon' + count + ' slds-icon slds-icon--small slds-m-top--x-small slds-m-left--x-small '+iconClass);
+            $(".objectIcon" + count).html(ele);
+            $(".MenuObj" + count).addClass('slds-hide');
+            $(".MenuRec" + count).addClass('slds-hide');
+            lookupObject = key;
+            
+            populateLookup('MenuRec' + count, count);
+            $('[id$=' + inputName[count-1] + ']').val('');
+            $('[id$=' + inputId[count-1] + ']').val('');
+         }
+         
+         function populateLookup( lkpDiv, count){
+                var SObjType = lookupObject;
+                var queryStatement;
+                var queryField;
+                
+                if(SObjType.toLowerCase() == 'case'){
+                    queryField = 'CaseNumber';
+                } else if(SObjType.toLowerCase() == 'contract'){
+                    queryField = 'ContractNumber';
+                } else if(SObjType.toLowerCase() == 'solution'){
+                    queryField = 'SolutionName';
+                } else{
+                    queryField = 'Name';    
+                }
+                
+                if(($('[id$=' + inputName[count-1] + ']').val() != undefined) && $('[id$='+ inputName[count-1] + ']').val().trim().length > 0  ) 
+                    queryStatement = "SELECT Id, "+queryField+" FROM " + SObjType + " where "+ queryField + " like '%" + $('[id$=' + inputName[count-1] + ']').val() + "%' LIMIT 100";
+                else
+                    queryStatement = 'SELECT Id, '+queryField+' FROM ' + SObjType + ' LIMIT 100';
+                
+                var queryResult = sforce.connection.query( queryStatement );
+                if( queryResult.size > 0){
+                   
+                    var html = '<ul class="slds-lookup__list" role="presentation" >';
+                    var recordArr = queryResult.getArray('records');
+                    
+                    for (var i = 0; i <recordArr.length; i++) {
+                        var obj = recordArr[i];
+                                                  
+                        html += '<li class="slds-lookup__item" role="presentation">';
+                        html += '<a href="javascript:void(0)" role="option" onclick="setLookupValue(\'' + obj[queryField] + '\', \'' + recordArr[i].Id + '\', ' + count + ', \'' + lkpDiv + '\')">';
+                        html += '<svg aria-hidden="true" class="slds-icon ' + iconClassMap[objectIconMap[SObjType]] + ' slds-icon--small">';
+                        html += '<use xlink:href="' + objectIconMap[SObjType] + '"></use>';    
+                        html += '</svg>' + obj[queryField] + '</a>';
+                        html += '</li>';
+                    }
+                    html += '</ul>';
+                    $('.' + lkpDiv).html(html);
+                }else{
+                    $('.' + lkpDiv).html('');                    
+                }
+                
+            }
+            
+            function setLookupValue(nmold, lkpid,count ,lkpDiv){                             
+                $('[id$=' + inputId[count-1] + ']').val(lkpid);
+                $('[id$=' + inputName[count-1] + ']').val(nmold);
+                $('.'+lkpDiv).addClass('slds-hide');
+                
+            }
+            
+            
+            //hide opened section on document click
+            $(document).click(function(event) {
+              ele = event.target;
+              if($(ele).prop('tagName') == 'HTML' || $(ele).prop('tagName') == 'FORM' || $(ele).prop('tagName') == 'DIV'){
+                if(lookupSCount > 0){
+                    for(var i = 1;i <= lookupSCount; i++){
+                        if($('.MenuRec'+i) != undefined && !$('.MenuRec'+i).hasClass('slds-hide')){
+                            $('.MenuRec'+i).addClass('slds-hide');  
+                        }
+                        if($('.MenuObj'+i) != undefined && !$('.MenuObj'+i).hasClass('slds-hide')){
+                            $('.MenuObj'+i).addClass('slds-hide');  
+                        }
+                    }
+                }
+              }
+            });
+            function showLookup( count ){
+                $('.MenuRec'+count).removeClass('slds-hide');
+                if(!($('.MenuObj'+count).hasClass('slds-hide'))){
+                    $('.MenuObj'+count).addClass('slds-hide');
+                }
+            }
+  </script>
+        
+</apex:component>

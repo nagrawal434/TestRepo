@@ -1,0 +1,106 @@
+<apex:page applyBodyTag="false" sidebar="false" showHeader="false" docType="html-5.0" Controller="LightningPickListController" >
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">   
+    <head>
+        <title>My Page</title>
+        <apex:stylesheet value="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}"/>
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"/>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="{!URLFOR($Resource.boots,'/js/bootstrap.min.js')}"></script> 
+        <apex:styleSheet value="{!URLFOR($Resource.boots,'/css/bootstrap.min.css')}" /> 
+        <apex:styleSheet value="{!URLFOR($Resource.boots,'/css/bootstrap-theme.min.css')}" />
+
+        <script type="text/javascript">
+           function fun(){
+               alert('HIiiiiiiiiiiiiiiiiiiiiiiii');
+               actionMethod();
+           } 
+        </Script>
+        
+    </head>
+    <body>
+    <apex:form id="frm">
+            <apex:actionstatus id="statusWaiting">
+                        <apex:facet name="start">
+                            <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+                                <div class="waitingHolder" style="top: 100px; width: 91px;">
+                                    <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                                    <span class="waitingDescription">Loading...</span>
+                                </div>
+                            </div>
+                        </apex:facet>
+             </apex:actionstatus>  
+        <div class="slds">
+            <!-- MASTHEAD -->
+                <p class="slds-text-heading--label slds-m-bottom--small">Salesforce Lightning Design System Trailhead Module</p>
+            <!-- / MASTHEAD -->
+            
+            <!-- PAGE HEADER -->
+                <div class="slds-page-header" role="banner">
+                 <!-- LAYOUT GRID -->
+                    <div class="slds-grid">
+                        <!-- GRID COL -->
+                        <div class="slds-col">
+                            <!-- HEADING AREA -->
+                            <!-- MEDIA OBJECT = FIGURE + BODY -->
+                            <div class="slds-media">
+                                <div class="slds-media__figure">
+                                    <span class="slds-avatar slds-avatar--large">
+                                      <img src="{!URLFOR($Resource.assets, '/assets/images/avatar1.jpg')}" alt="portrait" />
+                                    </span>
+                                    </div>
+                                    <div class="slds-media__body">
+                                    <p class="slds-text-heading--label">Contacts</p>
+                                    <h1 class="slds-text-heading--medium">Edit Contacts</h1>
+                                </div>  
+                            </div>
+                            <!-- / MEDIA OBJECT -->
+                            <!-- /HEADING AREA -->
+                        </div>
+                    <!-- GRID COL -->
+                    <div class="slds-col slds-no-flex slds-align-middle">
+                        <div class="slds-button-group" role="group">
+                            <apex:commandButton styleClass="slds-button slds-button--neutral" value="Save Contact" />
+                        </div>
+                    </div>
+                    <!-- / GRID COL -->
+                </div>
+                <!-- / LAYOUT GRID -->
+                </div>
+            <!-- / PAGE HEADER -->
+            <!-- PRIMARY CONTENT WRAPPER -->
+                <div class="myapp">
+                     <!-- Standard PickList -->
+                      <!-- <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <apex:inputField value="{!modelObj.contactChild.LeadSource}" styleClass="slds-select slds-input slds-input--small" />
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- Custom Picklist -->
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <apex:selectList size="1" value="{!selectedCountry}" styleClass="slds-select">
+                                    <apex:selectOptions value="{!countrieLst}" />
+                                </apex:selectList>
+                            </div>
+                        </div>
+                    </div>    
+                </div>          
+            <!-- / PRIMARY CONTENT WRAPPER -->
+             <!-- FOOTER -->
+            <footer role="contentinfo" class="slds-p-around--large" style="background:#737f9a;">
+              <!-- LAYOUT GRID -->
+              <div class="slds-grid slds-grid--align-spread">
+                <p class="slds-col" Style="color:white">Salesforce Lightning Design System Example</p>
+                <p class="slds-col" Style="color:white">&copy; Ibirds Software Service Pvt. Ltd.</p>
+              </div>
+              <!-- / LAYOUT GRID -->
+            </footer>
+            <!-- / FOOTER -->                               
+        </div>  
+    </apex:form>
+    </body>
+</html>
+</apex:page>

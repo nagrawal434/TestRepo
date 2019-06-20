@@ -1,0 +1,38 @@
+<apex:page controller="objectListControllerTest" showHeader="false" sidebar="false">
+<apex:form id="frn"> 
+       <apex:actionStatus startText="Processsing..." id="stats"/>
+            <apex:actionFunction action="{!fieldType}" name="controllerFunction"  status="stats"  reRender="columList">
+                <apex:param assignTo="{!currentFieldValue}" value=" " name="vnn"/>
+                <apex:param assignTo="{!currentFieldCount}" value="" name="hj"/>
+            </apex:actionFunction>
+      <apex:pageBlock id="pgblock"  >
+          <apex:pageBlockSection columns="1"  >
+               <apex:outputlabel value="Object Names :"/> 
+                            
+                           <apex:selectList value="{!selectedObject}" size="1" >
+                                    <apex:selectOptions value="{!ObjectNames}"/>
+                                    <apex:actionSupport event="onchange" action="{!objfieldtype}" reRender="Requiredfield" />
+                            </apex:selectList>
+                                               
+                 <apex:outputPanel id="Requiredfield"    >
+                         <apex:outputlabel value="Required Field :"/>
+                        
+                                <apex:pageBlockTable value="{!objfieldtypereturn}" var="requirenametype">
+                                    <apex:column headerValue="S.No." value="{!requirenametype.count}"/>
+                                    <apex:column headerValue="Field Name"   >
+                                            <apex:selectList value="{!requirenametype.selectedField}" size="1" disabled="{!requirenametype.displayList}" onchange="controllerFunction(this.value,{!requirenametype.count});return false;" >
+                                                <apex:selectOptions value="{!requirenametype.fname}"/>
+                                            </apex:selectList>
+                                     </apex:column> 
+                                 <apex:column headerValue="Field Type" value="{!requirenametype.ftype}" id="columList" />
+                                 <apex:column headerValue="Default">
+                                     <apex:inputText value="{!requirenametype.inputDegaultReq}" />
+                                 </apex:column> 
+                               </apex:pageBlockTable>  
+                               <apex:commandButton value="Add Row" action="{!addRow}" id="buttonid"/>
+                   
+                  </apex:outputPanel>
+                 </apex:pageBlockSection>      
+   </apex:pageBlock>
+     </apex:form>
+</apex:page>

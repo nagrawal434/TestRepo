@@ -1,0 +1,5 @@
+<apex:page >
+    <apex:form >
+        <c:TemplateComponentAss2 />
+    </apex:form>
+</apex:page>

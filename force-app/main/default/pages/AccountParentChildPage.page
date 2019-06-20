@@ -1,0 +1,43 @@
+<apex:page standardController="Account" extensions="AccountParentChildController" sidebar="false" standardStylesheets="false">
+    <head>
+        <!-- <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+       
+        <apex:stylesheet value="{!URLFOR($Resource.boots, '/css/bootstrap.css')}" /> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- <apex:includeScript value="{!URLFOR($Resource.boots, '/js/bootstrap.min.js')}"/> --> 
+        <apex:includeScript value="{!URLFOR($Resource.NewBootStarp, '/bootstrap-3.3.7-dist/js/bootstrap.min.js')}"/>     
+    </head>
+    <body>
+        <apex:form >
+            <apex:pageBlock tabStyle="Account">
+                <apex:pageBlockSection columns="2">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputText value="Project Name: {!acc.name}" style="font-size :20px;color:blue;"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >                          
+                        <!--<div class="form-group has-feedback"> 
+                            <span class="glyphicon glyphicon-search form-control-feedback"></span>    
+                            <input type="text" class="form-control" id="inputSuccess2" placeholader="Search Salesforce"/> 
+                        </div> -->
+                        <!--<div class="input-group">
+                            <input type="text" class="form-control"/>
+                            <span class="input-group-addon">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div> -->
+                       <div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">@</span>
+  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1"/>
+</div>
+
+                    </apex:pageBlockSectionItem>
+                    <button type="button" class="btn btn-default">Default</button>   
+                </apex:pageBlockSection>  
+            </apex:pageBlock>    
+        </apex:form>
+    </body>    
+</apex:page>

@@ -1,0 +1,67 @@
+<apex:page controller="CheckBoxEmailAssignmentPage" id="pg">
+    <apex:form id="frm">
+     <apex:actionStatus id="st" startText="Email Sending....." startStyle="color:red"></apex:actionStatus>
+        <script>
+            function checkAll(cb,cbid){
+                var inputElem = document.getElementsByTagName("input");
+                if(inputElem.id != 'pg:frm:pb:pbt:allcheck'){
+                for(var i=0; i<inputElem.length; i++){
+                    if(inputElem[i].id.indexOf(cbid)!=-1){
+                        inputElem[i].checked = cb.checked;
+                    }
+                }
+                }
+            }
+            function selectedContacts(){
+                var divObj = document.getElementById("contacts");
+                var inputs = divObj.getElementsByTagName("input");
+                var emails = '';
+                var comma = "";
+                if(inputs.length > 0 ){
+                    for(i=0; i<inputs.length; i++){
+                        if(inputs[i].type == "checkbox" && inputs[i].checked && inputs[i].id != 'pg:frm:pb:pbt:allcheck'){
+        
+                            emails += comma + inputs[i].value;
+                            comma = ",";
+                        }
+                    }
+                }
+                 document.getElementById('pg:frm:pbs:pbs1:to').value=emails;
+                 document.getElementById('pg:frm:pbs:pbs1:to1').value=emails;
+            }
+        </script>   
+        <apex:pageBlock title="All Contacts" id="pb">
+        <apex:actionFunction name="sendEmail" action="{!sendEmail}" reRender="frm" status="st"/>
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Send" onclick="sendEmail();return false;"/>
+        </apex:pageBlockButtons>
+        <div id="contacts">
+            <apex:pageBlockTable value="{!modelList}" var="mCon" id="pbt">
+                <apex:column headerValue="Srno" value="{!mCon.srno}"/>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:inputCheckbox onclick="checkAll(this,'chk')" id="allcheck" onchange="selectedContacts()"/>
+                        </apex:facet>                 
+                    <input type="checkbox" id="chk" value="{!mCon.con.email}" onclick="selectedContacts()"/>
+                </apex:column>
+                <apex:column headerValue="First Name" value="{!mCon.con.FirstName}"/>
+                <apex:column headerValue="Last Name" value="{!mCon.con.LastName}"/>
+                <apex:column value="{!mCon.con.Email}"/>
+            </apex:pageBlockTable>  
+        </div>          
+        </apex:pageBlock>
+        <apex:pageBlock id="pbs" rendered="true">
+            <apex:pageBlockSection id="pbs1">
+                <apex:outputLabel >From </apex:outputLabel>
+                <apex:inputText value="{!fromAdd}"/>
+                <apex:outputLabel >To </apex:outputLabel>
+                <apex:inputText value="{!to}" id="to"/>
+                <apex:outputText value="{!to}" id="to1"/>
+                <apex:outputLabel >Subject </apex:outputLabel>
+                <apex:inputText value="{!subject}"/>
+                <apex:outputLabel >Message </apex:outputLabel>
+                <apex:inputTextarea value="{!body}" rows="5"/>
+            </apex:pageBlockSection>
+        </apex:pageblock>
+    </apex:form>
+</apex:page>

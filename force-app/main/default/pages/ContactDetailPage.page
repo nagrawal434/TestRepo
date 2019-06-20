@@ -1,0 +1,45 @@
+<apex:page controller="contactDetail">
+   <head>
+        <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/jquery.min.js')}"></script> 
+        <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/bootstrap.min.js')}"></script> 
+        <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap.min.css')}" /> 
+        <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap-theme.min.css')}" />
+        
+    </head>     
+    <apex:form >
+        <div style="width:1000px" class="panel panel-danger">
+            <div class="panel-heading">Contact Detail</div>
+            <div class="panel-body">
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="3">
+                <apex:repeat value="{!modelList}" var="m">
+                    <apex:outputPanel >
+                        <div>
+                            <div>
+                                <apex:image url="{!m.imageURL}" height="60px" width="80px"></apex:image><br/>
+                            </div>
+                            <div>
+                                <table class= "table table-bordered">
+                                    <tr>
+                                        <td>Name : </td>
+                                        <td>{!m.contact.name}</td>
+                                    </tr>    
+                                    <tr>
+                                        <td>Email :</td>
+                                        <td>{!m.contact.email}</td>
+                                    </tr>    
+                                    <tr>   
+                                        <td>Phone :</td>
+                                        <td> {!m.contact.phone}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </apex:repeat>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        </div>
+        </div>
+    </apex:form>    
+</apex:page>

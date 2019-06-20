@@ -1,0 +1,50 @@
+<apex:page controller="OpportunityInformationPage" tabStyle="Opportunity" >
+    <apex:sectionHeader title="Opportunity Edit" subtitle="New Opportunity"/>
+        <apex:form >
+            <apex:pageBlock title="Opportunity Edit" mode="edit">
+                <apex:pageBlockButtons location="top">
+                    <apex:commandButton value="Add" action="{!add}"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection columns="2" title="Opportunity Information" id="section2">
+                   <apex:outputText value="{!oName}" label="OwnerName"/>
+                   <apex:inputField value="{!oppstring.Amount}"/>
+                   <apex:inputField value="{!oppstring.name}"/>
+                   <apex:inputField value="{!oppstring.CloseDate}"/>
+                   <apex:inputField value="{!oppstring.Accountid}"/>
+                   <apex:inputField value="{!oppstring.StageName}"/>
+                   <apex:inputField value="{!oppstring.Type}"/>
+                   <apex:inputField value="{!oppstring.Probability}"/>
+                   <apex:inputField value="{!oppstring.LeadSource}"/>
+                  </apex:pageBlockSection>
+                  <apex:pageBlockSection columns="2" title="Contact Role" id="section3">
+                      <apex:inputField value="{!contactRoleDetail.ContactId}"/>
+                      <apex:inputField value="{!contactRoleDetail.Role}"/>
+                  </apex:pageBlockSection>
+                  <apex:commandLink value="Add Contact Role" action="{!ContactRecordAdd}"/>
+                  <apex:pageBlockSection columns="1" title="Selected Contact Role">
+                      <apex:outputText value="{!EmptyContact}"/>
+                      <apex:pageBlockTable value="{!ModelList}" var="m">
+                          <apex:column value="{!m.RoleContact}"/>
+                          <apex:column value="{!m.RoleName}"/>
+                      </apex:pageBlockTable>
+                  </apex:pageBlockSection>
+                  <apex:commandButton value="Add" action="{!addAllOppCon}"/>
+             </apex:pageBlock>
+             <apex:pageBlock >
+                     <apex:pageBlockButtons >
+                         <apex:commandButton value="Save" action="{!Save}"/>
+                         <apex:commandButton value="Cancel" action="{!cancel}"/>
+                     </apex:pageBlockButtons>
+                     <apex:pageBlockSection >
+                          <apex:pageBlockTable value="{!OppConRoleModelList}" var="moc">
+                              <apex:column value="{!moc.OppDetail.name}"/>
+                              <apex:column value="{!moc.OppDetail.closedate}"/>
+                             <apex:column value="{!moc.OppDetail.StageName}"/>
+                              <apex:column value="{!moc.OppDetail.account.name}"/>
+                              <apex:column value="{!moc.RoleContactList}"/>
+
+                          </apex:pageBlockTable>       
+                     </apex:pageBlockSection>
+             </apex:pageBlock>
+    </apex:form>
+</apex:page>

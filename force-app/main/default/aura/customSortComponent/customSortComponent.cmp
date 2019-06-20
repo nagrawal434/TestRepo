@@ -1,0 +1,65 @@
+<aura:component controller="CustomSortingController" implements="flexipage:availableForAllPageTypes">
+    <aura:attribute name="ListOfContact" type="contact[]"/>           
+    <aura:attribute name="arrowDirection" type="string" default="arrowup" description="Use for change arrow sign direction on header based on click"/>
+    <aura:attribute name="isAsc" type="boolean" default="true" description="boolean flag for pass sorting condition to apex class"/> 
+    <aura:attribute name="selectedTabsoft" type="string" default="firstName" description="Use for show/hide arraow sign on header based on conditions"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.loadContacts}"/>    
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+    	<thead>
+        	<tr class="slds-text-title--caps">            	
+                <th class="slds-is-sortable slds-text-ti tle--caps" scope="col" onclick="{!c.sortFirstName}">
+                    <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">
+                    	<span class="slds-assistive-text">Sort</span>
+                        <span class="slds-truncate" title="Name" >First Name</span>
+                        <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'firstName') }">&nbsp;  &#9660; </aura:if>      
+                        <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'firstName') }">&nbsp;  &#9650; </aura:if>      	
+                    </a>
+                </th>
+                <th class="slds-is-sortable slds-text-title--caps" scope="col" onclick="{!c.sortLastName}">
+                	<a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">
+                    	<span class="slds-assistive-text">Sort</span>
+                        <span class="slds-truncate" title="Name" >Last Name</span>
+                        <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'lastName') }">&nbsp;  &#9660; </aura:if>      
+                        <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'lastName') }">&nbsp;  &#9650; </aura:if>      	
+                    </a>              
+                </th>
+                <th class="slds-is-sortable slds-text-title--caps"  scope="col"  onclick="{!c.sortEmail}">
+                	<a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">
+                    	<span class="slds-assistive-text">Sort</span>
+                        <span class="slds-truncate" title="Email" >Email</span>
+                        <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'email') }">&nbsp;  &#9660; </aura:if>      
+                        <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'email') }">&nbsp;  &#9650; </aura:if>      	
+                    </a> 
+                </th>
+                <th class="slds-is-sortable slds-text-title--caps"  scope="col"  onclick="{!c.sortPhone}">
+                	<a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">
+                    	<span class="slds-assistive-text">Sort</span>
+                        <span class="slds-truncate" title="Phone" >Phone</span>
+                        <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'phone') }">&nbsp;  &#9660; </aura:if>      
+                        <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'phone') }">&nbsp;  &#9650; </aura:if>      	
+                    </a> 
+                </th>
+            </tr>            
+        </thead>
+        <tbody>
+        	<aura:iteration items="{!v.ListOfContact}" var="con">
+            	<tr>
+                	<td scope="row">
+                    	<div class="slds-truncate" title="{!con.firstName}">{!con.FirstName}</div>                        
+                    </td>
+                    <td scope="row">
+                    	<div class="slds-truncate" title="{!con.lastName}">{!con.LastName}</div>                        
+                    </td>
+                    <td scope="row">
+                    	<div class="slds-truncate" title="{!con.email}">{!con.Email}</div>                        
+                    </td>
+                    <td scope="row">
+                    	<div class="slds-truncate" title="{!con.phone}">{!con.Phone}</div>                        
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+    
+</aura:component>

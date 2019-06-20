@@ -1,0 +1,20 @@
+<apex:page controller="MemoManagerController" sidebar="false" showHeader="false">
+    <apex:form >
+        <apex:pageBlock >
+             <apex:pageBlockSection columns="1">
+                <apex:pageBlockTable value="{!memoEditList}" var="me">
+                    <apex:column >
+                        <apex:inputField value="{!me.MemoName__c}"/>
+                    </apex:column>
+                    <apex:column >   
+                        <apex:inputField value="{!me.Status__c}"/>
+                    </apex:column> 
+                    <apex:column >       
+                        <apex:inputField value="{!me.DiscriptionMemo__c}"/>
+                     </apex:column> 
+                   </apex:pageBlockTable>    
+               </apex:pageBlockSection>          
+               <apex:commandButton value="SaveMemo" action="{!Savememo}"/> 
+       </apex:pageBlock>
+   </apex:form>  
+</apex:page>

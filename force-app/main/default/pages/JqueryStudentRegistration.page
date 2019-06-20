@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<apex:page controller="JqueryStudentRegistration"  title="Student Registration Form">
+    <html lang="en">
+        <head>
+        <!-- Apply Css -->
+             <style>
+                .output1{
+                    font-size : 12px; 
+                }
+                #div1{
+                }
+                .logoHeading{
+                    font-size : 30px;
+                    color : Blue;
+                    font-style : italic;
+                    text-align: Center; 
+                    text-shadow: 2px 2px #3399ff;        
+                }
+                .img{
+                    border: 2px solid #ccc;
+                }
+                button:hover
+                {
+                    background-image:none;
+                    background-color:#a3c2c2;
+                }
+            </style>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    alert('hello alert in');
+
+                    $(".save").click(function(){
+                        <!-- Roll Validation -->
+                        
+                        var rollNo = $('#rollNoText').val();
+                        if($.trim(rollNo).length == 0){
+                            alert('Roll No is Compulsory');
+                            return;
+                        }
+                        
+                        <!-- FirstName Validation -->
+                        
+                        var fName = $('#testFirstName').val();
+                        if($.trim(fName).length== 0){
+                            alert('Name Is Compulsory');
+                            return;
+                        }if(!validateFirstName(fName)){
+                             alert('Name is incorrect');
+                             return;
+                        }
+                        
+                        <!-- LastName Validation -->
+
+                        var lName = $('#testLastName').val();
+                        if($.trim(lName).length== 0){
+                            alert('Name Is Compulsory');
+                            return;
+                        }if(!validateLastName(lName)){
+                             alert('Name is incorrect');
+                             return;
+                        }                        
+                        
+                        <!-- Password Validation -->
+                        
+                        var passwrd = $('#passid').val();
+                        if($.trim(passwrd).length == 0){
+                        
+                        
+                        function passid_validation(passid,mx,my)  
+                        {  
+                        var passid_len = passid.value.length;  
+                        if (passid_len == 0 ||passid_len >= my || passid_len < mx)  
+                        {  
+                        alert("Password should not be empty / length be between "+mx+" to "+my);  
+                        passid.focus();  
+                        return false;  
+                        }  
+                        return true;  
+                        }  
+                        
+                        
+                        // Email Validation
+                        
+                        var sEmail = $('#testemail').val();
+                        if($.trim(sEmail).length == 0){  
+                            alert('Email is Compulsory');
+                            return;  
+                        }     
+                        if (!validateEmail(sEmail)) {
+                            alert('Invalid Email Address');
+                            return;                            
+                        }
+                        
+                        // Mobile No Validation
+                            
+                            var No = $('#testMobileNo').val();
+                            if(validateMobileNo(No)){
+                                alert('Please fill Valid Phone No.');
+                                return;
+                            }
+                        
+                        // Gender Validation
+                        
+                            if(!$('.rdoNumber').is(':checked')){
+                                alert('Select Gender');
+                                return;    
+                            }
+                            
+                       // Course Validation
+                           if(!$('.rdoCourse').is(':checked')){
+                                    alert('Select Course');
+                                    return;    
+                           }
+                           
+                      // Category Validation
+                          if(!$('.rdoCategory').is(':checked')){
+                                        alert('Select Category');
+                                        return;    
+                          } 
+                                                                                       
+                    });        
+                });
+                
+                <!-- Function that validates FirstName --> 
+                    
+                    function validateFirstName(fName){
+                        var filter = /^[a-zA-Z]+$/;
+                        if(filter.test(fName)){
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }
+                 
+                <!-- Function that validates email address through a regular expression. -->
+                    function validateEmail(sEmail) {
+                        var filter = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+                        if (filter.test(sEmail)) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+                
+                // Function That validates Mobile Phone No.
+                    function validateMobileNo(No){
+                        var filter = /^[0-9-+]+$/;
+                        if (filter.test(No)){
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+                 $(function(){
+                     $( "#datepicker" ).datepicker();
+                 });                    
+            </script>
+        </head>
+   
+    <!-- Student Form --> 
+    <body>
+        <apex:form id="registration-form" >
+            <apex:pageBlock >
+                <div class ="logoHeading">
+                    <apex:image value="{!$Resource.StudentCollegeLogo}" width="80" height="80"  styleClass="img"/>
+                    <apex:outputText value="Govt Women Engineering College Ajmer"/>
+                </div>
+                <div id= "div1">
+                <apex:pageBlockSection title="Personal Details">
+                    
+                    <!-- Roll No: -->
+                    <apex:outputText value="Registration No / RollNo : "/>
+                    <input type= "text"  name= "user" id= "rollNoText"/>
+                    
+                    <!-- FirstName -->
+                    <apex:outputLabel value="First Name :"/>
+                    <input type ="text" name= "userFirstName" id ="testFirstName"/>
+                    
+                    <!-- LastName -->
+                    <apex:outputLabel value="LastName"/>
+                    <input type="text" id="testLastName"/>
+                    
+                    <!-- Password -->
+                    <apex:outputLabel value="Password"/>
+                    <input type="password" id="passid" size="12" />
+                                        
+                    <apex:outputText value="Email Id :"/>
+                    <input type ="text" id= "testemail"/>
+                    <apex:outputText value="Mobile No :"/>
+                    <input type= "text" id= "testMobileNo"/>             
+                    <apex:outputLabel value="Gender :"/> 
+                    <input type="radio" name="gender" value="male" class="rdoNumber">Male</input>
+                    <input type="radio" name="gender" value="female" class="rdoNumber">Female</input>
+                    <input type="radio" name="gender" value="other" class="rdoNumber"> Other</input>
+                    <apex:outputLabel value="Date Of Bitrh :"/>
+                    <input type="text" id="datepicker"></input>  
+                    <apex:outputLabel value="Course :"/> 
+                    <input type="radio" name="course" value="Btech" class="rdoCourse">BTech</input>
+                    <input type="radio" name="course" value="BBA" class="rdoCourse">BBA</input>
+                    <input type="radio" name="course" value="BCom" class="rdoCourse">BCOM</input>
+                    <apex:outputText value="Category :"/>
+                     <input type="radio" name="category" value="Gen" class= "rdoCategory">GEN</input>
+                    <input type="radio" name="category" value="OBC" class= "rdoCategory">OBC</input>
+                    <input type="radio" name="category" value="SC" class= "rdoCategory">SC</input>
+                    <apex:outputText value="Nationality : "/>
+                    <Select id="testNationality" name="Nationality">
+                        <option value="indian">Indian</option>
+                        <option value="USA">USA</option>
+                        <option value="America">America</option>
+                        <option value="Canada">Canada</option>
+                    </Select>
+                    <apex:outputText value="Address :"/>
+                    <apex:inputTextarea />
+                    <apex:outputText value="State:"/>
+                     <Select>
+                        <option value="Rajsthan">Rajsthan</option>
+                        <option value="Gujrat">Gujrat</option>
+                        <option value="Hariyana">Hariyana</option>
+                        <option value="Panjab">Panjab</option>
+                    </Select>  
+                    <apex:outputText value="City :"/>
+                    <Select>
+                        <option value="Bharatpur">Bharatpur</option>
+                        <option value="Ajmer">Ajmer</option>
+                        <option value="Udaipur">Udaipur</option>
+                        <option value="Jaipur">Jaipur</option>
+                    </Select>             
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Qualification Details">
+                    <apex:outputText value="12th Perchantage  :"/>    
+                    <apex:inputText />
+                    <apex:outputText value="10th Perchantage :"/>
+                    <apex:inputText />                
+                </apex:pageBlockSection>    
+                <apex:pageBlockButtons location="Bottom">
+                    <button class="save" onClick="return false;">Save</button>
+                    <button>Reset</button>
+                </apex:pageBlockButtons>
+               </div>
+            </apex:pageBlock>
+        </apex:form>
+    </body>
+    </html>  
+</apex:page>

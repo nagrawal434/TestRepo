@@ -1,0 +1,52 @@
+<apex:page controller="ContactEditController">
+    <apex:form>
+    <apex:pageBlock Title="Editable Contact"  >
+        <apex:pageBlockTable value="{!models}" var="clist">
+            <apex:column value="{!clist.conList.firstname}"/>
+            <apex:column value="{!clist.conList.lastname}"/>
+            <apex:column value="{!clist.conList.email}"/>
+            <apex:column value="{!clist.conList.phone}"/>
+            <apex:column>
+            <apex:inputCheckbox value=   />
+            </apex:column>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:form> 
+</apex:page>
+
+
+
+
+
+
+<apex:page controller="ContactEditController">
+    <apex:form >
+        <apex:actionFunction  name="acid" />    
+            <apex:pageBlock Title="Editable Contact"  >
+                <apex:pageBlockTable value="{!models}" var="clist">
+                      <apex:column headerValue="Action">
+                                <apex:inputCheckbox value="{!clist.mflag}" />
+                      </apex:column>
+                        <apex:column>
+                            <apex:inputField rendered="True" value="{!clist.conList.firstname}"   />
+                            <apex:outputField rendered="false"/>
+                        </apex:column>
+                        
+                        <apex:column> 
+                            <apex:inputField rendered="true" value="{!clist.conList.lastname}"/>
+                             <apex:outputField rendered="false"/>
+                        </apex:column>
+                            
+                        <apex:column>
+                            <apex:inputField rendered="True" value="{!clist.conList.email}"/>
+                             <apex:outputField rendered="false"/>
+                        </apex:column>    
+                        <apex:column>
+                            <apex:inputField rendered="True" value="{!clist.conList.phone}"/>
+                             <apex:outputField rendered="false"/>
+                         </apex:column>     
+               </apex:pageBlockTable>
+              
+    </apex:pageBlock>
+</apex:form> 
+</apex:page>

@@ -1,0 +1,6 @@
+<apex:page standardController="Contact" renderAs="pdf">  
+  <h1>Your Fee Detail!!</h1>
+    <p>{!contact.name}</p> 
+    <p>Please Submit Pending {!contact.DetailFee__c}</p>
+  
+  </apex:page>

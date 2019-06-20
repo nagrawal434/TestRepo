@@ -1,0 +1,25 @@
+<apex:page controller="AccountContactController"   >
+ <apex:form >
+    <apex:pageBlock >
+        <apex:repeat value="{!models}" var="m" >
+           <center><apex:outputText style="font-size:15px;font-style:Bold;color = red;" value="Account Name..{!m.accountname}"/></center>
+              <apex:pageBlockTable border="2px" value="{!m.ModelContsList}" var="con">
+              
+              <apex:column headerValue="FirstName" > 
+              <apex:outputText value="{!con.firstname}"/>
+              </apex:column>
+              <apex:column headerValue="LastName" >
+              <apex:outputText value="{!con.lastname}"/>
+              </apex:column>
+              <apex:column headerValue="Email" >
+              <apex:outputText value="{!con.email}"/>
+              </apex:column>
+              <apex:column headerValue="Phone" > 
+              <apex:outputText value="{!con.phone}"/>
+              </apex:column>  
+              </apex:pageBlockTable>
+       </apex:repeat>
+  </apex:pageBlock>
+</apex:form>      
+
+ </apex:page>

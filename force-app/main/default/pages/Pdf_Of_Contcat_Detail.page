@@ -1,0 +1,24 @@
+<apex:page controller="SendMailToContact" renderAs="pdf">
+    <apex:form >
+        <apex:pageBlock >
+            <table width="100%" cellspacing="0px" class="list">
+                <apex:variable var="cnt" value="{!0}" /> 
+                <apex:repeat value="{!contactList}" var="con">
+                    <div style="{!if(cnt < 1, 'page-break-before:avoid;','page-break-before:always;')}"><apex:variable var="cnt" value="{!cnt+1}"/></div>
+                    <tr class="headerRow">
+                        <th >First Name:</th><td>{!con.FirstName}</td>
+                    </tr>
+                    <tr class="headerRow">
+                        <th >Last Name:</th><td>{!con.LastName}</td>
+                    </tr>
+                    <tr class="headerRow">
+                        <th >Email:</th><td>{!con.Email}</td>
+                    </tr>
+                    <tr class="headerRow">
+                        <th >Phone:</th><td>{!con.Phone}</td>
+                    </tr>
+                </apex:repeat> 
+            </table>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

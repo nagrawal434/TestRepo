@@ -1,0 +1,33 @@
+<apex:page controller="AddDelConRowController">
+  <apex:form id="frm">
+    <apex:pageBlock id="membAdd" title="Contacts">                  
+            <apex:pagemessages />
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Add Row" action="{!addRow}" reRender="membAdd"/>
+                <apex:commandButton value="Save" action="{!saveRecord}" reRender="frm"/>
+            </apex:pageBlockButtons> 
+            <apex:variable var="rowNumber" value="{!0}"/>
+            <apex:pageBlockTable value="{!conAddList}" var="memb">
+                <apex:column headerValue="First Name">
+                    <apex:inputText value="{!memb.firstname}"/>
+                 </apex:column>
+                 <apex:column headerValue="Last Name">
+                    <apex:inputText value="{!memb.lastname}"/>
+                 </apex:column>
+                <apex:column headerValue="Father Name">
+                    <apex:inputField value="{!memb.Father_Name__c}"/>
+                </apex:column>
+                <apex:column headerValue="Fee">
+                    <apex:inputField value="{!memb.DetailFee__c}"/>
+                </apex:column>
+                <apex:column headerValue="EMail Id">
+                    <apex:commandButton value="Delete" action="{!deleteRow}" reRender="membAdd">
+                        <apex:param name="rowIndex" value="{!rowNumber}"/>
+                    </apex:commandButton>  
+                      <apex:variable var="rowNumber" value="{!rowNumber+1}"/>
+                </apex:column>
+            </apex:pageBlockTable>         
+    </apex:pageBlock>
+</apex:form>>
+
+</apex:page>

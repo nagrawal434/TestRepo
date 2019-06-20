@@ -1,0 +1,155 @@
+<apex:page controller="PieChartofBirthday" title="Contact Bithdate Life Status">
+    <apex:form >
+        <apex:pageBlock tabStyle="Contact" title="Contact Birthdate">
+            <apex:pageBlockSection title="Birthdate" columns="2"> 
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="From Month"/> 
+                    <apex:selectList multiselect="false" size="1" value="{!fromMonth}"> 
+                        <apex:selectOption itemLabel="January" itemValue="1"/>
+                        <apex:selectOption itemLabel="February" itemValue="2"/>
+                        <apex:selectOption itemLabel="March" itemValue="3"/>
+                        <apex:selectOption itemLabel="Aprail" itemValue="4"/>
+                        <apex:selectOption itemLabel="May" itemValue="5"/>
+                        <apex:selectOption itemLabel="June" itemValue="6"/>
+                        <apex:selectOption itemLabel="July" itemValue="7"/>
+                        <apex:selectOption itemLabel="August" itemValue="8"/>
+                        <apex:selectOption itemLabel="September" itemValue="9"/>
+                        <apex:selectOption itemLabel="Octomber" itemValue="10"/>
+                        <apex:selectOption itemLabel="November" itemValue="11"/>
+                        <apex:selectOption itemLabel="December" itemValue="12"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="To Month"/> 
+                        <apex:selectList multiselect="false" size="1" value="{!toMonth}"> 
+                            <apex:selectOption itemLabel="January" itemValue="1"/>
+                            <apex:selectOption itemLabel="February" itemValue="2"/>
+                            <apex:selectOption itemLabel="March" itemValue="3"/>
+                            <apex:selectOption itemLabel="Aprail" itemValue="4"/>
+                            <apex:selectOption itemLabel="May" itemValue="5"/>
+                            <apex:selectOption itemLabel="June" itemValue="6"/>
+                            <apex:selectOption itemLabel="July" itemValue="7"/>
+                            <apex:selectOption itemLabel="August" itemValue="8"/>
+                            <apex:selectOption itemLabel="September" itemValue="9"/>
+                            <apex:selectOption itemLabel="Octomber" itemValue="10"/>
+                            <apex:selectOption itemLabel="November" itemValue="11"/>
+                            <apex:selectOption itemLabel="December" itemValue="12"/>
+                        </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="From Year"/> 
+                        <apex:selectList multiselect="false" size="1" value="{!fromYear}"> 
+                            <apex:selectOption itemLabel="2016" itemValue="2016"/>
+                            <apex:selectOption itemLabel="2015" itemValue="2015"/>
+                            <apex:selectOption itemLabel="2014" itemValue="2014"/>
+                            <apex:selectOption itemLabel="2013" itemValue="2013"/>
+                            <apex:selectOption itemLabel="2012" itemValue="2012"/>
+                            <apex:selectOption itemLabel="2011" itemValue="2011"/>
+                            <apex:selectOption itemLabel="2010" itemValue="2010"/>
+                            <apex:selectOption itemLabel="2009" itemValue="2009"/>
+                            <apex:selectOption itemLabel="2008" itemValue="2008"/>
+                            <apex:selectOption itemLabel="2007" itemValue="2007"/>
+                            <apex:selectOption itemLabel="2006" itemValue="2006"/>
+                            <apex:selectOption itemLabel="2005" itemValue="2005"/>
+                            <apex:selectOption itemLabel="2004" itemValue="2004"/>
+                            <apex:selectOption itemLabel="2003" itemValue="2003"/>
+                            <apex:selectOption itemLabel="2002" itemValue="2002"/>
+                            <apex:selectOption itemLabel="2001" itemValue="2001"/>
+                            <apex:selectOption itemLabel="1999" itemValue="1999"/>
+                            <apex:selectOption itemLabel="1998" itemValue="1998"/>
+                            <apex:selectOption itemLabel="1997" itemValue="1997"/>
+                            <apex:selectOption itemLabel="1996" itemValue="1996"/>
+                            <apex:selectOption itemLabel="1995" itemValue="1995"/>
+                            <apex:selectOption itemLabel="1994" itemValue="1994"/>
+                            <apex:selectOption itemLabel="1993" itemValue="1993"/>
+                            <apex:selectOption itemLabel="1992" itemValue="1992"/>
+                            <apex:selectOption itemLabel="1991" itemValue="1991"/>
+                            <apex:selectOption itemLabel="1990" itemValue="1994"/>
+                            <apex:selectOption itemLabel="1994" itemValue="1990"/>
+                            <apex:selectOption itemLabel="1989" itemValue="1989"/>
+                            <apex:selectOption itemLabel="1988" itemValue="1988"/>
+                            <apex:selectOption itemLabel="1987" itemValue="1987"/>
+                            <apex:selectOption itemLabel="1986" itemValue="1986"/>
+                            <apex:selectOption itemLabel="1985" itemValue="1985"/>
+                            <apex:selectOption itemLabel="1984" itemValue="1984"/>
+                            <apex:selectOption itemLabel="1983" itemValue="1983"/>
+                            <apex:selectOption itemLabel="1982" itemValue="1982"/>
+                            <apex:selectOption itemLabel="1981" itemValue="1981"/>
+                            <apex:selectOption itemLabel="1980" itemValue="1980"/>
+                            <apex:selectOption itemLabel="1979" itemValue="1979"/>
+                            
+                        </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="To Year"/> 
+                        <apex:selectList multiselect="false" size="1" value="{!toYear}"> 
+                            <apex:selectOption itemLabel="2016" itemValue="2016"/>
+                            <apex:selectOption itemLabel="2015" itemValue="2015"/>
+                            <apex:selectOption itemLabel="2014" itemValue="2014"/>
+                            <apex:selectOption itemLabel="2013" itemValue="2013"/>
+                            <apex:selectOption itemLabel="2012" itemValue="2012"/>
+                            <apex:selectOption itemLabel="2011" itemValue="2011"/>
+                            <apex:selectOption itemLabel="2010" itemValue="2010"/>
+                            <apex:selectOption itemLabel="2009" itemValue="2009"/>
+                            <apex:selectOption itemLabel="2008" itemValue="2008"/>
+                            <apex:selectOption itemLabel="2007" itemValue="2007"/>
+                            <apex:selectOption itemLabel="2006" itemValue="2006"/>
+                            <apex:selectOption itemLabel="2005" itemValue="2005"/>
+                            <apex:selectOption itemLabel="2004" itemValue="2004"/>
+                            <apex:selectOption itemLabel="2003" itemValue="2003"/>
+                            <apex:selectOption itemLabel="2002" itemValue="2002"/>
+                            <apex:selectOption itemLabel="2001" itemValue="2001"/>
+                            <apex:selectOption itemLabel="1999" itemValue="1999"/>
+                            <apex:selectOption itemLabel="1998" itemValue="1998"/>
+                            <apex:selectOption itemLabel="1997" itemValue="1997"/>
+                            <apex:selectOption itemLabel="1996" itemValue="1996"/>
+                            <apex:selectOption itemLabel="1995" itemValue="1995"/>
+                            <apex:selectOption itemLabel="1994" itemValue="1994"/>
+                            <apex:selectOption itemLabel="1993" itemValue="1993"/>
+                            <apex:selectOption itemLabel="1992" itemValue="1992"/>
+                            <apex:selectOption itemLabel="1991" itemValue="1991"/>
+                            <apex:selectOption itemLabel="1990" itemValue="1994"/>
+                            <apex:selectOption itemLabel="1994" itemValue="1990"/>
+                            <apex:selectOption itemLabel="1989" itemValue="1989"/>
+                            <apex:selectOption itemLabel="1988" itemValue="1988"/>
+                            <apex:selectOption itemLabel="1987" itemValue="1987"/>
+                            <apex:selectOption itemLabel="1986" itemValue="1986"/>
+                            <apex:selectOption itemLabel="1985" itemValue="1985"/>
+                            <apex:selectOption itemLabel="1984" itemValue="1984"/>
+                            <apex:selectOption itemLabel="1983" itemValue="1983"/>
+                            <apex:selectOption itemLabel="1982" itemValue="1982"/>
+                            <apex:selectOption itemLabel="1981" itemValue="1981"/>
+                            <apex:selectOption itemLabel="1980" itemValue="1980"/>
+                            <apex:selectOption itemLabel="1979" itemValue="1979"/>                            
+                        </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+           <apex:commandButton value="Search" action="{!searchMethod}"/>
+            <apex:pageBlockSection title="Contact Birthdate Record ">
+             <!--BAR CHART  -->
+                 <apex:chart width="1000" height="500" data="{!wrapperList}"> 
+                       <apex:axis fields="dataXasies" position="bottom" type="Category" title="Year/Month">
+                           <apex:chartLabel rotate="75"/>
+                       </apex:axis>
+                       <apex:axis grid="true" fields="countYaxies" position="left" type="Numeric" title="Birthdays"/>
+                       <apex:barSeries orientation="vertical" xField="dataXasies" yField="countYaxies" axis="bottom">
+                           <apex:chartTips height="20" width="120"/>
+                       </apex:barseries>   
+                 </apex:chart>           
+            </apex:pageBlockSection>  
+            <apex:pageBlockSection title="Contacts Life History" columns="1">
+             <!-- PAI CHART  -->
+              <apex:outputPanel style="text-align:center;">
+              <!-- <div align="center"> -->
+                  <apex:chart data="{!wrapperList2}" height="300" width="500" >
+                     <apex:legend position="top"/>
+                     <apex:pieSeries labelField="PersonCategory" dataField="countPerson">
+                         <apex:chartTips height="20" width="120"/>
+                     </apex:pieSeries>
+                  </apex:chart>
+               </apex:outputPanel> 
+              <!-- </div> --> 
+              </apex:pageBlockSection>
+        </apex:pageBlock>   
+    </apex:form> 
+</apex:page>

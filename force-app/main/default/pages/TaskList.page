@@ -1,0 +1,31 @@
+<apex:page controller="TaskController" tabStyle="task">
+<apex:form >
+    <apex:pageBlock >
+           <apex:pageBlockSection columns="1">
+           
+               <apex:selectList value="{!searchselection}" multiselect="false" size="1">
+ 
+                   <apex:selectOption itemValue="TODAY" itemLabel="Today"/>
+                   <apex:selectOption itemValue="WEEK"  itemLabel="This Week"/>
+                   <apex:selectOption itemValue="MONTH" itemLabel="This Month"/>
+                  <apex:commandButton value="Go" action="{!goSearch}"/> 
+                  
+                </apex:selectList>
+                     <apex:pageBlockTable value="{!tasks}" var="tas">
+                           <apex:column value="{!tas.id}"/>
+                           <apex:column value="{!tas.subject}"/>
+                           <apex:column value="{!tas.priority}"/>
+                   <apex:column >
+                   <apex:commandLink action="/{!tas.id}/e?retURL=%2F{!tas.id}" value="Edit"  />
+                   </apex:column>
+                   <apex:column >
+                   <apex:commandButton value="View Details" action="/{!tas.id}" />
+                   </apex:column>
+                    
+               </apex:pageBlockTable>
+       
+     </apex:pageBlockSection>
+     
+     </apex:pageBlock>
+</apex:form>
+</apex:page>

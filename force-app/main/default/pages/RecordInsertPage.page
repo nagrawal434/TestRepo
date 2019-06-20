@@ -1,0 +1,10 @@
+<apex:page StandardController="Contact" extensions="RecordInsertController">
+    <apex:form >    
+        <apex:pageBlock title="Contacts" id="pb">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Add Row" action="{!addRow}"/>
+                <apex:commandButton value="Save" action="{!saveRecord}"/>
+            </apex:pageBlockButtons>  
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

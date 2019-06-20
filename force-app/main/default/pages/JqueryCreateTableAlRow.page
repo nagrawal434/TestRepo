@@ -1,0 +1,100 @@
+<!-- Using CSS Alternate ROw Color 
+<apex:page >
+    <html>
+        <head>
+        <style>
+        #table1 th{
+            height: 50px;
+            background-color: burlywood;
+        }
+        tr:nth-child(even){
+            background-color: #f1f1c1
+        }
+        table#table1 th, td {
+            text-align: center;
+            padding: 8px;
+        }
+        tr:nt-child(old){
+            backgroud-color: #f2f2f2
+        }
+        </style>
+        </head>
+        <body>
+            <table id="table1" border="1" style="border-color: black;display: grid; width:100%;border-collapse: collapse;"  cellpadding="3" cellspacing="3">
+                <tr>
+                    <th>Cell 1</th>
+                    <th>Cell 2</th>
+                    <th>Cell 3</th>
+                </tr>               
+                <tr >
+                    <td>one</td>
+                    <td>one</td>
+                    <td>one</td>
+                </tr>
+                <tr >
+                    <td>Two</td>
+                    <td>Two</td>
+                    <td>Two</td>
+                </tr>
+                <tr >
+                    <td>Three</td>
+                    <td>Three</td>
+                    <td>Three</td>
+                </tr>
+                <tr>
+                    <td>Four</td>
+                    <td>Four</td>
+                    <td>Four</td>
+                </tr>
+            </table>
+        </body>
+    </html>
+</apex:page> -->
+
+
+<!-- Using Jquery -->
+<apex:page >
+    <html>
+    <head>
+        <Script type="text/JavaScript">
+            <apex:includeScript value="{!$Resource.JqueryLibrary}"/>
+            $(document).ready(function()
+            {
+                $("table#table1 tr:odd").css("background-color", "#ffcc99");
+            });
+        </Script>
+        <Style>
+        
+        </Style>
+    </head>
+    <body>
+        <table id="table1" border="1" style="border-color: black;display: grid; width:100%;border-collapse: collapse;"  cellpadding="3" cellspacing="3">
+                <tr>
+                    <th>Cell 1</th>
+                    <th>Cell 2</th>
+                    <th>Cell 3</th>
+                </tr>               
+                <tr >
+                    <td>one</td>
+                    <td>one</td>
+                    <td>one</td>
+                </tr>
+                <tr >
+                    <td>Two</td>
+                    <td>Two</td>
+                    <td>Two</td>
+                </tr>
+                <tr >
+                    <td>Three</td>
+                    <td>Three</td>
+                    <td>Three</td>
+                </tr>
+                <tr>
+                    <td>Four</td>
+                    <td>Four</td>
+                    <td>Four</td>
+                </tr>
+            </table>
+        </body>
+    </html>
+</apex:page>

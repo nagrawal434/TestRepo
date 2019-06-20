@@ -1,0 +1,13 @@
+<apex:page controller="UpsertContactController">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+              <apex:inputField value="{!cont.firstname}"/>
+              <apex:inputField value="{!cont.lastname}"/>
+              <apex:inputField value="{!cont.email}"/>
+              <apex:inputField value="{!cont.phone}"/>
+            </apex:pageBlockSection>
+            <apex:commandButton value="save" action="{!save}"/>
+         </apex:pageBlock>
+    </apex:form>
+</apex:page>

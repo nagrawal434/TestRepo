@@ -1,0 +1,15 @@
+<apex:page controller="AcCtModelClassController">
+    <Apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!models}" var="m">
+                <apex:column value="{!m.acctname}"/>
+                <apex:column >
+                    <apex:pageBlockTable value="{!m.conname}" var="mCOn">
+                        <apex:column value="{!mCOn.firstname}"/>
+                        <apex:column value="{!mCOn.lastname}"/>
+                    </apex:pageBlockTable>
+                </apex:column>  
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </Apex:form>
+</apex:page>

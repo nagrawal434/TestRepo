@@ -1,0 +1,30 @@
+<apex:page controller="ExportController" tabStyle="Report">
+    <style>
+        .requierdBlock{
+             border-left: 4px solid #d13e3e;    
+        }
+    </style>
+    <apex:form >
+        <apex:sectionHeader title="{!reportName}"/>
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="1">
+                <apex:pageblocksectionItem >
+                    <apex:outputlabel value="Export File Encoding"/>
+                    <apex:selectList value="{!selectedEncoding}" size="1" id="encodeingId" required="true" styleClass="requierdBlock">
+                        <apex:selectOptions value="{!encodings}"/>
+                    </apex:selectList>
+                </apex:pageblocksectionItem>
+                <apex:pageblocksectionItem >
+                    <apex:outputlabel value="Export File Format"/>
+                    <apex:selectList value="{!selectedFormat}" size="1" id="encodeTypeId" required="true" styleClass="requierdBlock">
+                        <apex:selectOptions value="{!Types}"/>
+                    </apex:selectList>
+                </apex:pageblocksectionItem>        
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Export" onclick="window.open('/{!reportId}?export=1&enc={!selectedEncoding}&xf={!selectedFormat}','_self');return false;"/>
+                <apex:commandButton value="Done" action="{!doneMethod}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>    
+</apex:page>

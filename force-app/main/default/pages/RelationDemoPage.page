@@ -1,0 +1,26 @@
+<apex:page controller="RelationDemoController">
+  <apex:form >
+      <apex:pageBlock >
+            <apex:pageBlockSection title="Page Block Demo" columns="1" collapsible="true">
+                <apex:pageBlockTable value="{!stuList}" var="con">
+                    <apex:column value="{!con.First_Name__c}" />
+                    <apex:column value="{!con.Class__r.Name}" />
+                </apex:pageBlockTable>
+            </apex:pageBlockSection> 
+       </apex:pageBlock>
+       <table>
+            <apex:repeat value="{!clsList}" var="con">
+                <tr>
+                    <th>class</th>
+                    <td>{!con.Name}</td>
+                
+                <apex:repeat value="{!con.Students__r}" var="co">
+                    <th>Name</th>
+                    <td>{!co.First_Name__c}</td>
+               </apex:repeat>
+               </tr>
+            </apex:repeat>
+            
+        </table> 
+        </apex:form>
+</apex:page>

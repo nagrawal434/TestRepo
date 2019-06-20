@@ -1,0 +1,19 @@
+<apex:page controller="SendEmailPdfController" showHeader="false" sidebar="false">
+    <apex:form >
+        <style>
+                    body .bPageBlock .pbBody .blue .pbSubheader{
+                         background-color: #00aae4;
+                     }
+                    
+        </style>
+        <apex:pageBlock >
+            <apex:commandButton value="Send" action="{!sendMethod}"/>
+            <apex:commandButton value="Attach a File" action="{!attachFileMethod}"/>
+            <apex:commandButton value="Cancel" action="{!cancelMethod}"/>
+            <apex:outputPanel styleClass="blue" layout="block" id="outputpanel1" >
+              <apex:pageBlockSection title="Email" id="section1" columns="3">                       
+              </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>    
+</apex:page>

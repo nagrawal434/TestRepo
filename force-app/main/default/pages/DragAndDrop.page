@@ -1,0 +1,40 @@
+<apex:page docType="html-5.0" showHeader="false" controller="DragDropController">
+<apex:includeScript value="https://code.jquery.com/jquery-1.10.1.min.js"/>
+<apex:includeScript value="{!URLFOR($Resource.Ezdz,'/jquery.ezdz.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.Ezdz,'/jquery.ezdz.css')}" />
+
+
+<script>
+    $(document).ready(function() {
+        $('input[type="file"]').ezdz();
+    });
+</script>
+<apex:sectionHeader title="Visualforce Example" subtitle="File Upload Example"/>
+
+  <apex:form enctype="multipart/form-data">
+    <apex:pageMessages />
+    <apex:pageBlock title="Upload a File">
+
+      <apex:pageBlockButtons >
+        <apex:commandButton action="{!upload}" value="Save"/>
+      </apex:pageBlockButtons>
+
+      <apex:pageBlockSection showHeader="false" columns="2" id="block1">
+
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="File Name" for="fileName"/>
+          <apex:inputText value="{!att.name}" id="fileName"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Description" for="description"/>
+          <apex:inputTextarea value="{!att.description}" id="description"/>
+        </apex:pageBlockSectionItem>
+
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Select File" for="file"/> 
+             <apex:inputfile id="dragdrop" value="{!att.body}" filename="{!att.name}"/>
+        </apex:pageBlockSectionItem>
+      </apex:pageBlockSection>         
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

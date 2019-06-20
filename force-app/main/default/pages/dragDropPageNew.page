@@ -1,0 +1,311 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false">
+
+<!-- =====================Script============================ -->
+<script type="text/javascript">
+         var __sfdcSessionId = '{!GETSESSIONID()}';
+        //alert(__sfdcSessionId);
+</script>
+
+<!--
+<script src="/soap/ajax/35.0/connection.js" type="text/javascript"></script>
+<script src="/soap/ajax/35.0/apex.js" type="text/javascript"></script>
+-->
+
+<script src="{!$Resource.connection}" type="text/javascript"></script>
+<script src="{!$Resource.apex}" type="text/javascript"></script>
+
+<!-----------------jQuery--------------------->
+<script src="{!URLFOR($Resource.jQueryDragDrpo,'/jquery/jQuery-11.js')}" />
+
+<!---------Bootstrap files and j-query--------------->
+<script src="{!URLFOR($Resource.Bootstrap,'/bootstrap-3.3.5-dist/js/bootstrap.min.js')}" />
+<apex:stylesheet value="{!URLFOR($Resource.Bootstrap,'/bootstrap-3.3.5-dist/css/bootstrap.min.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.Bootstrap,'/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css')}" />
+<script>
+
+    // ====== Show browse ======
+    function showBrowse() {
+        alert('showBrowser');
+        document.getElementById('file').click();
+    }
+    
+    function showProcessing() {
+        alert('showProcessing');
+        $('#dlgBgr').css('display','block');
+        $('#dlg').css('display','block');
+    }
+    function hideProcessing() {
+        alert('hideProcessing');
+        $('#dlgBgr').css('display','none');
+        $('#dlg').css('display','none');
+    }
+    
+    var filesArray = [];
+    // ======= Fetch Files =======
+    function fetchFiles(files) {
+        alert('fetchFiles');
+        filesArray = [];
+        for(var i=0 ; i<files.length ; i++){
+            filesArray.push(files[i]);
+        }
+        showFiles();
+    }
+    
+    // ======= Show Files before upload ========
+    function showFiles(){
+        var fileRows = '';
+        document.getElementById('filesBdy').innerHTML = '';
+        for(var i=0 ; i<filesArray.length ; i++) {
+            fileRows += "<tr>";
+            fileRows += "<td>"+ parseInt(i+1) +"</td>";
+            fileRows += "<td>"+ filesArray[i].name +"</td>";
+            fileRows += "<td>"+ filesArray[i].type +"</td>";
+            fileRows += "<td>"+ ((filesArray[i].size/1024)/1024).toFixed(3) +"</td>";
+            fileRows += "<td><a href='#' onclick='delFileFromArray("+i+")'>Delete</a></td>";
+            fileRows += "</tr>"
+        }
+        document.getElementById('filesBdy').innerHTML = fileRows;
+    }
+    // ========== Delete filefrom rray before upoad =====
+    function delFileFromArray(delIndex) {
+        filesArray.splice(delIndex,1);
+        showFiles();
+    }
+    
+    // ==== Save to Server ====
+    function saveToServer() {
+        showProcessing();
+        if(filesArray.length > 0) {
+            var flag;
+            flag = checkingFileSize();
+            if(flag == true) {
+                fillListOfAtc();
+            }
+        }else{
+            hideProcessing();
+            alert('There are not any file to upload.')
+        }
+    }
+    
+    // ==== Checking file size ====
+    function checkingFileSize(){
+        var allFilesSize = 0;
+        var flag = true;
+        for(var i=0 ; i<filesArray.length ; i++) {
+            var fileSize = 0;
+            fileSize = ((filesArray[i].size/1024)/1024).toFixed(2);
+            if(fileSize > 25){
+                hideProcessing();
+                flag = false;
+                alert('The File ' + filesArray[i].name+ ' size is ' + fileSize + ' MB. Maximum single file size should be 25 MB.');
+                break;
+            }
+        }
+        return flag;
+    } 
+ 
+    
+    // ===== Files upload to server =====
+    var attachments = [];
+    var loadedFilesCounter = 0;
+    function fillListOfAtc() {
+        for(var i=0 ; i<filesArray.length ; i++) {
+            var f = filesArray[i];
+            var reader = new FileReader(); 
+            reader.file = f;
+            reader.onload = function(e) {
+                var atc = new sforce.SObject("Attachment");
+                atc.Name = this.file.name;
+                atc.ContentType = this.file.type;
+                atc.parentId = '{!'00628000002E2JL'}';
+
+                var binary = "";
+                var bytes = new Uint8Array(e.target.result);
+                var length = bytes.byteLength;
+
+                for (var index = 0; index < length; index++) {
+                    binary += String.fromCharCode(bytes[index]);
+                }
+                atc.Body = (new sforce.Base64Binary(binary)).toString();  
+                attachments.push(atc); 
+            }
+            
+            reader.onloadend = function(e) {
+                loadedFilesCounter++;                    
+                if(loadedFilesCounter == filesArray.length){                               
+                    processEachAtch();
+                } 
+            };                        
+            reader.readAsArrayBuffer(f);
+        } 
+        // ===END:for ====
+    }
+    
+    // ===== Process each attachment ======
+    function processEachAtch() {
+        //alert('processEachAtch');
+        //console.log('1');
+        
+        for(var i=0 ; i<attachments.length ; i++) {
+            uploadFileToServer(attachments[i], i+1);
+        }
+    }
+    
+    //====== Upload file to server =======
+    var uploadedAtchIds = '';
+    //var parentIds = '';
+    var comma = '';
+    function uploadFileToServer(atc, flagSize) {
+        console.log('checkLastIndx :-'+flagSize);
+        sforce.connection.create([atc], { 
+           onSuccess : function(result, source) {  
+                //alert(result);                            
+                if (result[0].getBoolean("success")){
+                    console.log('succesfull');
+                    uploadedAtchIds += comma + result[0].id;
+                    comma = '---';
+                    //alert('File uploaded id'+result[0].id);
+                    //parentIds = result[0].name;
+                    console.log(flagSize + '==' + attachments.length);
+                    if(flagSize == attachments.length){ 
+                        //alert(uploadedAtchIds);
+                        hideProcessing();
+                        alert("Attachment added sucessfully..");
+                        loadedFilesCounter = 0;
+                    }                                 
+                } else {
+                    hideProcessing();
+                    alert('FAIL :- '+result[0].errors.message)
+                }
+            },
+                
+            onFailure : function(error, source) {
+                hideProcessing();
+               alert('Error : '+error);
+            }            
+        });  
+    }
+    
+</script>
+<!-- ============================= END : Script ============================ -->
+
+<!-- ============================== Style ================================= -->
+<style>
+   #downloadUrlDiv{
+       display:none;
+   }
+   #downloadUrlDiv .downldUrl{
+       color:#65B26A;
+   }
+   .drgDrpDiv{
+        background-color: #f5f5f5;
+        border: 1px dotted #ccc;
+        border-radius:10px;
+        border-image: none;
+        color: #666;
+        font-size: 16px;
+        min-height: 50px;
+        text-align: center;
+   }
+   #dlgBgr{
+                top         :   0;
+                width       :   100%;
+                height      :   100%;
+                position    :   fixed;
+                background  :   #f5f5f5;
+                Opacity     :   .7;
+                display     :   none;
+                z-index     :   100;
+            }
+            
+          #dlg{
+                top           :     0;
+                bottom        :     0;
+                left          :     0;
+                right         :     0;
+                margin        :     auto;
+                position      :     fixed;
+                display       :     none;
+                
+                width         :     75px;
+                height        :     80px;
+                z-index       :     101;
+            }
+   
+</style>
+<!-- ============================== END : Style ================================= -->
+
+<!-- =====================Form============================= -->
+<apex:form >
+    <!-- ======= Loading ===== -->
+    <div id="dlgBgr"></div>
+        
+    <div id="dlg">
+        Uploading <img src="{!URLFOR($Resource.images,'/images/loading.gif')}"/> 
+    </div> 
+    
+    <input type="file" name="file" onChange="fetchFiles(this.files); return false;" style='display:none'  id="file" multiple="true" />
+    <div class="container">
+        <div class='row'>
+            <div class='col-sm-2' />
+            <div  class='col-sm-8' style="font-size:40px; color:#265a88 ; text-align:center">
+                Document Uploader
+            </div>
+            <div class='col-sm-2' />
+        </div>
+        <br/>
+        <div class='row'>
+            <div  class='col-sm-2' />
+            <!-- ===== Drag and Drop files div ===== -->
+            <div id='holder' class='col-sm-8 drgDrpDiv' onClick="showBrowse()">
+                    Drag and drop files here OR click to browse
+            </div>
+            
+             <div class='col-sm-2' />
+        </div>
+        
+        <br/>
+        
+        <!-- ===== Files show before upload ======== -->
+        <table id='filesTbl' class="table table-responsive" >
+            <thead>
+                <tr>
+                    <th>S No</th> <th>Name</th> <th>Type</th> <th>Size(MB)</th> <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id='filesBdy'>    </tbody>
+        </table>
+       
+        <div class="row">
+            <div class="col-sm-12" style="text-align:center">
+                <button class="btn btn-primary" onClick='saveToServer(); return false;'> Upload To Server </button>  
+            </div>
+        </div>
+        <br/>
+        
+        
+    </div>
+    <!-- ======= END : Container ======= -->
+ 
+</apex:form>
+<!-- ===================== END : Form ============================= -->
+<script>
+   
+    var holder = document.getElementById('holder');
+
+    holder.ondragover = function () { 
+          //alert('drag over'); 
+          return false; 
+    };
+    holder.ondragend = function () { 
+        //alert('drag end'); 
+        //return false; 
+    };
+    holder.ondrop = function (e) {
+        //alert('on drop');
+        e.preventDefault();
+        fetchFiles(e.dataTransfer.files);
+    }
+   
+</script>
+</apex:page>

@@ -1,0 +1,58 @@
+<apex:page controller="PieChartDemoController">
+  <apex:form >
+      <apex:pageBlock >
+          <!-- The three buttons to click -->
+          <apex:pageBlockButtons >
+              <apex:commandButton action="{!button1}" value="Button 1" reRender="chartSection"/>
+              <apex:commandButton action="{!button2}" value="Button 2" reRender="chartSection"/>
+              <apex:commandButton action="{!button3}" value="Button 3" reRender="chartSection"/>
+          </apex:pageBlockButtons>
+ 
+          <!-- OUR CHART -->
+          <apex:pageBlockSection columns="2" id="chartSection">
+              <!-- PAI CHART -->
+              <apex:chart data="{!dataPoints}" height="300" width="500">
+                 <apex:legend position="top"/>
+                 <apex:pieSeries labelField="name" dataField="clicks" >
+                     <apex:chartTips height="20" width="120"/>
+                 </apex:pieSeries>
+              </apex:chart>   
+              
+              <!-- DONUT CHRAT -->
+              <apex:chart data="{!dataPoints}" height="300" width="500">        
+                  <apex:legend position="bottom"/>
+                  <apex:pieSeries tips="true" dataField="clicks" labelField="name" donut="50"/>
+               </apex:chart>
+              
+              <!-- BAR CHART -->
+              <apex:chart data="{!dataPoints}" height="300" width="500">
+                  <apex:axis type="Numeric"  position="left"   fields="clicks" title="Click"/>
+                  <apex:axis type="Category" position="bottom" fields="name"   title="Name"/>
+               
+                  <apex:barSeries axis="bottom" orientation="vertical" xField="name" yField="clicks" >
+                     <apex:chartTips height="20" width="120"  />
+                  </apex:barSeries>
+              </apex:chart>
+              
+              <!-- LINE CHART -->
+              <apex:chart data="{!dataPoints}" height="300" width="500">
+                  <apex:axis type="Numeric"  position="left"   fields="clicks" title="Click"/>
+                  <apex:axis type="Category" position="bottom" fields="name"   title="Name"/>
+                  <apex:lineSeries axis="bottom"  xField="name" yField="clicks"></apex:lineSeries>
+
+              </apex:chart>
+              
+              
+              <apex:chart data="{!dataPoints}" height="300" width="500">
+                  <apex:scatterSeries xField="name" yField="clicks" >
+                      
+                   </apex:scatterSeries>
+                   <apex:axis type="Numeric"  position="left"   fields="clicks" title="Click"/>
+                  <apex:axis type="Category" position="bottom" fields="name"   title="Name"/>
+               </apex:chart>   
+       
+          
+          </apex:pageBlockSection>
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

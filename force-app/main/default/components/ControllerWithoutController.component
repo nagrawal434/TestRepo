@@ -1,0 +1,11 @@
+<apex:component >
+      <apex:attribute name="contacts" description="Contacts Detail" required="true" type="Contact"/>
+      
+     <tr>
+          <td>{!contacts.firstname}</td>
+          <td>{!contacts.lastname}</td>
+          <td>{!contacts.email}</td>
+          <td>{!contacts.phone}</td>
+          
+       </tr>
+</apex:component>

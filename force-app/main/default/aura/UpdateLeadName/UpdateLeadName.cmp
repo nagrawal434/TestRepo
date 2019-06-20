@@ -1,0 +1,36 @@
+<aura:component controller="UpdateLeadController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId">
+    <aura:attribute name="recordId" type="Id"/>    
+    <aura:attribute name="leadRecord" type="lead"/>
+    <aura:attribute name="isEdit" type="Boolean" default="false"/>        
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <lightning:card >
+        <!-- <apex:form> -->
+        <div class="slds-media slds-no-space slds-grow">
+            <div class="slds-media__figure">
+                <lightning:avatar src="" variant="circle" size="medium" fallbackIconName="standard:lead"/>
+            </div>
+            <div class="slds-media__body">
+                <p class="slds-text-title--caps slds-line-height--reset">Lead</p>
+                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="Lead Details">Lead Detail</h1>
+            </div>
+        </div>            
+        <form class="slds-form--stacked">
+            <div class="slds-form-element__control">                    
+                <aura:if isTrue="{!v.isEdit}" >
+                    <ui:inputText placeholder="Type here..." class="slds-input"  aura:id="searchId" value="{!v.leadRecord.FirstName}"/>                                                
+                    <aura:set attribute="else">
+                        FirstName : <ui:outputTextArea value="{!v.leadRecord.FirstName}" />
+                    </aura:set>
+                </aura:if>
+                <div class="slds-form-element__icon slds-float_right">
+                    <lightning:buttonIcon iconName="utility:edit" variant="bare" onclick="{!c.editLead }" alternativeText="edit test lead" disabled="{!v.isEdit}"/>
+                </div>
+            </div>                        
+            <div class="slds-form-element">
+                <lightning:button variant="brand" label="Save" onclick="{!c.SaveRecord}"/>
+            </div>        
+        </form>
+    </lightning:card>
+    
+</aura:component>

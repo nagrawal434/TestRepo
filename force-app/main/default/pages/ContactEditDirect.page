@@ -1,0 +1,10 @@
+<apex:page standardController="contact">
+    <apex:form >
+            <apex:outputText value="{!contact.firstname}" />
+            <apex:outputText value="{!contact.lastname}"/>
+            <apex:outputText value="{!contact.email}"/>
+            <apex:outputText value="{!contact.phone}"/>
+            <Apex:outputLink value="{!contact.id}"/> 
+        
+    </apex:form>
+</apex:page>

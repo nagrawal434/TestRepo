@@ -1,0 +1,32 @@
+<apex:page controller="ContactModel1">
+<apex:form id="frm">
+    function displayErr()
+    if(acctName!='Test User')
+      {   
+    alert(".....");
+      }else
+      {
+          DeleteRecord();
+      }
+    }
+  
+  
+  <apex:pageBlock >
+  <apex:pageMessages ></apex:pageMessages>
+      <apex:pageBlockSection >
+         <apex:pageBlockTable value="{!seriesList}" var="s" width="100%">
+              <apex:column value="{!s.sno}" headerValue="SNo"/>
+              <apex:column value="{!s.con.FirstName}"/>
+              <apex:column value="{!s.con.LastName}"/>
+              <apex:column value="{!s.con.Email}"/>
+              <apex:column headerValue="Checkbox"> <apex:inputCheckbox value="{!s.isSelected}"/></apex:column>   
+         </apex:pageBlockTable>
+      </apex:pageBlockSection>
+      
+      <apex:pageBlockButtons >
+      <apex:commandButton value="Delete" action="{!deleteFun}" onclick="jsMethod"/>
+      </apex:pageBlockButtons>
+      
+  </apex:pageBlock>
+ </apex:form>
+</apex:page>

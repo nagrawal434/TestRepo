@@ -1,0 +1,81 @@
+<apex:page controller="SendEmailAndPdfController"  showHeader="false" sidebar="false">
+    
+    <apex:form id="frm">
+        <apex:actionFunction name="contactDetail" action="{!showContactDetail}" reRender="table1">
+            <apex:param assignTo="{!accountId}" name="par" value=""/>
+        </apex:actionFunction>
+        <apex:actionFunction action="{!changeOption}"  name="change"  reRender="opPge,table1"/>  
+        <apex:actionFunction name="emptyId" action="{!emptyIds}" reRender="table1"/>
+    <apex:outputPanel id="op1">
+        <apex:pagemessages ></apex:pagemessages>
+        <script>
+        function OpenVfpage(){
+            a = '{!checker}';
+            if(a == 'true'){
+                window.open('/apex/Send_Email_To_Contact?id={!contactIdList}','_blank', 'toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=700, width=700, height=400')
+            }
+            
+        }
+        function showpdf(){
+            a = '{!checker}';
+            if(a == 'true'){
+                window.open('/apex/Pdf_Of_Contcat_Detail?id={!contactIdList}','_blank')
+            }
+        }
+        function empty(){
+            alert('inside');
+            emptyId();
+        }
+     </script>
+    </apex:outputPanel>
+        <apex:pageBlock >
+            <apex:pageBlockSection title="Search Account" collapsible="false" columns="1">
+                <apex:outputPanel >
+                    <apex:outputLabel >Enter Name:</apex:outputLabel>&nbsp;&nbsp;&nbsp;
+                    <apex:inputText value="{!accountName}"/>&nbsp;&nbsp;&nbsp;
+                    <apex:commandButton value="Search" action="{!searchAccount}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Account Detail" collapsible="" columns="1" rendered="{!accountDetail}" id="accId">
+                <apex:outputPanel layout="none">
+                    <apex:pageBlockTable value="{!accountList}" var="obj">
+                        <apex:column >
+                            <input type="radio" onchange="contactDetail('{!obj.id}');" id="radio{!obj.id}" name="rd"/>
+                        </apex:column>
+                        <apex:column value="{!obj.name}"/>
+                        <apex:column value="{!obj.phone}"/>
+                    </apex:pageBlockTable>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            <apex:outputPanel layout="none" id="table1">
+                <apex:pagemessages ></apex:pagemessages>
+                <apex:pageBlockSection title="Related Contact" collapsible="false" columns="1" rendered="{!contactDetail}">
+                    <apex:outputPanel layout="none">
+                        <apex:commandButton value="Print Detail" action="{!ShowContactAsPdf}" oncomplete="showpdf();" reRender="op1" style="margin-left:400px"/>
+                        <apex:commandButton value="Send Email"  action="{!sendMailToContcat}" oncomplete="OpenVfpage();return false;" reRender="op1"/>
+                        <apex:selectList size="1" value="{!selectOption}" onchange="change();" style="margin-left:400px">
+                            <apex:selectOptions value="{!options}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none">
+                        <apex:pageBlockTable value="{!newModelList}" var="obj">
+                            <apex:column >
+                                <apex:inputCheckbox value="{!obj.flag}"/>
+                            </apex:column>
+                            <apex:column value="{!obj.con.FirstName}"/>
+                            <apex:column value="{!obj.con.LastName}"/>
+                            <apex:column value="{!obj.con.Email}"/>
+                            <apex:column value="{!obj.con.phone}"/>
+                        </apex:pageBlockTable>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!viewPagination}" id="opPge">
+                        <apex:outputLabel value="Pre" rendered="{!viewPre}"/>&nbsp;
+                        <apex:commandLink value="Pre" rendered="{!IF(viewPre == false,true,false)}" action="{!previousCon}" reRender="table1,opPge"/>&nbsp;
+                        <apex:outputLabel value="Next" rendered="{!viewNext}"/>&nbsp;
+                        <apex:commandLink value="Next" rendered="{!IF(viewNext == false,true,false)}" action="{!nextCon}" reRender="table1,opPge"/>&nbsp;
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

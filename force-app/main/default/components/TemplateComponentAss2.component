@@ -1,0 +1,23 @@
+<apex:component controller="MultipleEmailTemplateController" access="global"> 
+  <apex:attribute name="stu"   description="Template Component Ass2" type="String"/>
+  <apex:actionFunction rerender="" name="recordId" action="{!mailRecord}">
+      <apex:param name="args" assignTo="{!detail}" value="" />
+  </apex:actionFunction>
+    <apex:commandButton value="Send" action="{!send}" />
+       <table width='100%' border ='2'  >
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        <apex:repeat value="{!StudentListModel}" var="sList">
+            <tr>
+                    <td>{!sList.stuListModel.First_Name__c}</td>
+                    <td>{!sList.stuListModel.Last_Name__c}</td>
+                    <td>{!sList.stuListModel.email__c}</td>
+                    <td><apex:inputCheckbox value="{!sList.flag}" onclick="recordId('{!sList.stuListModel.id}');" /></td>
+           </tr>
+        </apex:repeat>    
+        </table>   
+</apex:component>

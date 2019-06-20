@@ -1,0 +1,62 @@
+<apex:page showHeader="false" sidebar="false" controller="NewObjectAssignment">
+    <apex:form id="frm">
+        <apex:actionFunction name="fieldChange" action="{!fieldType}" reRender="frm" status="st">
+            <apex:param name="nm" value="" assignTo="{!currentIndex}"/>
+        </apex:actionFunction>
+        <apex:pageBlock rendered="{!!pgb}">
+            <apex:actionStatus startText="processing...." id="st" />
+            <apex:actionFunction action="{!fetchFields}" name="field" reRender="frm" status="st"/>
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Objects</apex:outputLabel>
+                    <apex:selectList size="1" value="{!currentobject}" onchange="field()">
+                        <apex:selectOption itemValue="--Select a Object--"/>
+                        <apex:selectOptions value="{!objects}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:outputPanel rendered="{!flag}">
+            <apex:pageBlockTable value="{!modelList}" var="req">
+                <apex:column headerValue="Field Name">
+                    <apex:selectList size="1" value="{!req.currentfield}" disabled="{!req.isReq}" onchange="fieldChange({!req.rowid})">
+                        <apex:selectOption itemValue="--None--"/>
+                        <apex:selectOptions value="{!req.fName}" />
+                    </apex:selectList>
+                </apex:column>
+                <apex:column value="{!req.type}" headerValue="Data Type"/>
+                <apex:column headerValue="Default Value">
+                    <apex:inputText value="{!req.value}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+            <apex:commandButton value="Add" action="{!add}" reRender="frm"/>
+            </apex:outputPanel>
+        </apex:pageBlock>
+        
+        <apex:commandButton value="Next" action="{!next}" rendered="{!!pgb}"/>
+        
+        <apex:pageBlock rendered="{!pgb}">
+            <table>
+                <thead>
+                    <tr>
+                        <apex:repeat value="{!modelList}" var="modList">
+                            <th>{!modList.currentfield}</th>
+                        </apex:repeat>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!objList}" var="obj">
+                        <tr>
+                            <apex:repeat value="{!modelList}" var="mdRecord">
+                                <td><apex:inputField value="{!obj[mdRecord.currentfield]}"/></td>
+                            </apex:repeat>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+            <apex:pageBlockSection columns="2">
+            <apex:commandButton value="Add" rendered="{!pgb}" action="{!addRow}"/>
+            <apex:commandButton value="Insert" rendered="{!pgb}" action="{!Save}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

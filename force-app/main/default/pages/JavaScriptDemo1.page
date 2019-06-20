@@ -1,0 +1,191 @@
+<apex:page >
+<html>
+<Style>
+@CHARSET "ISO-8859-1";
+/* set attribute of section*/
+section{
+    margin: 0 auto;
+    width: 85%;
+    height: 750px;
+}
+
+/* set color of '*' */
+.span {
+    color: red;
+}
+
+/*set the attributes of header*/
+h1 {
+    width: 100%;
+    text-align: center;
+}
+
+/*set attributes of table*/
+table {
+    margin-top: 50px;
+    border: 1px solid black;
+    margin-left: 30%;
+    margin-right: 35%;
+}
+
+/*set attributes of cell(column) in a table*/
+td {
+    width: 100%;
+}
+</Style>
+<Script>
+// Validation for Checking all the conditions
+function validate() {
+    var count = 0;
+    var password = document.getElementById("password").value;
+    // Password Verification
+    if (password.length < 8) {
+        count = 1;
+        alert("Password Length should be greater than 8");
+    }
+    var confirmPassword = document.getElementById("confirmPassword").value;
+    // Matching The Password and Confirm Password
+    if (confirmPassword != password) {
+        count = 1;
+        alert("Password mismatch!!");
+    }
+    // Checking the Conditions if user account created or not
+    if (count == 0) {
+        alert("User account created successfully");
+        return true;
+    } else {
+
+        return false;
+    }
+}
+
+// to provide options for city based on state value
+function selectCity() {
+    var cityObject = document.getElementById("city");
+    var stateObject = document.getElementById("state");
+    switch (stateObject.value) {
+    case "Rajasthan":
+        cityObject.innerHTML = "<Option>Jaipur</option><Option>Bikaner</option><Option>Kota</option><Option>Ajmer</option>";
+        break;
+    case "MP":
+        cityObject.innerHTML = "<Option>Bilaspur</option><Option>Bhopal</option><Option>Gwalior</option><Option>Mandi</option>";
+        break;
+    case "UP":
+        cityObject.innerHTML = "<Option>Agra</option><Option>Kanpur</option><Option>Aligarh</option><Option>Mathura</option>";
+        break;
+    case "Maharastra":
+        cityObject.innerHTML = "<Option>Mumbai</option><Option>Pune</option><Option>Aurangabad</option><Option>Thane</option>";
+        break;
+    }
+}
+
+// Validation for Activating The Submit Button
+function activateSubmit() {
+    var checkbox = document.getElementById("checkbox");
+    var submit = document.getElementById("submit");
+    if (checkbox.checked == true) {
+        submit.disabled = false;
+    } else {
+        submit.disabled = true;
+    }
+}
+</Script>
+<head>
+<meta charset="ISO-8859-1"/>
+<!-- HTML page title -->
+<title>Registration</title>
+<!-- link of RegistrationScript.js file -->
+<!--<script type="text/javascript" src="RegistrationScript.js"></script> -->
+<!-- link of RegistrationStyle.css file -->
+<!-- <link rel="styleSheet" type="text/css" href="RegistrationStyle.css "/> -->
+</head>
+
+<body>
+    <!-- HTML semantic tag -->
+    <section>
+
+        <!-- HTML header -->
+        <h1>Registration Form</h1>
+
+        <form>
+            <!-- Table For Data To Symmetric -->
+            <table>
+
+                <!-- first Name -->
+                <tr>
+                    <td><span class="span"> *</span>First Name</td>
+                    <td><input type="text" required="required"/></td>
+                </tr>
+
+                <!-- Last Name -->
+                <tr>
+                    <td><span class="span"> *</span>Last Name</td>
+                    <td><input type="text" required="required"/></td>
+                </tr>
+
+                <!-- Password -->
+                <tr>
+                    <td><span class="span"> *</span>Password</td>
+                    <td><input type="password" id="password" required="required"/></td>
+                </tr>
+
+                <!--  Confirm Password -->
+                <tr>
+                    <td><span class="*"> *</span>Confirm Password</td>
+                    <td><input type="password" id="confirmPassword"
+                        required="required"/></td>
+                </tr>
+
+                <!--  Age Field -->
+                <tr>
+                    <td><span class="span">*</span>Age</td>
+                    <td><input type="number" id="age" min="12" max="75" step="any"
+                        required="required"/></td>
+                </tr>
+
+                <!--  State Name -->
+                <tr>
+                    <td>State</td>
+                    <td><select style="width: 100%;" id="state"
+                        onchange="selectCity()">
+                            <option selected="selected" disabled="disabled">Select
+                                State</option>
+                            <option value="Rajasthan">Rajasthan</option>
+                            <option value="MP">Madhya Pradesh</option>
+                            <option value="Maharastra">Maharastra</option>
+                            <option value="UP">Uttar Pradesh</option>
+                    </select></td>
+                </tr>
+
+                <!-- City Name based on state-->
+                <tr>
+                    <td>City</td>
+                    <td><select style="width: 100%;" id="city">
+                            <option selected="selected" disabled="disabled">Select
+                                City</option>
+                    </select></td>
+                </tr>
+
+                <!--  Address -->
+                <tr>
+                    <td>AddressLine</td>
+                    <td><textarea style="width: 100%;"></textarea></td>
+                </tr>
+                <!-- check box -->
+                <tr>
+                    <td colspan="2"><input type="checkbox" id="checkbox"
+                        onchange="activateSubmit()"/>I accept all terms and
+                        conditions.</td>
+                </tr>
+
+                <!-- Submission Button -->
+                <tr>
+                    <td colspan="2" align="right"><input type="submit"
+                        onclick="return validate()" disabled="disabled" id="submit"/></td>
+                </tr>
+            </table>
+        </form>
+    </section>
+</body>
+</html>
+</apex:page>

@@ -1,0 +1,26 @@
+<apex:page controller="DisplayDataFromCSVController"  standardstylesheets="false">
+    <apex:form >
+        <style>
+        .red Span a
+        {
+            color:red;
+        }
+        </style>
+        
+        <apex:pagemessages />
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="4"> 
+                  <apex:inputFile value="{!csvFileBody}"  filename="{!nameFile}"/>
+                  <apex:commandButton value="Display Contact" action="{!importCSVFile}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock >
+           <apex:pageblocktable value="{!ModelConObjList}" var="m" border="1" cellspacing="5" cellpadding="5">
+              <apex:column value="{!m.ModelConObj.firstname}" />
+              <apex:column value="{!m.ModelConObj.lastname}" />
+              <apex:column value="{!m.ModelConObj.phone}" /> 
+              <apex:column value="{!m.ModelConObj.email}"  styleClass="{!m.color}"/>
+        </apex:pageblocktable>
+     </apex:pageBlock>
+   </apex:form>       
+</apex:page>

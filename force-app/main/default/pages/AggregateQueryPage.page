@@ -1,0 +1,14 @@
+<apex:page controller="AggregateQueryController" >
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!stuModelClass}" var="m">
+                <apex:column headerValue="No">
+                    <apex:outputText value="{!m.Counts}"/>
+                </apex:column>
+                <apex:column headerValue="ClassName">
+                     <apex:outputText value="{!m.ClsName.ClassName__c }"/>
+                </apex:column> 
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

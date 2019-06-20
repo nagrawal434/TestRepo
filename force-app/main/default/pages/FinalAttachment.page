@@ -1,0 +1,86 @@
+<apex:page controller="FinalAttachmentController">
+    <script type="text/javascript">
+        function check(a)
+        {
+            if(confirm('Do you want to delete ?'))
+            {
+                assignID(a);
+            }
+        }
+    </script>
+    <apex:form id="frm">
+        <apex:actionFunction name="assignID" action="{!deleteAttachment}" rerender="frm">
+            <apex:param assignTo="{!Attid}"  name="arg1" value="" />
+        </apex:actionFunction>
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputPanel >
+                        <apex:outputText value="Search" />
+                        <apex:selectList value="{!selectListValue}" size="1">
+                            <apex:selectOption itemLabel="All" itemValue="All"/>
+                            <apex:selectOption itemLabel="Account" itemValue="Account"/>
+                            <apex:selectOption itemLabel="Contact" itemValue="Contact"/>
+                            <apex:selectOption itemLabel="Opportunity" itemValue="Opportunity"/>
+                            <apex:selectOption itemLabel="Lead" itemValue="Lead"/>
+                        </apex:selectList>
+                        <apex:commandButton action="{!showSelectedList}" value="Show"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockTable value="{!modelList}" var="ml">
+                    <apex:column >
+                        <apex:inputCheckbox value="{!ml.flagValue}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:commandLink action="//servlet/servlet.FileDownload?file={!ml.attachList.id}"  value="View Content"/>
+                        <apex:outputText value=" / "/>
+                        <apex:commandLink action="/{!ml.attachList.id}"  value="View Details"/>
+                        <apex:outputText value=" / "/>
+                        <!--<apex:commandLink  onclick=" assignID('{!ml.attachList.id}');return false;" value="Delete"/>-->
+                        <apex:commandLink onclick=" check('{!ml.attachList.id}'); return false;" value="Delete"/>
+                    </apex:column>
+                    <apex:column headerValue="Icon">
+                        <apex:image width="50" height="50" rendered="{!if(RIGHT(ml.attachList.name,3)=='jpg' ||RIGHT(ml.attachList.name,4)=='jpeg',true,false)}" value="{!$Resource.JPG}" />
+                       <apex:image width="50" height="50" rendered="{!if(RIGHT(ml.attachList.name,3)=='ppt',true,false)}" value="{!$Resource.ppt}" />
+                        <apex:image width="50" height="50" rendered="{!if(RIGHT(ml.attachList.name,3)=='pdf',true,false)}" value="{!$Resource.PDF}" />
+                        <apex:image width="50" height="50" rendered="{!if(RIGHT(ml.attachList.name,3)=='doc' ||RIGHT(ml.attachList.name,4)=='docx',true,false)}" value="{!$Resource.word}" />
+                                               
+                         <apex:image width="50" height="50" rendered="{!if(RIGHT(ml.attachList.name,4)=='html',true,false)}" value="{!$Resource.html}" />                                                 
+                         <apex:image width="50" height="50" rendered="{!if(RIGHT(ml.attachList.name,3)=='xls' || RIGHT(ml.attachList.name,4)=='xlsx',true,false)}" value="{!$Resource.XLS}"/>                                                
+                         
+                    </apex:column>
+                    <apex:column headerValue="Attachment ID">
+                        <apex:outputText value="{!ml.attachList.id}" />
+                    </apex:column>
+                    <apex:column headerValue="Name" >
+                        <apex:outputText value="{!ml.attachList.name}"  />
+                    </apex:column>
+                    <apex:column headerValue="Body Length">
+                        <apex:outputText value="{!ml.attachList.bodylength}"  />
+                    </apex:column>
+                    <apex:column headerValue="Content Type" >
+                        <apex:outputText value="{!ml.attachList.contenttype}"  />
+                    </apex:column>
+                    <apex:column headerValue="Parent ID">
+                        <apex:outputText value="{!ml.attachList.parentid}"  />
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            
+            <center>
+            <apex:pageBlockSection columns="1">
+                <table>
+                    <tr>
+                        <td><apex:inputField value="{!acc.accountid}"/></td>
+                        <td><apex:inputField value="{!cas.contactid}"/></td>
+                        <td><apex:inputField value="{!part.opportunityid}"/></td>
+                    </tr>
+                </table>
+                <apex:commandButton action="{!copyAttachment}" value="Copy Attachment"/>
+            </apex:pageBlockSection>
+            </center>
+        </apex:pageBlock>
+    </apex:form> 
+</apex:page>

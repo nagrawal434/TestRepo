@@ -1,0 +1,213 @@
+<aura:component controller="searchAccountContactParentContrller">
+    <ltng:require scripts="{!$Resource.JQ + '/jquery.min.js'}" afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    <aura:attribute name="contactList" type="Contact[]"/>
+    <aura:handler event="c:searchAccountContactEvent" action="{!c.handleApplicationEvent}"/>
+    <aura:attribute name="isListVisible" type="Boolean" default="false"/>
+    <aura:attribute name="isOutput" type="Boolean" default="true"/>
+    <aura:attribute name="isButtonHide" type="Boolean" default="true"/>
+    <aura:attribute name="Message" type="string"/>
+    <aura:attribute name="arrowDirection" type="string" default="arrowUp"/>
+    <aura:attribute name="selectedTabSort" type="string" default="firstname" />
+    <aura:attribute name="isAsc" type="Boolean" default="true" />
+    <aura:attribute name="globalAccountId" type="Id" />
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>-->
+    <aura:if isTrue="{!v.isListVisible}">
+        <div class="slds-table_edit_container slds-is-relative">
+            <div class="slds-docked-form-footer">
+                <lightning:button variant="brand" label="Save Update" onclick="{!c.saveContact}" 
+                                  disabled="{!v.isButtonHide}" />
+            </div>
+            <table class="slds-table slds-table_edit slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols slds-no-cell-focus" role="grid" style="width: 60.75rem;">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="slds-is-sortable slds-is-resizable slds-text-title_caps" scope="col" style="width: 8.75rem;">Serial No.</th>
+                        <th class="slds-is-sortable slds-is-resizable slds-text-title_caps" scope="col" style="width: 8.75rem;">
+                            <a href="javascript:void(0);" class="slds-th__action slds-text-link_reset" tabindex="-1" onclick="{!c.sortFirstName}">
+                                <span class="slds-assistive-text">Sort </span>
+                                <span class="slds-truncate" title="Name">FistName</span>
+                                <div class="slds-icon_container">
+                                    <aura:if isTrue="{! and(v.isArrowDown == 'arrowDown', v.selectedTabSort == 'firstname')}">
+                                        <lightning:buttonIcon iconName="utility:arrowdown" size="x-small" alternativeText="Indicates approval" /> 
+                                    </aura:if>
+                                    <aura:if isTrue="{! and(v.isArrowDown != 'arrowDown', v.selectedTabSort == 'firstname')}">
+                                            <lightning:buttonIcon iconName="utility:arrowup" size="x-small" alternativeText="Indicates approval"/>     
+                                    </aura:if>
+                                </div>
+                                <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+                            </a>
+                            <div class="slds-resizable">
+                                <label for="cell-resize-handle-1" class="slds-assistive-text">Name column width</label>
+                                <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-1" tabindex="-1"/>
+                                <span class="slds-resizable__handle">
+                                    <span class="slds-resizable__divider"></span>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="slds-is-sortable slds-is-resizable slds-text-title_caps" scope="col" style="width: 8.75rem;">
+                            <a href="javascript:void(0);" class="slds-th__action slds-text-link_reset" tabindex="-1" onclick="{!c.sortLastName}">
+                                <span class="slds-assistive-text">Sort </span>
+                                <span class="slds-truncate" title="Account Name">Last Name</span>
+                                <div class="slds-icon_container">
+                                    <aura:if isTrue="{! and(v.isArrowDown == 'arrowDown', v.selectedTabSort == 'lastname')}">
+                                        <lightning:buttonIcon iconName="utility:arrowdown" size="x-small" alternativeText="Indicates approval" /> 
+                                    </aura:if>
+                                    <aura:if isTrue="{! and(v.isArrowDown != 'arrowDown', v.selectedTabSort == 'lastname')}">
+                                            <lightning:buttonIcon iconName="utility:arrowup" size="x-small" alternativeText="Indicates approval"/>     
+                                    </aura:if>
+                                </div>
+                                <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+                            </a>
+                            <div class="slds-resizable">
+                                <label for="cell-resize-handle-2" class="slds-assistive-text">Account Name column width</label>
+                                <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-2" tabindex="-1"/>
+                                <span class="slds-resizable__handle">
+                                    <span class="slds-resizable__divider"></span>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="slds-is-sortable slds-is-resizable slds-text-title_caps" scope="col" style="width: 8.75rem;">
+                            <a href="javascript:void(0);" class="slds-th__action slds-text-link_reset" tabindex="-1" onclick="{!c.sortPhone}">
+                                <span class="slds-assistive-text">Sort </span>
+                                <span class="slds-truncate" title="Close Date">Phone</span>
+                                <div class="slds-icon_container">
+                                    <aura:if isTrue="{! and(v.isArrowDown == 'arrowDown', v.selectedTabSort == 'phone')}">
+                                        <lightning:buttonIcon iconName="utility:arrowdown" size="x-small" alternativeText="Indicates approval" /> 
+                                    </aura:if>
+                                    <aura:if isTrue="{! and(v.isArrowDown != 'arrowDown', v.selectedTabSort == 'phone')}">
+                                            <lightning:buttonIcon iconName="utility:arrowup" size="x-small" alternativeText="Indicates approval"/>     
+                                    </aura:if>
+                                </div>
+                                <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+                            </a>
+                            <div class="slds-resizable">
+                                <label for="cell-resize-handle-3" class="slds-assistive-text">Close Date column width</label>
+                                <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-3" tabindex="-1"/>
+                                <span class="slds-resizable__handle">
+                                    <span class="slds-resizable__divider"></span>
+                                </span>
+                            </div>
+                        </th>
+                        <th class="slds-is-sortable slds-is-resizable slds-text-title_caps" scope="col" style="width: 8.75rem;">
+                            <a href="javascript:void(0);" class="slds-th__action slds-text-link_reset" tabindex="-1" onclick="{!c.sortEmail}">
+                                <span class="slds-assistive-text">Sort </span>
+                                <span class="slds-truncate" title="Close Date">Email</span>
+                                <div class="slds-icon_container">
+                                    <aura:if isTrue="{! and(v.isArrowDown == 'arrowDown', v.selectedTabSort == 'email')}">
+                                        <lightning:buttonIcon iconName="utility:arrowdown" size="x-small" alternativeText="Indicates approval" /> 
+                                    </aura:if>
+                                    <aura:if isTrue="{! and(v.isArrowDown != 'arrowDown', v.selectedTabSort == 'email')}">
+                                            <lightning:buttonIcon iconName="utility:arrowup" size="x-small" alternativeText="Indicates approval"/>     
+                                    </aura:if>
+                                </div>
+                                <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+                            </a>
+                            <div class="slds-resizable">
+                                <label for="cell-resize-handle-3" class="slds-assistive-text">Close Date column width</label>
+                                <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-3" tabindex="-1"/>
+                                <span class="slds-resizable__handle">
+                                    <span class="slds-resizable__divider"></span>
+                                </span>
+                            </div>
+                        </th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.contactList}" var="con" indexVar="index">
+                        <tr class="slds-hint-parent">               
+                            <td role="gridcell" class="slds-cell-edit">
+                                <span class="slds-grid slds-grid_align-spread">
+                                    <span class="slds-truncate" title="Index">
+                                        {!index+1}	
+                                    </span>                                    
+                                </span>
+                            </td>
+                            <td scope="row" tabindex="0" class="slds-cell-edit slds-has-focus" >
+                                <span class="slds-grid slds-grid_align-spread" data-recordidn="{!index}" data-cid= "{!con.Id}" >
+                                    <a class="slds-truncate slds-show outPutA" tabindex="0" title="First Name">
+                                        <ui:outputText aura:id="outPutText" value="{!con.FirstName}"  />
+                                    </a>
+                                    <a class="slds-truncate slds-hide inputA" tabindex="0" title="First Name">
+                                        <ui:inputText aura:id="inPutText" value="{!con.FirstName}" class="slds-input"/>
+                                    </a>
+                                    <!--<button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="-1" data-value="{!'FirstName' + index}" onclick="{!c.EditFirstRecord}">
+                                        <span class="slds-assistive-text">{!con.FirstName}</span>
+                                        <lightning:icon iconName="utility:edit" size="x-small" alternativeText="Indicates approval"/> 
+                                    </button>-->
+                                    <span onclick="{!c.EditRecord}">
+                                        <lightning:icon iconName="utility:edit" size="x-small" alternativeText="Indicates approval"/>
+                                    </span>
+                                    <!-- <ui:button iconName="utility:edit" size="x-small" variant="bare"
+           alternativeText="Close window." aura:id="EditButtonColumn0" onclick="{!c.EditFirstRecord}"/>-->
+                                </span>
+                            </td>
+                            <td role="gridcell" class="slds-cell-edit" aura:id="{!r.Id}">
+                                <span class="slds-grid slds-grid_align-spread" data-recordidn="{!index}" data-cid= "{!con.Id}" >
+                                    <a href="javascript:void(0);" class="slds-truncate slds-show outPutA" tabindex="0" title="Last Name">
+                                        <ui:outputText aura:id="outPutText" value="{!con.LastName}"  />
+                                    </a>
+                                    <a class="slds-truncate slds-hide inputA" tabindex="0" title="Last Name">
+                                        <ui:inputText aura:id="inPutText" value="{!con.LastName}" class="slds-input"/>
+                                    </a>
+                                    <!--<button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="-1" data-value="{!'FirstName' + index}" onclick="{!c.EditFirstRecord}">
+                                        <span class="slds-assistive-text">{!con.FirstName}</span>
+                                        <lightning:icon iconName="utility:edit" size="x-small" alternativeText="Indicates approval"/> 
+                                    </button>-->
+                                    <span onclick="{!c.EditRecord}">
+                                        <lightning:icon iconName="utility:edit" size="x-small" alternativeText="Indicates approval"/>
+                                    </span>
+                                    <!-- <ui:button iconName="utility:edit" size="x-small" variant="bare"
+           alternativeText="Close window." aura:id="EditButtonColumn0" onclick="{!c.EditFirstRecord}"/>-->
+                                </span>
+                            </td>
+                            <td role="gridcell" class="slds-cell-edit">
+                                <span class="slds-grid slds-grid_align-spread" data-recordidn="{!index}" data-cid= "{!con.Id}" >
+                                    <a href="javascript:void(0);" class="slds-truncate slds-show outPutA" tabindex="0" title="Phone">
+                                        <ui:outputText aura:id="outPutText" value="{!con.Phone}"  />
+                                    </a>
+                                    <a class="slds-truncate slds-hide inputA" tabindex="0" title="Phone">
+                                        <ui:inputText aura:id="inPutText" value="{!con.Phone}" class="slds-input"/>
+                                    </a>
+                                    <!--<button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="-1" data-value="{!'FirstName' + index}" onclick="{!c.EditFirstRecord}">
+                                        <span class="slds-assistive-text">{!con.FirstName}</span>
+                                        <lightning:icon iconName="utility:edit" size="x-small" alternativeText="Indicates approval"/> 
+                                    </button>-->
+                                    <span onclick="{!c.EditRecord}">
+                                        <lightning:icon iconName="utility:edit" size="x-small" alternativeText="Indicates approval"/>
+                                    </span>
+                                    <!-- <ui:button iconName="utility:edit" size="x-small" variant="bare"
+           alternativeText="Close window." aura:id="EditButtonColumn0" onclick="{!c.EditFirstRecord}"/>-->
+                                </span>
+                            </td>
+                            <td role="gridcell" class="slds-cell-edit">
+                                <span class="slds-grid slds-grid_align-spread" data-recordidn="{!index}" data-cid= "{!con.Id}" >
+                                    <a href="javascript:void(0);" class="slds-truncate slds-show outPutA" tabindex="0" title="Email">
+                                        <ui:outputText aura:id="outPutText" value="{!con.Email}"  />
+                                    </a>
+                                    <a class="slds-truncate slds-hide inputA" tabindex="0" title="Email">
+                                        <ui:inputText aura:id="inPutText" value="{!con.Email}" class="slds-input"/>
+                                    </a>
+                                    <!--<button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small" tabindex="-1" data-value="{!'FirstName' + index}" onclick="{!c.EditFirstRecord}">
+                                        <span class="slds-assistive-text">{!con.FirstName}</span>
+                                        <lightning:icon iconName="utility:edit" size="x-small" alternativeText="Indicates approval"/> 
+                                    </button>-->
+                                    <span onclick="{!c.EditRecord}">
+                                        <lightning:icon iconName="utility:edit" size="x-small" alternativeText="Indicates approval"/>
+                                    </span>
+                                    <!-- <ui:button iconName="utility:edit" size="x-small" variant="bare"
+           alternativeText="Close window." aura:id="EditButtonColumn0" onclick="{!c.EditFirstRecord}"/>-->
+                                </span>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>     
+        </div>
+        <aura:set attribute="else">
+            <div>
+                <ui:outputText value="{!v.Message}"/>
+            </div>
+        </aura:set>
+        
+    </aura:if>
+    
+</aura:component>

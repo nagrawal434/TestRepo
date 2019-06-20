@@ -1,0 +1,20 @@
+<apex:page controller="JoinRelationHotelAssController" sidebar="false" showHeader="false">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!modelList}" var="m"> 
+            <apex:column value="{!m.booking.Customer__r.First_Name__c}"/>
+            <apex:column value="{!m.booking.Customer__r.Last_Name__c}"/>
+            <apex:column value="{!m.booking.Room__r.Room_No__c}"/>
+            <apex:column value="{!m.booking.Room__r.Price__c}"/>
+            <apex:column value="{!m.booking.Check_In_Time__c}"/>
+            <apex:column value="{!m.booking.Check_Out_Time__c}"/>
+            <apex:column headerValue="DAYS">
+                 <apex:outputText value="{!m.Days}"/>
+            </apex:column>
+            <apex:column headerValue="Total Amount In $">
+            <apex:outputText value="{!m.TotalAmount}"/>
+            </apex:column>
+            </apex:pageBlockTable>            
+       </apex:pageBlock>
+    </apex:form>
+</apex:page>

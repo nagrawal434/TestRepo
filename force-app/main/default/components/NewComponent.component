@@ -1,0 +1,11 @@
+<apex:component >
+    <apex:attribute name="contacts" type="Contact" required="true"  description="My Contacts Details"/>
+    
+    <tr>
+        <td>{!contacts.firstname}</td>
+        <td>{!contacts.lastname}</td>
+        <td>{!contacts.email}</td>
+        <td>{!contacts.phone}</td>
+        <td><apex:commandButton value="Detail" action="{!'/'+contacts.id}"/></td>
+    </tr>
+</apex:component>

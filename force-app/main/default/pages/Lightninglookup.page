@@ -1,0 +1,104 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Opportunity" extensions="lightningOpportuningController">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tabs Demo | Appiphony Lightning JS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+    <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-all.min.js')}"></script>
+    <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-lookup.min.js')}"></script>
+    <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+    
+    
+    <script>
+    $(document).ready(function() {
+    $('#lookup-01').lookup({
+        items: [
+            {
+                id: 'result-1',
+                label: 'Result 1'
+            },
+            {
+                id: 'result-2',
+                label: 'Result 2'
+            },
+            {
+                id: 'result-3',
+                label: 'Result 3'
+            },
+            {
+                id: 'result-4',
+                label: 'Result 4'
+            }
+        ],
+    });
+
+    var results = [
+        {
+            id: 'ajax-result-1',
+            label: 'ajaxResult1'
+        },
+        {
+            id: 'ajax-result-2',
+            label: 'ajaxResult2'
+        },
+        {
+            id: 'ajax-result-3',
+            label: 'ajaxResult3'
+        },
+        {
+            id: 'ajax-result-4',
+            label: 'ajaxResult4'
+        }
+    ];
+
+    $('#lookup-02').lookup({
+        items: results,
+        objectPluralLabel: 'Things',
+        objectLabel: 'Thing',
+        useImgTag: false,
+        objectIconUrl: '{!URLFOR($Resource.assets,'/assets/icons/standard-sprite/svg/symbols.svg#account')}',
+        objectIconClass: 'slds-icon-standard-account',
+        emptySearchTermQuery: function(callback) {
+            callback(results);
+        },
+        filledSearchTermQuery: function(searchTerm, callback) {
+            callback(results.filter(function(result) {
+                return result.label.match(searchTerm) !== null;
+            }));
+        },
+        initialSelection: { id: 'ajax-result-1', label: 'ajaxResult1' },
+        clickAddFunction: function() {
+            console.log('redirect or do something to add something');
+        }
+    });
+    });
+</script>
+</head>
+<body>
+    <apex:form >
+        <div class="slds">
+            <div class="slds-form-element slds-lookup" data-select="single" data-scope="single">
+                <label class="slds-form-element__label" for="lookup-01">Objects</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                    <svg aria-hidden="true" class="slds-input__icon slds-icon-text-default">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+                    </svg>
+                    <input id="lookup-01" class="slds-lookup__search-input slds-input" type="text" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-activedescendant="" placeholder="Search Objects"/>
+                </div>
+                </div>
+                <div class="slds-form-element slds-lookup" data-select="single" data-scope="single">
+                <label class="slds-form-element__label" for="lookup-02">Things</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                    <svg aria-hidden="true" class="slds-input__icon slds-icon-text-default">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+                    </svg>
+                    <input id="lookup-02" class="slds-lookup__search-input slds-input" type="text" aria-autocomplete="list" role="combobox" aria-expanded="true" aria-activedescendant="" placeholder="Search Things"/>
+                </div>
+            </div>
+        </div>
+        <!-- Main SLDS End -->  
+    </apex:form>
+</body>
+</html>
+</apex:page>

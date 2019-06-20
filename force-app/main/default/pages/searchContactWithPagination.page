@@ -1,0 +1,80 @@
+<apex:page controller="searchContactWithPaginationController" sidebar="false">
+    <apex:sectionHeader title="Search Contact" subtitle="Search With Pagination"/>
+    <style>
+        .tbl{
+            width: 80%;
+            margin: auto;
+            border: 1px solid #000;
+            border-collapse: collapse;
+        }
+        .tbl td, .tbl th{
+            border: 1px solid #000;
+            border-collapse: collapse;
+            padding: 10px;
+        }
+    </style>
+    <apex:actionstatus id="status">
+        <apex:facet name="start">
+            <div class="waitingSearchDiv" id="el_loading" style="position: fixed;top:0;background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+                <div class="waitingHolder" style="top: 50%x; width: 91px;">
+                    <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                    <span class="waitingDescription">Loading...</span>
+                </div>
+            </div>
+        </apex:facet>
+    </apex:actionstatus>
+    <apex:form id="frm" styleClass="container">
+        <apex:actionFunction name="sorting" action="{!sortRecord}" status="status" reRender="frm"/>
+        <apex:pageBlock >
+              <table width="80%" align="center">
+                    <tr>
+                        <th>Name</th>
+                        <th><apex:inputText value="{!Name}"/></th>
+                        <th>Father Name</th>
+                        <th><apex:inputText value="{!Fathername}"/></th>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <th>
+                            <apex:inputField value="{!contacts.Status__c}">
+                                <apex:actionSupport event="onchange" reRender="frm" action="{!SearchRecord}" status="status" />
+                            </apex:inputField>
+                        </th>
+                        <th>DOB</th>
+                        <th><apex:inputField value="{!contacts.birthdate}"/></th>
+                    </tr>
+                    <tr>
+                        <td colspan="4" align="center">
+                            <apex:commandButton value="Search" action="{!SearchRecord}" reRender="frm" status="status"/>
+                        </td>
+                    </tr>
+              </table>
+        </apex:pageBlock>
+        <apex:pageBlock > 
+             <table class="tbl" >
+                <tr>
+                    <th><a href="#" onclick="sorting(); return false">Name 
+                        <apex:outputLabel value="{! if(sortDirection == 'ASC','▼','▲')}"></apex:outputLabel>
+                    </a></th>
+                    <th>Father Name</th>
+                    <th>Status</th>
+                    <th>Birthdate</th>
+                </tr>
+                <apex:repeat value="{!modelContactClassList}" var="modCon">
+                    <tr>
+                        <td>{!modCon.con.Name}</td>
+                        <td>{!modCon.con.Father_Name__c}</td>
+                        <td>{!modCon.con.Status__c}</td>
+                        <td><apex:outputField value="{!modCon.con.Birthdate}"/> </td>
+                    </tr>
+                </apex:repeat>
+            </table>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="First Page" rerender="frm" action="{!firstRecord}" status="status"/>
+                <apex:commandButton value="Previous" rerender="frm" action="{!prev}" status="status"/>
+                <apex:commandButton value="Next" rerender="frm" action="{!next}" status="status"/>
+                <apex:commandButton value="Last Page" rerender="frm" action="{!lastRecord}" status="status"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

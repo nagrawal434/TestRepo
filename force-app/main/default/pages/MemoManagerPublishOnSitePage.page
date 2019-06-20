@@ -1,0 +1,13 @@
+<apex:page controller="MemoManagerController">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+              <apex:repeat value="{!memoSiteList}" var="m">
+                  <apex:outputText value="{!m.MemoName__c}" />
+                  <apex:outputText value="{!m.Status__c}" />
+              </apex:repeat>   
+         </apex:pageBlockSection>
+          <apex:commandButton action="/apex/Start_Chatting" value="demo"/> 
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,66 @@
+<apex:page Controller="TimeSheetTabController" sidebar="false" showHeader="false">
+    <head>
+        <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/jquery.min.js')}"></script> 
+        <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/bootstrap.min.js')}"></script> 
+        <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap.min.css')}" /> 
+        <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap-theme.min.css')}" />
+        <style>
+                .timesheet{
+                    margin-top : 15px;
+                }
+                table.timesheet ,.timesheet th, .timesheet td {
+                border: 1px solid gray;
+                border-collapse: collapse;                    
+                }
+                .classYellow {
+                background-color : yellow;    
+                }
+                .classNon{  
+                    }
+                .Alllist{
+                    margin-top : 80px;
+                    
+                }
+        </style>
+    </head>
+        <apex:form >        
+            <h3 style="color : red;border-radius:10px;font-family:verdana;background-color:#8080ff;border:1px solid black;"><center>Timesheet</center></h3>
+            <apex:selectList value="{!selectMonth}" multiselect="false" size="1" styleClass="Alllist">
+                <apex:selectOptions value="{!monthList}"/>
+                <apex:actionSupport event="onchange" reRender="sheetTable" action="{!displayTimeSheet}"/>
+            <br/>
+            </apex:selectList>
+                   <apex:selectList value="{!selectYear}" multiselect="false" size="1" styleClass="Alllist">
+                       <apex:selectOptions value="{!YearList}"/>
+                       <apex:actionSupport event="onchange" reRender="sheetTable" action="{!displayTimeSheet}"/>
+                   </apex:selectList>
+                   <apex:outputPanel id="sheetTable"> 
+                    <table  style="width:100%" class ="timesheet"> 
+                                            <tr>
+                                <td width = "10%" height = "50" style="background-color:#b3d9ff;">Resource Name</td>
+                                    <apex:repeat value="{!dates}" var="d"> 
+                                        <td Style = "background-color :  {!IF(MOD(d-DATE(1900,1,6),7)== 1,'yellow','#FFE699')}">
+                                        <apex:outputText value="{0,date,EEE dd'/'MM}">
+                                        <apex:param value="{!d}"/> 
+                                        </apex:outputText>
+                                        </td> 
+                                    </apex:repeat>
+                         </tr>
+                        <apex:repeat value="{!candidateList }" var="con">
+                            <tr>
+                                <td style="text-align:center;background-color:#ccffcc;border : 1pt solid black">{!con.candidate}</td>
+                                <apex:repeat value="{!con.ColorHour}" var="h">
+                                        <td Style = "background-color : {!h.colorcolumn}">{!h.hour}</td>
+                                </apex:repeat>    
+                             </tr>
+                        </apex:repeat>          
+                             <tr>
+                                 <td style = "text-align:center;background-color : #009900;">Total</td>
+                                 <apex:repeat value="{!totalSum}" var="t">
+                                 <td>{!t}</td>
+                                 </apex:repeat>
+                             </tr>
+                      </table>
+                      </apex:outputPanel>
+        </apex:form>     
+</apex:page>

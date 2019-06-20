@@ -1,0 +1,20 @@
+<apex:page controller="JobAppComController" sidebar="false">
+    <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/jquery.min.js')}"></script> 
+        <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/bootstrap.min.js')}"></script> 
+        <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap.min.css')}" /> 
+        <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap-theme.min.css')}"/>
+           <apex:form >
+                    <table>
+                        Submit Your Resume
+                        <tr>
+                        <td><apex:inputFile value="{!resumeInsert.body}" fileName="{!resumeInsert.name}" contentType="content"/></td>
+                        </tr>
+                        <br/>
+                        <tr>
+                        <td><apex:commandButton value="Save" action="{!saveResume}"/></td>
+                        </tr>
+                    </table>
+             </apex:form>
+    
+    
+</apex:page>

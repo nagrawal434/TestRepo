@@ -1,0 +1,50 @@
+<apex:page controller="MemoManagerController" showHeader="false"  sidebar="false">
+   
+    <apex:form >
+        <apex:pageBlock >
+            <table>
+                <tr>
+                    <td><font size = "5">New User</font></td>
+                </tr>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr/>
+                <tr>
+                    <td><font size = "3">First Name</font></td>
+                </tr>
+                <tr>
+                    <td><apex:inputText value="{!con.firstname}"/></td>
+                </tr>
+                <tr/>
+                <tr/>
+                <tr>
+                    <td><font size = "3">Last Name</font></td>
+                </tr>
+                <tr>
+                    <td><apex:inputText value="{!con.lastname}"/></td>
+                </tr>
+                <tr/>
+                <tr/>
+                <tr>
+                    <td><font size = "3">Email</font></td>
+                </tr>
+                <tr>
+                    <td><apex:inputText value="{!con.email}"/></td>
+                </tr>
+                <tr/>
+                <tr/>
+                 <tr>
+                    <td><font size = "3">Password</font></td>
+                </tr>
+                <tr>
+                    <td><apex:inputText value="{!con.Password__c}"/></td>
+                </tr>
+                <tr/>
+                <tr/>
+           </table>
+           <apex:commandButton value="Save" action="{!saveNewUserPage}" />
+        </apex:pageBlock>
+        </apex:form>
+</apex:page>

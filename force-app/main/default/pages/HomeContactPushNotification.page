@@ -1,0 +1,67 @@
+<apex:page tabStyle="contact" controller="remoteContactNotificationController" id="page">
+    <apex:includeScript value="{!$Resource.cometd}"/>
+    <apex:includeScript value="{!$Resource.jquery}"/>
+    <apex:includeScript value="{!$Resource.json2}"/>
+    <apex:includeScript value="{!$Resource.jquery_cometd}"/>
+    <script type="text/javascript">
+        var j$ = jQuery.noConflict();
+        j$(document).ready(function() {
+            // Connect to the CometD endpoint 
+    
+            j$.cometd.init({
+               url: window.location.protocol+'//'+window.location.hostname+'/cometd/29.0/',
+               requestHeaders: { Authorization: 'OAuth {!$Api.Session_ID}'}
+            });
+
+            j$.cometd.subscribe('/topic/ContactNotifications', function(message) {
+                getContactDetails(message.data.sobject.Id);
+            });
+            
+            function getContactDetails(contactId){
+                alert(contactId);
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.remoteContactNotificationController.contactDetail}',
+                    contactId, 
+                    function(result, event){
+                        if (event.status) {
+                            document.getElementById('{!$Component.page.form.block.section.firstName}').innerText = result.FirstName;
+                            document.getElementById('{!$Component.page.form.block.section.lastName}').innerText = result.LastName;
+                            document.getElementById('{!$Component.page.form.block.section.accountName}').innerText = result.Account.Name;
+                            document.getElementById('{!$Component.page.form.block.section.email}').innerText = result.Email;
+                            document.getElementById('{!$Component.page.form.block.section.phone}').innerText = result.Phone;
+                            document.getElementById('{!$Component.page.form.block.section.bdate}').innerText = result.BirthDate;
+                        } else if (event.type === 'exception') {
+                            alert('Error');
+                            document.getElementById('{!$Component.page.form.responseErrors}').innerHTML = 
+                                event.message + "<br/>\n<pre>" + event.where + "</pre>";
+                        } else {
+                            document.getElementById('{!$Component.page.form.responseErrors}').innerHTML = event.message;
+                        }
+                    }, 
+                    {escape: true}
+                );
+            }
+            
+        });
+    </script>
+    <apex:sectionHeader title="Contact" subtitle="Contact Detail"/>
+    <apex:form id="form">
+        <apex:pageBlock id="block">
+            <apex:pageBlockSection id="section" columns="2" title="Contact Details">
+                <apex:outputLabel value="First Name: " for="firstName" style="font-weight: bold;"/>
+                <apex:outputText value="" id="firstName"  />
+                <apex:outputLabel value="Last Name: " for="lastName" style="font-weight: bold;"/>
+                <apex:outputText value="" id="lastName"  />
+                <apex:outputLabel value="Account Name: " for="accountName" style="font-weight: bold;"/>
+                <apex:outputText value="" id="accountName"  />
+                <apex:outputLabel value="Email: " for="email" style="font-weight: bold;"/>
+                <apex:outputText value="" id="email"  />
+                <apex:outputLabel value="Phone: " for="phone" style="font-weight: bold;"/>
+                <apex:outputText value="" id="phone"  />
+                <apex:outputLabel value="BirthDate: " for="bdate" style="font-weight: bold;"/>
+                <apex:outputText value="" id="bdate"  />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:outputPanel layout="block" id="responseErrors"></apex:outputPanel>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,69 @@
+<apex:page standardController="Opportunity" extensions="LightningProgressbarController">
+  <!-- Lightning Design System Source -->
+    <apex:stylesheet value="{!URLFOR($Resource.assets, '/assets/styles/salesforce-lightning-design-system-vf.css')}" />
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">  
+        <apex:form >
+            <div class="slds" style="width:50%;">
+                <div class="slds-grid">
+                    <div class="slds-tabs--path"   role="application">
+                        <ul  class="slds-tabs--path__nav" role="tablist">
+                            <!--Completed Stage-->
+                            <apex:repeat value="{!completedStage}" var="completeStage">
+                                <li class="slds-tabs--path__item slds-is-complete" role="presentation">
+                                    <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                                        <span class="slds-tabs--path__stage">
+                                            <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                                            </svg>
+                                            <span class="slds-assistive-text">Stage Complete</span>
+                                        </span>
+                                        <span class="slds-tabs--path__title">{!completeStage}</span>
+                                    </a>
+                                </li>
+                            </apex:repeat> 
+                            <!-- /Completed Stage-->
+                           
+                            <!--Current Stage-->  
+                            <li class="slds-tabs--path__item slds-is-current" role="presentation">
+                                <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                                    <span class="slds-tabs--path__stage">
+                                        <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                            <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Current Stage</span>
+                                    </span>
+                                    <span class="slds-tabs--path__title">{!currentStage}</span>
+                                </a>
+                            </li>
+                            <!-- / Current Stage -->
+                           
+                            <!-- Incompleted Stage -->
+                            <apex:repeat value="{!incompletedStage}" var="incompleteStage">
+                                <li class="slds-tabs--path__item slds-is-incomplete" role="presentation">
+                                    <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                                        <span class="slds-tabs--path__stage">
+                                            <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                                            </svg>
+                                            <span class="slds-assistive-text">Incomplete Stage</span>
+                                        </span>
+                                        <span class="slds-tabs--path__title">{!incompleteStage}</span>
+                                    </a>
+                                </li>
+                            </apex:repeat>
+                            <!-- /Incompleted Stage -->
+                            
+                        </ul>
+                    </div>
+                    <button style="margin-left:147px;" class="slds-button slds-button--brand slds-path__mark-complete slds-no-flex slds-m-horizontal--small">
+                        <svg aria-hidden="true" class="slds-button__icon slds-button__icon--left">
+                            <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                        </svg>Mark Status as Complete
+                    </button>
+                </div>                    
+            </div>
+        </apex:form>
+    </html>        
+</apex:page>

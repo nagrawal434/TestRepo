@@ -1,0 +1,63 @@
+<apex:page controller="SendEmailPdfController" sidebar="false" showHeader="false">
+ <apex:form id="frm" >
+            <style>
+                    body .bPageBlock .pbBody .blue .pbSubheader{
+                         background-color: #00aae4;
+                     }
+                    
+            </style>
+            <apex:outputPanel id="panel1">
+            <apex:pageMessages ></apex:pageMessages>
+            <Script>
+            function newSendMailPage(){
+                forSend = '{!chkForSendMail}';
+                if(a == 'forSend'){
+                    window.open('/apex/SendingPage?id={!ContactIds}','_blank', 'toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=700, width=700, height=400')
+                }
+            }
+            </Script>               
+            </apex:outputPanel>
+            <apex:pageBlock rendered="{!pbk1}" id="searchBlock">
+                <apex:outputPanel styleClass="blue" layout="block" id="outputpanel1" >
+                    <apex:pageBlockSection title="Search Account" id="section1" columns="2">
+                        <apex:pageBlockSectionItem >
+                        <apex:inputText value="{!enterAccount}" html-placeholder="Enter Account Name"/>
+                        <apex:commandButton value="Search" action="{!searchAccount}"/>
+                        </apex:pageBlockSectionItem>
+                   </apex:pageBlockSection>
+                </apex:outputPanel>
+            </apex:pageBlock>
+            <apex:pageBlock rendered="{!pbk2}" id="Accounts">  
+                 <apex:outputPanel styleClass="blue" layout="block" id="outputpanel2">
+                    <apex:pageBlockSection title="Account Details" id="Accounts" columns="1">
+                        <apex:pageBlockTable value="{!ModelList}" var="m" > 
+                            <apex:column >
+                                 <apex:actionsupport action="{!selectContacts}" event="onclick"  rerender="Accounts,RelatedContacts">  
+                                    <input type="radio"/>                    
+                                    <apex:param name="accountId" value="{!m.AccountModel.id}">
+                                    </apex:param>
+                                 </apex:actionsupport>   
+                             </apex:column>
+                            <apex:column value="{!m.AccountModel.name}"/>
+                            <apex:column value="{!m.AccountModel.phone}"/>
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection>
+                </apex:outputPanel> 
+            </apex:pageBlock>
+            <apex:pageBlock id="RelatedContacts">
+                <apex:pageBlockSection rendered="{!pbk3}" columns="2">
+                    <apex:commandButton value="Send Email"  action="{!sendMethod}" oncomplete="newSendMailPage();return false;" reRender="panel1" /> 
+                    <apex:commandButton value="Print Detail" action="{!printEmail}"/>
+                </apex:pageBlockSection>    
+                    <apex:pageBlockTable id="Accounts" value="{!ModelContactList}" var="mcontact">
+                        <apex:column >
+                        <apex:inputCheckbox value="{!mcontact.isCheck}"/>
+                        </apex:column>
+                        <apex:column value="{!mcontact.ContactModel.firstname}"/>
+                        <apex:column value="{!mcontact.ContactModel.lastname}"/>
+                        <apex:column value="{!mcontact.ContactModel.phone}"/>
+                        <apex:column value="{!mcontact.ContactModel.email}"/>
+                     </apex:pageBlockTable>
+              </apex:pageBlock>
+    </apex:form>                    
+</apex:page>

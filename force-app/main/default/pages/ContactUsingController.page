@@ -1,0 +1,20 @@
+<apex:page standardController="Contact"  recordSetVar="con" sidebar="false"  standardStylesheets="false" showHeader="false">
+    <apex:form >
+        <apex:pageBlock >
+            <table border="1" width="100%" >
+                <tr>
+                  <th>Firstname</th>
+                  <th>lastname</th>
+                  <th>email</th>
+                  <th>phone</th>
+               </tr>
+               <tr>
+                    <apex:repeat value="{!con}" var="c">
+                         <c:ControllerWithoutController contacts="{!c}"/>
+                        
+                    </apex:repeat>
+                </tr>
+            </table>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

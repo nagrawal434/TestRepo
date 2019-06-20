@@ -1,0 +1,18 @@
+<apex:page controller="jobApplicantListController">
+    <apex:form >
+        <apex:pageBlock title="Applicant List">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton action="{!sendMail}" value="Send Mail"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!modelList}" var="m">
+                <apex:column >
+                    <apex:inputCheckbox value="{!m.chk}"/>
+                </apex:column>
+                
+                <apex:column value="{!m.jobApplication.Applicant__c}"/>
+                <apex:column value="{!m.jobApplication.Qualification__c}"/>
+                
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form> 
+</apex:page>

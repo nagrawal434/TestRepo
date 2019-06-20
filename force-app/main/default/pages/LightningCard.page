@@ -1,0 +1,102 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="opportunity">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tabs Demo | Appiphony Lightning JS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+    <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-all.min.js')}"></script>
+    <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+
+</head>
+<body>
+    <!-- SLDS -->
+    <div class="slds">
+        <!--  SLDS-CARD -->
+        <div class="slds-card">
+            <!-- SLDS-CARD__HEADER -->
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small">
+                          <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#products')}"></use>
+                        </svg>
+                    </div>
+                    <div class="slds-media__body slds-truncate">
+                        <h2>
+                          <a href="javascript:void(0);" class="slds-text-link--reset">
+                            <apex:variable var="count" value="{!0}"/>
+                            <apex:repeat value="{!opportunity.opportunityLineItems}">
+                                <apex:variable var="count" value="{!count + 1}"/>
+                            </apex:repeat>
+                            <span class="slds-text-heading--small">products ({!count})</span>
+                          </a>
+                        </h2>
+                    </div>
+                </header>
+                <div class="slds-no-flex">
+                    <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" aria-haspopup="true">
+                        <svg aria-hidden="true" class="slds-button__icon">
+                          <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- /SLDS-CARD__HEADER -->
+            <!-- SLDS-CARD BODY -->
+            <div class="slds-card__body">
+                <div class="slds-card__body--inner slds-grid slds-wrap slds-grid--pull-padded">
+                    <apex:repeat value="{!opportunity.opportunitylineitems}" var="opp">
+                        <div class="slds-tile slds-media slds-card__tile slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-3 slds-hint-parent">
+                            <!-- SLDS_MEDIA_BODY -->
+                            <div class="slds-media__body">
+                                <div class="slds-grid slds-grid--align-spread slds-has-flexi-truncate">
+                                    <h3 class="slds-truncate" title="Related Record Title 1"><a href="javascript:void(0);">{!opp.name}</a></h3>
+                                    <div class="slds-shrink-none">
+                                        <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" aria-haspopup="true">
+                                            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--hint">
+                                              <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                            </svg>
+                                            <span class="slds-assistive-text">More options</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="slds-tile__detail slds-text-body--small">
+                                    <dl class="slds-dl--horizontal">
+                                      <dt class="slds-dl--horizontal__label">
+                                        <span class="slds-truncate" title="Quantity">Quantity:</span>
+                                      </dt>
+                                      <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                        <span class="slds-truncate" title="Quantity">{!opp.quantity}</span>
+                                      </dd>
+                                      <dt class="slds-dl--horizontal__label">
+                                        <span class="slds-truncate" title="Price">SalePrice:</span>
+                                      </dt>
+                                      <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                        <span class="slds-truncate" title="UnitPrice">{!opp.unitprice}</span>
+                                      </dd>
+                                      
+                                      <dt class="slds-dl--horizontal__label">
+                                        <span class="slds-truncate" title="Date">Date:</span>
+                                      </dt>
+                                      <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                        <span class="slds-truncate" title="Service Date">{!opp.servicedate}</span>
+                                      </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <!-- /SLDS_MEDIA_BODY -->
+                        </div>
+                    </apex:repeat>
+                </div>
+            <div class="slds-card__footer"><a href="javascript:void(0);">View All <span class="slds-assistive-text">entity type</span></a></div>
+        </div>
+        <!-- /SLDS-CARD BODY -->    
+    </div>
+    <!--  /SLDS_CARD -->
+    </div>
+    <!-- SLDS -->
+</body>
+
+</html>
+</apex:page>

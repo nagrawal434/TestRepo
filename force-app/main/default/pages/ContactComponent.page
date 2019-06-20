@@ -1,0 +1,22 @@
+<apex:page controller="ContactComponentController" showHeader="false" sidebar="false" standardStylesheets="false"> 
+  <apex:form >
+      <apex:pageBlock >
+          
+              <table width="100%" border="1" >
+              <tr>
+                  <th>Firstname</th>
+                  <th>lastname</th>
+                  <th>email</th>
+                  <th>phone</th>
+              </tr>
+              <tr>
+                  <apex:repeat value="{!clist}" var="c">
+                      <c:mycontroller contlist="{!c}"> 
+                      </c:mycontroller>
+                  </apex:repeat>
+              </tr>
+             </table>
+        
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

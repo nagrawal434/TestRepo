@@ -1,0 +1,36 @@
+<apex:page controller="WorldSetMapListController">    
+<apex:form >
+    <apex:pageBlock >
+        <apex:pageBlockSection columns="1" >
+        <apex:outputPanel >
+            <apex:actionStatus startText="Processing...." id="process"  startStyle="color.red" />
+            
+                <apex:selectList multiselect="false" size="1" value="{!countrySelect}">
+                     <apex:selectOption itemLabel="--None--" itemValue=""/>
+                     <apex:selectOptions value="{!cl}">
+                    </apex:selectOptions>
+               </apex:selectList>
+              <apex:commandButton value="GO" action="{!goCountry}"  status="process"/>
+              
+               <apex:selectList size="1" multiselect="false" value="{!stateSelect}">
+                     <apex:selectOption itemLabel="--None--" itemValue=""/>
+                    <apex:selectOptions value="{!state}">
+                    </apex:selectOptions>
+               </apex:selectList>
+               
+               <apex:commandButton value="GoState" action="{!goState}" status="process"/>
+               
+               <apex:selectlist multiselect="false" size="1" >
+               <apex:selectOption itemLabel="--None--" itemValue=""/>
+            <apex:selectOptions value="{!cityselect}">
+            </apex:selectOptions>
+                </apex:selectList>
+           </apex:outputPanel>
+           </apex:pageBlockSection>
+            
+               
+            
+             
+     </apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,11 @@
+<apex:page controller="XMLAssignmentController" contentType="application/xml" >
+    <contacts>
+        <apex:repeat value="{!contactModels}" var="con">
+            <contact>
+                <firstname>{!con.firstname}</firstname>
+                <lastname>{!con.Lastname}</lastname>
+                <email>{!con.email}</email>    
+            </contact>
+        </apex:repeat>
+    </contacts>
+</apex:page>

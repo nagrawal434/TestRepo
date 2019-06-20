@@ -1,0 +1,48 @@
+<apex:page >
+    <html>
+    <head>
+    <apex:includeScript value="{!$Resource.Jquery1}"/> 
+    
+    <!-- To hide a paragrath -->
+    <script>        
+        $(document).ready(function(){
+            $("#hide").click(function(){
+                $(".text").hide();
+            }) 
+        }); 
+    </script>
+    
+    <!--- To show A paragraph -->
+    <script>
+        $(document).ready(function(){
+            $("#show").click(function(){
+                $("#text1").show();
+            })    
+        });
+    </script>
+    
+    <!-- To hide show one button click -->
+        <script>
+        alert('^^^^^^^');
+        $(document).ready(function(){
+            $("#toggle").click(function(){
+                alert('****');
+                $("#text1").toggle();
+            })    
+        });
+    </script>
+    
+    <!--Show text after click on a button -->
+        <script>
+            
+        </script>
+    </head> 
+    <body>
+        <apex:outPutText value="Hello now Click" id="text1" styleclass="text" />
+        <button id="hide"> hide </button>
+        <button id ="show">show</button>
+        <button id="toggle"> Toggle Button </button>
+        
+    </body>
+    </html>   
+</apex:page>

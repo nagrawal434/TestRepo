@@ -1,0 +1,90 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" applyHtmlTag="false" id="thePage">
+  
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <title>Lightning_Multi_Lookup_Component</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+        <apex:stylesheet value="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+        <script src="//code.jquery.com/jquery-2.1.4.js" type="text/javascript"></script>
+        <!-- <script src="{!URLFOR($Resource.Light_custom_MultiLookup_JS)}"></script> -->
+     </head>
+    <body class="slds">
+        <apex:form >
+            <c:Lightning_multilookup_component />
+            <div class="slds-container slds-container--center">
+                <div class="slds-box">
+                    <div class="slds-page-header slds-text-heading--medium">Activity Details</div>
+                    
+                    <div class="slds-grid slds-wrap slds-form--vertical slds-p-top--medium">
+                        <div class="slds-large-size--6-of-12 slds-col slds-col--padded" >
+                            <div class="slds-form-element">
+                              <label class="slds-form-element__label" for="sample1">Activity Name</label>
+                              <div class="slds-form-element__control">
+                                <input type="text" class="slds-input"/>
+                              </div>
+                            </div>
+                        
+                        </div>
+                        <div class="slds-large-size--6-of-12 slds-col slds-col--padded" >
+                            <div class="slds-form-element">
+                              <label class="slds-form-element__label" for="sample1">Activity Date</label>
+                              <div class="slds-form-element__control">
+                                <input type="text" class="slds-input"/>
+                              </div>
+                            </div>
+                            
+                        </div>
+                        <div class="slds-large-size--6-of-12 slds-col slds-col--padded" >
+                            <div class="slds-form-element">
+                              <label class="slds-form-element__label" for="sample1">Due Date</label>
+                              <div class="slds-form-element__control">
+                                <input type="text" class="slds-input"/>
+                              </div>
+                            </div>
+                           
+                        </div>
+                        <div class="slds-large-size--6-of-12 slds-col slds-col--padded" >
+                            <div class="slds-form-element">
+                              <label class="slds-form-element__label" for="sample1">Related To</label>
+                              <div class="slds-form-element__control">
+                                <apex:inputText id="inptName"/>
+                                <apex:inputHidden id="inptId"/>
+                                <div id="lk" class=""></div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="slds-large-size--12-of-12 slds-col slds-col--padded slds-m-top--small" >
+                            <center>
+                                <button class="slds-button slds-button--brand">Save</button>
+                                <button class="slds-button slds-button--neutral">Cancel</button>
+                            </center>        
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </apex:form>
+         
+        <script>
+            
+            var dropdownIcon = "{!URLFOR($Resource.assets, 'assets/icons/utility-sprite/svg/symbols.svg#switch')}";
+            var objIconMap = {};
+            var iconClassMap1 = {};
+            objIconMap["account"] = "{!URLFOR($Resource.assets, 'assets/icons/standard-sprite/svg/symbols.svg#account')}";
+            objIconMap["case"] = "{!URLFOR($Resource.assets, 'assets/icons/standard-sprite/svg/symbols.svg#case')}";
+            iconClassMap1["{!URLFOR($Resource.assets, 'assets/icons/standard-sprite/svg/symbols.svg#account')}"] = "slds-icon-standard-account";
+            iconClassMap1["{!URLFOR($Resource.assets, 'assets/icons/standard-sprite/svg/symbols.svg#case')}"] = "slds-icon-standard-article";
+                
+            $(document).ready(function(){
+                createMultiLookup('lk','inptName','inptId',objIconMap,iconClassMap1);
+                
+                
+            });
+            
+            
+        </script>
+        
+       
+        
+    </body>
+</html>
+</apex:page>

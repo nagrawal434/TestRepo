@@ -1,0 +1,3 @@
+<apex:page sidebar="false">
+     <c:StageIndicator stages="Prospecting, Qualification, Need Analysis, Value Proposition,  Negotiation, Closed Won" fontsize="18px" currentStage="Value Proposition" indicatorHeight="50px" indicatorWidth="150px"/>         
+ </apex:page>

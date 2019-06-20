@@ -1,0 +1,39 @@
+<apex:page showheader="false" standardStylesheets="false">
+   <html>
+      <head>
+         <!-- Bootstrap -->
+         <title>Bootstrap Theme Company</title>
+           <link rel="stylesheet" href="{!URLFOR($Resource.BootStrapFile,'bootstrap-3.3.7/dist/css/bootstrap.min.css')}"/>
+           <script src="{!URLFOR($Resource.BootStrapFile,'bootstrap-3.3.7/dist/js/bootstrap.min.js')}"></script>
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <style>
+         
+        </style>
+        </head>
+        <body>
+        
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-3 col-md-offset-1">
+                                <img src="{!URLFOR($Resource.IHG, 'IHG.png')}" class="img-responsive" style="width:90%" alt="Image"/>
+                            </div>
+                            <div class="col-sm-4">
+                                <p>Catalog</p>
+                            </div>
+                            <div class="col-sm-4">
+                                <!-- Deemphasize a button by making it look like a link while maintaining button behavior -->
+                                <a href='#' target="_blank">Read More</a>
+                            </div>                        
+                        </div>    
+                    </div>
+                    <div class="col-sm-2 col-md-offset-4">
+                    <button type="button" class="btn btn-outline-warning">Warning</button>    
+                    </div>    
+                </div>
+            </div>
+        
+        </body> 
+   </html>
+</apex:page>

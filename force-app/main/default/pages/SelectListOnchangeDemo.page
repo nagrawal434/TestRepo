@@ -1,0 +1,18 @@
+<apex:page controller="SelectListOnchangeDemo" id="mypage">
+    <apex:form >            
+        
+        <apex:selectList id="selected_list" value="{!temp}" required="false" size="1">
+            <apex:selectOption itemvalue="None" itemLabel="--None--"/>
+            <apex:selectOption itemvalue="a" itemLabel="a"/>
+            <apex:selectOption itemvalue="b" itemLabel="b"/>
+            <apex:actionSupport event="onchange" reRender="Details" action="{!find}"/>
+        </apex:selectList>
+        <br/>
+        <apex:panelGroup >        
+            <apex:outputPanel id="Details">            
+                The value based on select list value: {!temp1}            
+            </apex:outputPanel>
+        </apex:panelGroup>
+         
+    </apex:form>
+</apex:page>

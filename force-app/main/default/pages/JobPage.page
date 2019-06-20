@@ -1,0 +1,131 @@
+<apex:page standardController="Job_Application__c" showHeader="false" sidebar="false">
+    <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/jquery.min.js')}"></script> 
+    <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/bootstrap.min.js')}"></script> 
+    <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap.min.css')}" /> 
+    <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap-theme.min.css')}" />
+    <style>
+    .wizard a {
+            background: #efefef;
+            display: inline-block;
+            margin-right: 5px;
+            min-width: 74px;
+            outline: none;
+            padding: 6px 40px 22px;
+            position: relative;
+            text-decoration: none !important;
+        }
+        
+        .wizard .active {
+            background: #428BCA;
+            color: #fff;
+        }
+        .currentSt{
+            background: #428BCA !important;
+            color: #fff;
+        }
+       .wizard .currentSt:after {
+            border-left: 21px solid #428BCA !important;
+        }
+        .beforeCurrentSt{
+            background: #7F992F !important;
+            color: #fff;
+        }
+        .wizard .beforeCurrentSt:after {
+            border-left: 21px solid #7F992F !important;
+        }
+        .reject{
+            background: #cc0000 !important;
+            color: #fff;
+        }
+       .wizard .reject:after {
+            border-left: 21px solid #cc0000 !important;
+        }
+        
+        .wizard a:before {
+            width: 0;
+            height: 0;
+            border-top: 27px inset transparent;
+            border-bottom: 22px inset transparent;
+            border-left: 21px solid #fff;
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+        }
+        
+        .wizard a:after {
+            width: 0;
+            height: 0;
+            border-top: 27px inset transparent;
+            border-bottom: 22px inset transparent;
+            border-left: 21px solid #efefef;
+            position: absolute;
+            content: "";
+            top: 0;
+            right: -20px;
+            z-index: 2;
+        }
+        
+        .wizard a:first-child:before,
+        .wizard a:last-child:after {
+            border: none;
+        }
+        
+        .wizard a.active:after {
+            border-left: 21px solid #428BCA;
+        }
+        .wizard a .txt{
+            margin-top: 7px;
+            margin-bottom: -7px;
+        }
+    </style>
+  </head>
+   <script>
+    $(document).ready(function(){
+          $("a").tooltip();
+          var date = new Date("{!Job_Application__c.createdDate}");
+          $('#aid1').attr('title','Applicant is : {!Job_Application__c.Applicant__r.name} '+'\n'+'Submitted Date is :' + (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+          
+          var date1 = new Date("{!Job_Application__c.Reviewer_Date__c}");
+          $('#aid2').attr('title','Reviewer is : {!Job_Application__c.ReviewerName__r.name} '+'\n'+'Review Date is :' + (date1.getMonth() + 1) + '/' + date1.getDate() + '/' +  date1.getFullYear()) ;
+          
+          var date2 = new Date("{!Job_Application__c.Interview_Date__c}");
+          $('#aid3').attr('title','Interviewer is : {!Job_Application__c.InterviewerName__r.name} '+'\n'+'Interview Date is :' + (date2.getMonth() + 1) + '/' + date2.getDate() + '/' +  date2.getFullYear()) ;
+          
+          var date3 = new Date("{!Job_Application__c.HR_Date__c}");
+          $('#aid4').attr('title','HR is : {!Job_Application__c.HRName__r.name} '+'\n'+'Interview Date is :' + (date3.getMonth() + 1) + '/' + date3.getDate() + '/' +  date3.getFullYear()) ;
+          
+           var date4 = new Date("{!Job_Application__c.Appointed_Date__c}");
+          $('#aid5').attr('title','Appointed Date is :' + (date4.getMonth() + 1) + '/' + date4.getDate() + '/' +  date4.getFullYear()) ;
+          
+          var date5 = new Date("{!Job_Application__c.Rejection_Date__c}");
+          $('#aid6').attr('title','Rejected Date is :' + (date5.getMonth() + 1) + '/' + date5.getDate() + '/' +  date5.getFullYear()) ;
+          
+       });
+   </script>
+<div class="wizard">
+                    <a id="aid1" class="{!if(Job_Application__c.RecordType.name =='Submitted',"currentSt first",if(Job_Application__c.RecordType.name =='Rejected',"first","beforeCurrentSt first"))}">
+                        <div class="txt" id="txts">Submitted</div>
+                    </a>
+                    <a id="aid2" class="{!if(Job_Application__c.RecordType.name =='Internal Reviewer',"currentSt",if( (Job_Application__c.RecordType.name =='Submitted' || Job_Application__c.RecordType.name =='Rejected' ),"","beforeCurrentSt"))}">
+                        <div class="txt">Internal Review</div>
+                    </a>
+                    <a id="aid3" class="{!if(Job_Application__c.RecordType.name =='Interview',"currentSt",if( (Job_Application__c.RecordType.name =='Submitted' || Job_Application__c.RecordType.name =='Internal Reviewer'||Job_Application__c.RecordType.name=='Rejected' ),"","beforeCurrentSt"))}">
+                        <div class="txt">Interview </div>
+                    </a>
+                    <a id="aid4" class="{!if(Job_Application__c.RecordType.name =='HR Round',"currentSt",if( (Job_Application__c.RecordType.name=='Submitted' || Job_Application__c.RecordType.name=='Internal Reviewer' || Job_Application__c.RecordType.name =='Interview' ||Job_Application__c.RecordType.name=='Rejected'),"","beforeCurrentSt"))}">
+                        <div class="txt">HR Round</div>
+                    </a>
+                    <a id="aid5" class="{!if(Job_Application__c.RecordType.name =='Appointed',"currentSt",if( (Job_Application__c.RecordType.name =='Submitted' || Job_Application__c.RecordType.name =='Internal Reviewer' || Job_Application__c.RecordType.name=='Interview' || Job_Application__c.RecordType.name=='Appointed'||Job_Application__c.RecordType.name =='Rejected'||Job_Application__c.RecordType.name =='HR Round'),"","beforeCurrentSt"))}">
+                        <div class="txt">Appointed</div>
+                    </a>
+                    <a id="aid6" class="{!if(Job_Application__c.RecordType.name =='Rejected',"reject",if( (Job_Application__c.RecordType.name=='Submitted' || Job_Application__c.RecordType.name == 'Internal Reviewer' || Job_Application__c.RecordType.name=='Interview'||Job_Application__c.RecordType.name =='HR Round'||Job_Application__c.RecordType.name =='Appointed'),"last","beforeCurrentSt last"))}">
+                        <div class="txt">Rejected</div>
+                    </a>
+                </div><!-- end of wizard div-->
+</apex:page>

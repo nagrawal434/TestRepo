@@ -1,0 +1,130 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" Controller="lightningCardController">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<head>
+    <meta charset="UTF-8" />
+    <title>Tabs Demo | Appiphony Lightning JS</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+    <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-all.min.js')}"></script>
+    <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+
+</head>
+<body>
+    <div class="slds">
+    <!-- PRIMARY CONTENT WRAPPER -->
+        <div class="myapp">
+        
+          <!-- RELATED LIST CARDS-->
+        
+          <div class="slds-grid slds-m-top--large">
+        
+            <!-- MAIN CARD -->
+            <div class="slds-col slds-col-rule--right slds-p-right--large slds-size--8-of-12">
+            <!-- Nested Tab -->
+                <div class="slds-tabs--default" data-aljs="tabs" style="padding-left: 118px;width: 62%;">
+                  <ul class="slds-tabs--default__nav" role="tablist">
+                    <li class="slds-tabs--default__item slds-text-title--caps slds-active" title="Activity" role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" data-aljs-show="tab-default-1" id="tab-default-1__item">Activity</a></li>
+                    <li class="slds-tabs--default__item slds-text-title--caps" title="Collaborate"
+                      role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" data-aljs-show="tab-default-2" id="tab-default-2__item">Collaborate</a></li>
+                    <li class="slds-tabs--default__item slds-text-title--caps" title="Details"
+                      role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" data-aljs-show="tab-default-3" id="tab-default-3__item">Details</a></li>
+                  </ul>
+                  <div id="tab-default-1" class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+                    <div class="slds-tabs--scoped" data-aljs="tabs">
+                      <ul class="slds-tabs--scoped__nav" role="tablist">
+                        <li class="slds-tabs--scoped__item slds-text-title--caps slds-active" style="padding-bottom: 0px" title="Log a Call" role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" data-aljs-show="tab-scoped-1" id="tab-scoped-1__item">Log a Call</a></li>
+                        <li class="slds-tabs--scoped__item slds-text-title--caps" title="New Task" style="padding-bottom: 0px"
+                          role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" data-aljs-show="tab-scoped-2"  id="tab-scoped-2__item">New Task</a></li>
+                        <li class="slds-tabs--scoped__item slds-text-title--caps" title="New Event" style="padding-bottom: 0px"
+                          role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" data-aljs-show="tab-scoped-3"  id="tab-scoped-3__item">New Event</a></li>
+                        <li class="slds-tabs--scoped__item slds-text-title--caps" title="Email" style="padding-bottom: 0px"
+                          role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-4" data-aljs-show="tab-scoped-4"  id="tab-scoped-4__item">Email</a></li>
+                      </ul>
+                      <div id="tab-scoped-1" class="slds-tabs--scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-1__item">Item One Content</div>
+                      <div id="tab-scoped-2" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-2__item">Item Two Content</div>
+                      <div id="tab-scoped-3" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-3__item">Item Three Content</div>
+                      <div id="tab-scoped-4" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-4__item">Item Four Content</div>
+                    </div>
+                  </div>
+                  <div id="tab-default-2" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">Item Two Content</div>
+                  <div id="tab-default-3" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-3__item">Item Three Content</div>
+                </div> 
+            <!-- /Nested Tab -->            
+            
+            </div>
+            <!-- / MAIN CARD -->
+        
+            <!-- COMPACT CARD -->
+            <div class="slds-col slds-p-left--large slds-size--4-of-12">
+                <!-- DEmo Card-->
+                <div class="slds-card slds-card--narrow">
+                  <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                      <div class="slds-media__figure">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small" style="background-color: orange;">
+                          <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#product')}"></use>
+                        </svg>
+                      </div>
+                      <div class="slds-media__body slds-truncate">
+                        <h2>
+                            <apex:variable var="count" value="{!0}"/>
+                            <apex:repeat value="{!opportunity.opportunityLineItems}">
+                                <apex:variable var="count" value="{!count + 1}"/>
+                            </apex:repeat>
+                            <span class="slds-text-heading--small">Products({!count})</span>
+                        </h2>
+                      </div>
+                    </header>
+                    <div class="slds-no-flex">
+                      <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" aria-haspopup="true">
+                        <svg aria-hidden="true" class="slds-button__icon">
+                          <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="slds-card__body">
+                    <div class="slds-card__body--inner">
+                      <apex:repeat value="{!opportunity.opportunityLineItems}" var="products">
+                          <div class="slds-tile">
+                            <h3 class="slds-truncate" title="Related Record Title 1"><a href="javascript:void(0);">{!products.name}</a></h3>
+                            <div class="slds-tile__detail slds-text-body--small">
+                              <dl class="slds-dl--horizontal">
+                                <dt class="slds-dl--horizontal__label">
+                                  <span class="slds-truncate" title="Quantity">Quantity:</span>
+                                </dt>
+                                <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                  <span class="slds-truncate" title="Quantity">{!products.quantity}</span>
+                                </dd>
+                                <dt class="slds-dl--horizontal__label">
+                                  <span class="slds-truncate" title="SalesPrice">Sales Price:</span>
+                                </dt>
+                                <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                  <span class="slds-truncate" title="Salesprice">{!products.UnitPrice}</span>
+                                </dd>
+                                <dt class="slds-dl--horizontal__label">
+                                  <span class="slds-truncate" title="Date">>Date:</span>
+                                </dt>
+                                <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                  <apex:outputText value="{0,date,MM/dd/yy}" title="Date"><apex:param value="{!products.ServiceDate}" /></apex:outputText>
+                                </dd>
+                              </dl>
+                            </div>
+                          </div>
+                      </apex:repeat>
+                    </div>
+                  </div>
+                  <div class="slds-card__footer"><a href="javascript:void(0);">View All <span class="slds-assistive-text">entity type</span></a></div>
+                </div>
+            <!-- /DEmo Card-->
+            </div>
+            <!-- / COMPACT CARD -->
+          </div>
+          <!-- / RELATED LIST CARDS -->
+        </div>
+        <!-- / PRIMARY CONTENT WRAPPER -->   
+    </div>
+</body>
+
+</html>
+</apex:page>

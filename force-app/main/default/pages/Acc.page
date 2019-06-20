@@ -1,0 +1,74 @@
+<apex:page standardController="Account" extensions="ShowContactOfAccount">
+    <apex:form id="frm">
+        
+        
+          <script>
+            $(function() {
+                $( "#tabs" ).tabs();
+            });
+        </script>
+         
+         <apex:actionFunction name="detail" action="{!showContactDetail}" reRender="op">
+            <apex:param assignTo="{!contactId}" name="par" value=""/>      
+        </apex:actionFunction>
+        <apex:actionFunction name="editContact" action="{!editDetail}" reRender="op">
+            <apex:param assignTo="{!editContactId}" name="par" value=""/>      
+        </apex:actionFunction>
+        
+        <apex:pageBlock >
+            <div id="tabs"><br/>
+                <apex:commandButton value="New Contact" style="margin-left:350px" action="{!Addcontact}"/><br/><br/>
+                    <ul>
+                    <apex:repeat value="{!contactList}" var="con">
+                        <apex:variable value="{!con.FirstName} {!con.LastName}" var="name"/>
+                        <li style="font-size:12px"><a href ="#{!con.id}" onclick="detail('{!con.id}');return false;">{!name}</a></li>
+                    </apex:repeat>
+                   </ul>
+                  <br/>
+                  <apex:outputPanel id="op">
+                      <div id="{!contactDetail.id}">
+                      
+                          <apex:outputPanel rendered="{!showContact}" style="font-size:14px" layout="none" >
+                            <apex:commandButton value="Edit" style="margin-left:350px" onclick="editContact('{!contactDetail.id}'); return false;"/><br/><br/>
+                       
+                            <apex:pageBlockSection columns="2" title="Contact Dtails" >
+                                <apex:outputField value="{!contactDetail.FirstName}" label="FirstName"/>
+                                <apex:outputField value="{!contactDetail.LastName}" label="LastName"/>
+                                <apex:outputField value="{!contactDetail.Email}" label="Email "/>
+                                <apex:outputField value="{!contactDetail.Phone}" label="Phone "/>
+                                <apex:outputField value="{!contactDetail.MobilePhone}" label="MobilePhone "/>
+                                <apex:outputField value="{!contactDetail.MailingCity}" label="City"/>
+                          </apex:pageBlockSection>
+                          
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!editContact}" layout="none">
+                            <apex:pageBlock >
+                                <apex:pageBlockButtons >
+                                    <apex:commandButton value="save"  action="{!updateContact}" reRender="op" status="actStatusId"/>
+                                    <apex:actionStatus id="actStatusId" >
+                                        <apex:facet name="start" >
+                                                              
+                                        </apex:facet>
+                                    </apex:actionStatus>
+                                </apex:pageBlockButtons>
+                                <apex:pageBlockSection title="Contact Edit">
+                                    <apex:inputField value="{!contactDetail.FirstName}"/>
+                                    <apex:inputField value="{!contactDetail.LastName}"/>
+                                    <apex:inputField value="{!contactDetail.Email}"/>
+                                    <apex:inputField value="{!contactDetail.Phone}"/>
+                                    <apex:inputField value="{!contactDetail.MobilePhone}"/>
+                                    <apex:inputField value="{!contactDetail.MailingCity}"/>
+                                </apex:pageBlockSection><br/><br/>
+                                    
+                                <!--<apex:commandButton value="save" style="margin-left:350px" action="{!updateContact}" reRender="op"/>
+                                <apex:commandButton value="cancel" reRender="frm"/>-->
+                            </apex:pageBlock>
+                        </apex:outputPanel>
+                    </div>
+                </apex:outputPanel>
+            </div>
+        </apex:pageBlock>
+        
+        
+    </apex:form>
+</apex:page>

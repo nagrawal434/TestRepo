@@ -1,0 +1,27 @@
+<apex:page controller="SendEmailPdfController" renderAs="pdf" applyBodyTag="false">
+<head>
+        <style>
+            body { font-family: 'Arial Unicode MS'; }
+            .companyName { font: bold 30px; color: red; } 
+        </style>
+    </head>
+    <body>
+        <center>
+        <h1>New Account Name!</h1>
+            <table width ="100%">
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <apex:repeat value="{!ModelPdfContactList}" var="mp">
+                   <tr>
+                       <td>{!mp.firstname}</td> 
+                       <td>{!mp.lastname}</td> 
+                       <td>{!mp.phone}</td> 
+                       <td>{!mp.email}</td> 
+                   </tr>
+              </apex:repeat> 
+            </table>   
+        </center>
+    </body>
+  </apex:page>

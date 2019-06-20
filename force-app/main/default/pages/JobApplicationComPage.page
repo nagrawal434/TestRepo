@@ -1,0 +1,36 @@
+<apex:page controller="JobAppComController" sidebar="false">    
+   <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/jquery.min.js')}"></script> 
+        <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/bootstrap.min.js')}"></script> 
+        <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap.min.css')}" /> 
+        <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap-theme.min.css')}"/>
+    <apex:image value="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTnc2kyHLPLkxO8HdnPaTu2YAv2JtfzO5X_d3pkPuOIbrT-ZBn6" styleClass="Logo"/>
+   <script>
+       function redirectPage(valRe){
+           alert(valRe);
+           Apply(valRe);
+       }
+   </script>
+    <apex:form id="frm" >  
+       <apex:pageMessages ></apex:pageMessages>
+       <apex:actionStatus id="statudId" startText="Apply For The Job"/> 
+       <apex:actionFunction action="{!applyJob}" name="Apply" status="statudId" reRender="frm">
+           <apex:param assignTo="{!applyJobId}" name="ss"  value=""/>
+       </apex:actionFunction>
+      <apex:pageBlock >
+            <apex:pageBlockTable value="{!modeljobList}" var="jb">
+                <apex:column value="{!jb.job.Post_Name__c}"/>
+                <apex:column value="{!jb.job.Status__c}"/>
+                <apex:column value="{!jb.job.No_Of_Post__c}"/>
+                <apex:column value="{!jb.job.Display_Date__c}"/>
+                <apex:column value="{!jb.job.Expire_Date__c}"/>
+                <apex:column >
+                    {!jb.job.id}
+                    <apex:commandButton value="Apply" onclick="redirectPage('{!jb.job.id}');return false;"/>
+                    <!--<apex:commandButton value="Apply" styleClass="{!jb.job.id}" action="{!applyJob}" >
+                        <apex:param name="ParamA" value="{!jb.job.id}" assignTo="{!applyJobId}"/>
+                    </apex:commandButton>-->
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>        
+</apex:page>

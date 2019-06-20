@@ -1,0 +1,54 @@
+<apex:page controller="SendMailToContact" showHeader="false">
+    
+    <apex:form id="frm">
+        <apex:outputPanel id="op1">
+            <script>
+                function closeaftersave(){  
+                    //window.opener.location.href="/apex/Send_Email_To_Contact?id={!contactId}"; 
+                    var a = '{!checker}';
+                    if(a == 'false'){
+                        window.top.close(); 
+                        window.opener.RefreshAttachmnet('{!documnetId}','{!attachmnetId}');
+                    }
+               }  
+               
+                window.onload = window.setTimeOut(closeaftersave(),500);
+            </script> 
+            <apex:pagemessages ></apex:pagemessages>
+        </apex:outputPanel>
+        <apex:actionFunction name="change" action="{!selectType}"/>
+        <apex:pageBlock id="block">
+            <apex:pageBlockSection title="Attactment" columns="1">
+                <apex:selectList size="1" value="{!getOptions}" label="Select Type" onchange="change();">
+                    <apex:selectOptions value="{!options}"/>
+                </apex:selectList>
+                <apex:outputPanel rendered="{!viewSystemFile}" layout="none">
+                    <apex:inputFile contentType="{!contentType}" fileName="{!fileName}" value="{!fileBody}" />
+                    <apex:commandButton value="Save" action="{!attachFile}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Attactment" rendered="{!viewAttachment}" columns="1">
+                    <apex:commandButton value="save" action="{!attachFile}" oncomplete="closeaftersave();return false;" reRender="op1"/>
+                    <apex:pageBlockTable value="{!AttactmentModelList}" var="obj">
+                        <apex:column >
+                            <apex:inputCheckbox value="{!obj.flag}"/>
+                        </apex:column>
+                        <apex:column value="{!obj.attach.name}"/>
+                        <apex:column value="{!obj.attach.ContentType}"/>
+                        <apex:column value="{!obj.attach.BodyLength}"/>
+                    </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Document" rendered="{!viewDocument}" columns="1">
+                    <apex:commandButton value="save" action="{!attachFile}" oncomplete="closeaftersave();" reRender="op1"/>
+                    <apex:pageBlockTable value="{!documentModelList}" var="obj">
+                        <apex:column >
+                            <apex:inputCheckbox value="{!obj.flag}"/>
+                        </apex:column>
+                        <apex:column value="{!obj.doc.name}"/>
+                        <apex:column value="{!obj.doc.ContentType}"/>
+                        <apex:column value="{!obj.doc.BodyLength}"/>
+                    </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

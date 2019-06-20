@@ -1,0 +1,24 @@
+<apex:page controller="EmailPdfController">
+  <apex:actionStatus id="status" startText="Processing"/>
+  <apex:form id="frm" >
+    <apex:pageBlock >
+       <apex:commandButton value="Send Email & Pdf" action="{!sendMailPdf}"/>
+        <apex:pageBlockTable value="{!modelList}" var="m" id="details">
+            <apex:column value="{!m.Con.name}"/>
+            <apex:column value="{!m.Con.Father_Name__c}"/>
+            <apex:column value="{!m.Con.birthdate}"/>
+            <apex:column value="{!m.Con.email}"/>
+            <apex:column headerValue="Action" >
+                <apex:inputCheckbox value="{!m.Chk}"/>
+            </apex:column>
+        </apex:pageBlockTable>
+        <apex:commandButton value="First" rerender="frm" action="{!beginning}" status="status"/>
+        
+        <apex:commandButton value="Previous" rerender="frm" action="{!previous}" status="status"/>
+        <apex:commandButton value="Next" rerender="frm" action="{!next}" status="status"/>
+        <apex:commandButton value="Last" rerender="frm" action="{!end}" status="status"/>
+        
+
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>

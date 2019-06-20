@@ -1,0 +1,43 @@
+<apex:page controller="ContactCheckboxController">
+   <script type="text/javascript">
+        function show()
+        {
+            alert("Update Successfully....");
+        }
+    </script>
+ 
+ 
+  <apex:form id="valueform">
+       <apex:actionStatus startText="Processing..." id="processid"/>
+       
+          <apex:pageBlock >
+                <apex:actionFunction action="{!editContact}"  name="edit" reRender="valueform" status="processid">
+                        <apex:param assignTo="{!ContactId}" value="" name="param"/>
+                  </apex:actionFunction> 
+    <apex:pageBlockTable value="{!models1}" var="m">
+                <apex:column HeaderValue="Action">
+                 <apex:inputCheckbox onclick="edit('{!m.cont.id}')" value="{!m.flag}"  />
+              </apex:column>   
+              <apex:column > 
+                   <apex:inputField value="{!m.cont.firstname}" rendered="{!m.flag}"/>
+                   <apex:outputField value="{!m.cont.firstname}" rendered="{!!m.flag}"/>
+               </apex:column>
+               <apex:column >
+                   <apex:inputField value="{!m.cont.lastname}" rendered="{!m.flag}"/>
+                   <apex:outputField value="{!m.cont.lastname}" rendered="{!!m.flag}"/>
+               </apex:column>  
+               <apex:column >
+                   <apex:inputField value="{!m.cont.email}" rendered="{!m.flag}"/>
+                   <apex:outputField value="{!m.cont.email}" rendered="{!!m.flag}"/>
+               </apex:column>
+               <apex:column >
+                   <apex:inputField value="{!m.cont.phone}" rendered="{!m.flag}"/>
+                   <apex:outputField value="{!m.cont.phone}" rendered="{!!m.flag}"/>
+               </apex:column>  
+            </apex:pageBlockTable>
+           <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Save" action="{!save}" onclick="show()"  />
+            </apex:pageBlockButtons>
+         </apex:pageBlock>   
+ </apex:form>
+</apex:page>

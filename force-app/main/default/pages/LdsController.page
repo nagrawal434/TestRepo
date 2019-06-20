@@ -1,0 +1,74 @@
+<apex:page controller="LdsController" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">    
+<apex:remoteObjects >
+  <apex:remoteObjectModel name="Account" fields="Id,Name,LastModifiedDate"/>
+</apex:remoteObjects>    
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">    
+ 
+<head>
+  <title>Salesforce Lightning Design System Trailhead Module</title>
+  <apex:stylesheet value="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+  <script>
+      function clickevent(myVal)
+      {
+          jsAction(myVal.value);
+          return false;
+      }
+  </script>
+</head>    
+ 
+<body>    
+<apex:form >
+ 
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds">    
+ 
+    
+ 
+    <!-- PRIMARY CONTENT WRAPPER -->
+    <div class="myapp">    
+ 
+       <div class="slds-form-element">
+    <label class="slds-form-element__label" for="select-01">Select Account</label>
+    <div class="slds-form-element__control">
+      <div class="slds-select_container">
+        <select id="select-01" class="slds-select" onchange="return clickevent(this);">
+        <option value="">Select Account</option>
+        <apex:repeat value="{!accountList}" var="account">
+            <option value="{!account.id}">{!account.name}</option>
+        </apex:repeat>
+         
+        </select>
+      </div>
+    </div>
+  </div>   
+ 
+<fieldset class="slds-form-element">
+    <legend class="form-element__legend slds-form-element__label">Contact</legend>
+    <div class="slds-form-element__control">
+    <apex:outputpanel id="out">
+      <apex:repeat value="{!contactList}" var="contact">
+       
+      <label class="slds-checkbox">
+        <input type="checkbox" name="options" id="checkbox-02"/>
+        <span class="slds-checkbox--faux"></span>
+        <span class="slds-form-element__label">{!contact.name}</span>
+      </label>
+      </apex:repeat>
+      </apex:outputpanel>
+    </div>
+  </fieldset>
+ 
+    </div>
+    <!-- / PRIMARY CONTENT WRAPPER -->   
+ 
+  </div>
+  <!-- / REQUIRED SLDS WRAPPER -->   
+<apex:actionFunction name="jsAction" action="{!actionfunction}" rerender="out">
+<apex:param name="accountId" value=""/>
+</apex:actionfunction>
+</apex:form>
+</body>
+</html>
+ 
+ 
+</apex:page>

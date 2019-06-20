@@ -1,0 +1,19 @@
+<apex:page controller="MemoManagerController" showHeader="false" sidebar="false">
+    <apex:form id="frm">
+    <apex:actionStatus id="chk" startText="Processing..."/>
+    <apex:actionFunction action="{!editMemo}" name="editMethod" status="chk" reRender="frm">
+    <apex:param assignTo="{!rowMemoId}" value="" name="sdd"/>
+    </apex:actionFunction>
+    <apex:pageBlock >
+            <apex:pageBlockTable value="{!memoList}" var="m">
+                   <apex:column value="{!m.MemoName__c}"/>
+                    <apex:column value="{!m.Status__c}"/>
+                    <apex:column headerValue="Discription" value="{!m.DiscriptionMemo__c}"/>
+                   <apex:column headerValue="EditMemo">
+                        <apex:commandButton onclick="editMethod('{!m.id}')" value="EditMemo"/>
+                    </apex:column>    
+            </apex:pageBlockTable>
+            <apex:commandButton value="CreateNewMemo" action="{!Create}"/>
+      </apex:pageBlock> 
+    </apex:form>
+</apex:page>

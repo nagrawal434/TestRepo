@@ -1,0 +1,864 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" standardController="Opportunity" extensions="lightningOpportuningController">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <meta charset="UTF-8" />
+            <title>Tabs Demo | Appiphony Lightning JS</title>
+            
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+            <!-- JQUERY Library -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-all.min.js')}"></script>
+            <script src="{!URLFOR($Resource.LJquery, '/jquery/jquery.aljs-lookup.min.js')}"></script>
+            <script src="{!URLFOR($Resource.LJquery, 'jquery/jquery.aljs-tabs.min.js')}"></script>
+            
+            <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.assets, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+                <!-- BootStrap Library -->
+                    <script src="{!URLFOR($Resource.boots,'/js/bootstrap.min.js')}"></script> 
+            <apex:styleSheet value="{!URLFOR($Resource.boots,'/css/bootstrap.min.css')}" /> 
+            <apex:styleSheet value="{!URLFOR($Resource.boots,'/css/bootstrap-theme.min.css')}" />
+            <style type="text/css">
+                .liClass { 
+                padding-bottom: 20px;
+                }
+                .iconImage{
+                background-color: #122867 !important;
+                }            
+                #homeId:hover{
+                background-color: #ff99bb !important;
+                }#opportunityId:hover{
+                background-color: #ffb84d !important;
+                }#leadId:hover{
+                background-color: #ff884d !important;
+                }#taskId:hover{
+                background-color: #39ac39 !important;
+                }#accountId:hover{
+                background-color: #668cff !important;
+                }#fileId:hover{
+                background-color: #d6d6c2 !important;
+                }#contactId:hover{
+                background-color: #99b3ff !important;
+                }#campaignId:hover{
+                background-color: #ffad33 !important;
+                }#dashboardId:hover{
+                background-color: #ffa366 !important;
+                }#reportId:hover{
+                background-color: #00e6e6 !important;
+                }#feedId:hover{
+                background-color: pink !important;
+                }#groupId:hover{
+                background-color: pink !important;
+                }#eventId:hover{
+                background-color: pink !important;
+                }#peopleId:hover{
+                background-color: pink !important;
+                }#caseId:hover{
+                background-color: pink !important;
+                }
+                *{
+                margin: 0px;
+                }
+                .lookupInput a{
+                background-image: url("/img/setup/search-icon.png") !important;
+                background-position: center center !important;
+                background-repeat: no-repeat !important;
+                border: medium none;
+                display: inline-flex !important;
+                margin-left: -34px;
+                <!-- margin-top: 3px; -->
+                position: absolute;
+                width: 33px !important;
+                }
+                .lookupInput input{
+                width:50% !important;
+                height: 39px;
+                }                        
+                .lookupInput img{
+                display:none !important;
+                
+                }
+            </style>
+            <!-- TOOLTIP SCRIPT METHOD -->
+            <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();   
+            });
+            <!-- /TOOLTIP SCRIPT METHOD -->
+            </script>
+            <!-- NESTED TAB SCRIPT METHOD -->
+            <script>
+            var assetsLocation = '{!URLFOR($Resource.assets)}';
+            $.aljsInit({
+                assetsLocation: assetsLocation,
+                scoped: false
+            });
+            $(document).ready(function() {
+                $('[data-aljs="tabs"]').tabs();
+                
+            });
+            </script>
+            <!-- /NESTED TAB SCRIPT METHOD -->
+        </head>
+        <body>
+            <apex:form >
+                <div class="slds">
+                    <div class="slds-form--stacked slds-grow slds-scrollable--y" style="float:left;width:5%;height:100%;background-color:#122867;text-align: center;  overflow: scroll;">
+                        <ul>
+                            <li><a href="#" title="Toggle Sidebar">
+                                <svg  id="toggleButton" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage" style="width: 40%;">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#rows')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="Home" >
+                                <svg  id="homeId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#home')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="Opportunity">
+                                <svg id="opportunityId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage" >
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#opportunity')}"/>
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="lead">
+                                <svg id="leadId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage" >
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#lead')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"> <a href="#" data-toggle="tooltip" data-placement="right" title="task">
+                                <svg id="taskId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage"  >
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#task')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="account">
+                                <svg id="accountId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#account')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="file">
+                                <svg id="fileId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#file')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="contact">
+                                <svg id="contactId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#contact')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="campaign">
+                                <svg id="campaignId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#campaign')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="dashboard">
+                                <svg id="dashboardId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#dashboard')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="report">
+                                <svg id="reportId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#report')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="feed">
+                                <svg id="feedId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#feed')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="groups">
+                                <svg id="groupId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#groups')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="event">
+                                <svg id="eventId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#event')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="people">
+                                <svg  id="peopleId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#people')}" />
+                                </svg>
+                                </a></li>
+                            <li class="liClass"><a href="#" data-toggle="tooltip" data-placement="right" title="case">
+                                <svg id="caseId" aria-hidden="true" class="slds-icon slds-icon--medium slds-icon-standard-user iconImage">
+                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#case')}" />
+                                </svg>
+                                </a></li>
+                        </ul>
+                    </div>
+                    <!-- Global header -->
+                    <div class="slds-global-header slds-grid slds-grid--align-spread">
+                        <!-- GLOBAL HEADER WITH LOGO -->
+                        <div class="slds-global-header__item">
+                            <div class="slds-global-header__logo">
+                                <img src="{!$Resource.SalesforceLogo}" alt="" Style="width: 24%;"/>
+                            </div>
+                        </div>
+                        <!-- /GLOBAL HEADER WITH LOGO -->
+                        <!-- GLOBAL HEADER WITH SEARCH BAR -->
+                        <div class="slds-global-header__item slds-global-header__item--search" style="margin-left:-20%;width:30%;">
+                            <div class="slds-form-element slds-lookup">
+                                <label class="slds-assistive-text" for="global-search-01">Search Salesforce</label>
+                                <div class="slds-form-element__control lookup__search-control slds-input-has-icon slds-input-has-icon--left">
+                                    <svg aria-hidden="true" class="slds-input__icon">
+                                        <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>
+                                    </svg>
+                                    <input id="global-search-01" class="slds-input slds-lookup__search-input" type="search" placeholder="Search Salesforce" />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /GLOBAL HEADER WITH SEARCH BAR -->
+                        <!-- GLOBAL HEADER WITH ICON -->
+                        <ul class="slds-global-header__item slds-grid slds-grid--vertical-align-center">
+                            <li class="slds-dropdown-trigger slds-dropdown-trigger--click slds-m-left--x-small">
+                                <button class="slds-button" title="person name" aria-haspopup="true">
+                                    <span class="slds-avatar slds-avatar--circle slds-avatar--medium">
+                                        <img src="{!URLFOR($Resource.assets, '/assets/images/avatar2.jpg')}" alt="person name" />
+                                    </span>
+                                </button>
+                            </li>
+                        </ul>
+                        <!-- /GLOBAL HEADER WITH ICON -->
+                    </div>                
+                    <!-- /Global header -->            
+                    <!-- HEADER -->
+                    <div class="slds-page-header" role="banner" style="padding-left:6%">
+                        <!-- Grid -->
+                        <div class="slds-grid">
+                            <!-- slds-col  -->
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media slds-media--center slds-no-space slds-grow">
+                                    <div class="slds-media__figure">
+                                        <svg aria-hidden="true" class="slds-icon slds-icon-standard-user" style="background-color:orange">
+                                            <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#opportunity')}"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <p class="slds-text-heading--label">Opportunity</p>
+                                        <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle" title="Opportunity"><b>{!opportunity.name}</b></h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /slds-col  -->
+                            <!--  Buttons -->
+                            <div class="slds-col slds-no-flex slds-grid slds-align-bottom">
+                                <button class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive">
+                                    <span class="slds-text-not-selected">
+                                        <svg aria-hidden="true" class="slds-button__icon--stateful slds-button__icon--left">
+                                            <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#add')}"></use>
+                                        </svg>Follow</span>
+                                    <span class="slds-text-selected">
+                                        <svg aria-hidden="true" class="slds-button__icon--stateful slds-button__icon--left">
+                                            <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                                        </svg>Following</span>
+                                    <span class="slds-text-selected-focus">
+                                        <svg aria-hidden="true" class="slds-button__icon--stateful slds-button__icon--left">
+                                            <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                        </svg>Unfollow</span>
+                                </button>
+                                <div class="slds-button-group" role="group">
+                                    <button class="slds-button slds-button--neutral">Edit</button>
+                                    <button class="slds-button slds-button--neutral">Delete</button>
+                                    <button class="slds-button slds-button--neutral">Clone</button>
+                                    <div class="slds-button--last">
+                                        <button class="slds-button slds-button--icon-border-filled">
+                                            <svg aria-hidden="true" class="slds-button__icon">
+                                                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                            </svg>
+                                            <span class="slds-assistive-text">More</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  /Buttons -->
+                        </div>
+                        <!-- Grid -->
+                    </div>
+                    <!-- HEADER --> 
+                    
+                    <!-- HEADER DETAIL --> 
+                    <ul class="slds-grid slds-page-header__detail-row" style="margin-top: 12px;">
+                        <li class="slds-page-header__detail-block">
+                            <p class="slds-text-heading--label-normal slds-truncate slds-m-bottom--xx-small" title="Account" style="margin-left: 40px;">Account</p>
+                            <p class="slds-text-body--regular slds-truncate" title="Account Name" style="color: blue;margin-left: 40px;">{!opportunity.account.name}</p>
+                        </li>
+                        <li class="slds-page-header__detail-block">
+                            <p class="slds-text-heading--label-normal slds-truncate slds-m-bottom--xx-small" title="Close Date" style="margin-left:86px;margin-right: 120px;">CloseDate</p>
+                            <apex:outputText value="{0,date,MM/dd/yy}" style="margin-left:86px;margin-right: 120px;"><apex:param value="{!opportunity.CloseDate}" /></apex:outputText>
+                            <!--<p class="slds-text-body--regular" style="margin-left:86px;margin-right: 120px;"></p> -->
+                        </li>
+                        <li class="slds-page-header__detail-block">
+                            <p class="slds-text-heading--label-normal slds-truncate slds-m-bottom--xx-small" title="Amount" style="margin-right: 120px;">Amount</p>                  
+                            <p class="slds-text-body--regular" style="margin-right: 120px;">{!opportunity.amount}</p>
+                        </li>  
+                        <li class="slds-page-header__detail-block">
+                            <p class="slds-text-heading--label-normal slds-truncate slds-m-bottom--xx-small" title="Opportunity Owner">Opportunity Owner</p>
+                            <p class="slds-text-body--regular" style="color: blue;"><img src="{!opportunity.owner.SmallPhotoUrl}" style="width: 25px;"/>{!opportunity.owner.name}</p>
+                            
+                        </li>
+                    </ul>
+                    <!-- /HEADER DETAIL --> 
+                    
+                    <!-- Opportunity Stage Panel -->
+                    <div class="slds-grid" style="margin-left: 92px;width: 65%;">
+                        <div class="slds-tabs--path"   role="application">
+                            <ul  class="slds-tabs--path__nav" role="tablist">
+                                <!--Completed Stage-->
+                                <apex:repeat value="{!completedStage}" var="completeStage">
+                                    <li class="slds-tabs--path__item slds-is-complete" role="presentation" style="padding-bottom: 3px;">
+                                        <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                                            <span class="slds-tabs--path__stage">
+                                                <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                                                </svg>
+                                                <span class="slds-assistive-text">Stage Complete</span>
+                                            </span>
+                                            <span class="slds-tabs--path__title">{!completeStage}</span>
+                                        </a>
+                                    </li>
+                                </apex:repeat> 
+                                <!-- /Completed Stage-->
+                                
+                                <!--Current Stage-->  
+                                <li class="slds-tabs--path__item slds-is-current" role="presentation" style="padding-bottom: 3px;">
+                                    <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                                        <span class="slds-tabs--path__stage">
+                                            <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                                            </svg>
+                                            <span class="slds-assistive-text">Current Stage</span>
+                                        </span>
+                                        <span class="slds-tabs--path__title">{!currentStage}</span>
+                                    </a>
+                                </li>
+                                <!-- / Current Stage -->
+                                
+                                <!-- Incompleted Stage -->
+                                <apex:repeat value="{!incompletedStage}" var="incompleteStage">
+                                    <li class="slds-tabs--path__item slds-is-incomplete" role="presentation" style="padding-bottom: 3px;">
+                                        <a class="slds-tabs--path__link" id="tabs-path-1" aria-controls="content-path-1" aria-selected="false" tabindex="-1" role="tab" href="javascript:void(0);" aria-live="assertive">
+                                            <span class="slds-tabs--path__stage">
+                                                <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                                                </svg>
+                                                <span class="slds-assistive-text">Incomplete Stage</span>
+                                            </span>
+                                            <span class="slds-tabs--path__title">{!incompleteStage}</span>
+                                        </a>
+                                    </li>
+                                </apex:repeat>
+                                <!-- /Incompleted Stage -->
+                                
+                            </ul>
+                        </div>
+                        <button style="margin-left:38px;" class="slds-button slds-button--brand slds-path__mark-complete slds-no-flex slds-m-horizontal--small">
+                            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--left">
+                                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                            </svg>Change Close Stage
+                        </button>
+                    </div>             
+                    <!-- /Opportunity Stage Panel --> 
+                    <!-- PRIMARY CONTENT WRAPPER -->
+                    <div class="myapp">
+                        
+                        <!-- RELATED LIST CARDS-->
+                        
+                        <div class="slds-grid slds-m-top--large">
+                            
+                            <!-- MAIN CARD -->
+                            <div class="slds-col slds-col-rule--right slds-p-right--large slds-size--8-of-12">
+                                <!-- Nested Tab -->
+                                <div class="slds-tabs--default" data-aljs="tabs" style="padding-left: 35px;width: 96%;">
+                                    <ul class="slds-tabs--default__nav" role="tablist">
+                                        <li class="slds-tabs--default__item slds-text-title--caps slds-active" title="Activity" role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" data-aljs-show="tab-default-1" id="tab-default-1__item">Activity</a></li>
+                                        <li class="slds-tabs--default__item slds-text-title--caps" title="Collaborate"
+                                            role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" data-aljs-show="tab-default-2" id="tab-default-2__item">Collaborate</a></li>
+                                        <li class="slds-tabs--default__item slds-text-title--caps" title="Details"
+                                            role="presentation"><a class="slds-tabs--default__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" data-aljs-show="tab-default-3" id="tab-default-3__item">Details</a></li>
+                                    </ul>
+                                    <div id="tab-default-1" class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+                                        <div class="slds-tabs--scoped" data-aljs="tabs">
+                                            <ul class="slds-tabs--scoped__nav" role="tablist">
+                                                <li class="slds-tabs--scoped__item slds-text-title--caps slds-active" style="padding-bottom: 0px" title="Log a Call" role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" data-aljs-show="tab-scoped-1" id="tab-scoped-1__item">Log a Call</a></li>
+                                                <li class="slds-tabs--scoped__item slds-text-title--caps" title="New Task" style="padding-bottom: 0px"
+                                                    role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" data-aljs-show="tab-scoped-2"  id="tab-scoped-2__item">New Task</a></li>
+                                                <li class="slds-tabs--scoped__item slds-text-title--caps" title="New Event" style="padding-bottom: 0px"
+                                                    role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" data-aljs-show="tab-scoped-3"  id="tab-scoped-3__item">New Event</a></li>
+                                                <li class="slds-tabs--scoped__item slds-text-title--caps" title="Email" style="padding-bottom: 0px"
+                                                    role="presentation"><a class="slds-tabs--scoped__link" href="#" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-4" data-aljs-show="tab-scoped-4"  id="tab-scoped-4__item">Email</a></li>
+                                                
+                                            </ul>
+                                            <div id="tab-scoped-1" class="slds-tabs--scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-1__item">Item One Content</div>
+                                            <div id="tab-scoped-2" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-2__item">Item Two Content</div>
+                                            <div id="tab-scoped-3" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-3__item">Item Three Content</div>
+                                            <div id="tab-scoped-4" class="slds-tabs--scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-4__item">Item Four Content</div>
+                                        </div>
+                                        <div Style="margin-top: 30px;">
+                                            <ul>
+                                                <apex:repeat value="{!Opportunity.Tasks}" var="tas">
+                                                    <!-- Task-->
+                                                    <li>
+                                                        <apex:outputPanel rendered="{!if(tas.tasksubtype=='Task','true','false')}">
+                                                            <span class="slds-assistive-text">Task</span>
+                                                            <div class="slds-media">
+                                                                <div class="slds-media__body">
+                                                                    <div class="slds-media slds-media--timeline slds-timeline__media--task">
+                                                                        <div class="slds-media__figure slds-timeline__icon">
+                                                                            <div class="slds-icon_container">
+                                                                                <svg aria-hidden="true" class="slds-icon slds-icon--small slds-icon-standard-task">
+                                                                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#task')}"></use>
+                                                                                </svg>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="slds-media__body">
+                                                                            <div class="slds-media">
+                                                                                <div class="slds-media__figure">
+                                                                                    <label class="slds-checkbox" for="mark-complete">
+                                                                                        <input name="checkbox" type="checkbox" id="mark-complete" />
+                                                                                        <span class="slds-checkbox--faux"></span>
+                                                                                        <span class="slds-form-element__label slds-assistive-text">mark-complete</span>
+                                                                                    </label>
+                                                                                </div>
+                                                                                <div class="slds-media__body">
+                                                                                    <h3 class="slds-truncate" title="Task Subject">
+                                                                                        <a href="javascript:void(0);">
+                                                                                            {!tas.subject}
+                                                                                        </a>
+                                                                                    </h3>
+                                                                                    <ul class="slds-list--horizontal slds-wrap">
+                                                                                        <li class="slds-m-right--large">
+                                                                                            <span class="slds-text-title">
+                                                                                                Contact:
+                                                                                            </span>
+                                                                                            <span class="slds-text-body--small">
+                                                                                                <a href="javascript:void(0);">
+                                                                                                    <apex:outputField value="{!tas.whoid}" />
+                                                                                                </a>
+                                                                                            </span>
+                                                                                        </li>
+                                                                                        <li class="slds-m-right--large">
+                                                                                            <span class="slds-text-title">
+                                                                                                Assigned to:
+                                                                                            </span>
+                                                                                            <span class="slds-text-body--small">
+                                                                                                <a href="javascript:void(0);">
+                                                                                                    <apex:outputField value="{!tas.ownerid}" />
+                                                                                                </a>
+                                                                                            </span>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-media__figure slds-media__figure--reverse">
+                                                                    <div class="slds-timeline__actions">
+                                                                        <p class="slds-timeline__date">
+                                                                            <apex:outputText value="{0,date,MMM dd}"><apex:param value="{!tas.createddate}" /></apex:outputText>
+                                                                        </p>
+                                                                        <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" aria-haspopup="true">
+                                                                            <svg aria-hidden="true" class="slds-button__icon">
+                                                                                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                                                            </svg>
+                                                                            <span class="slds-assistive-text">More Options</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </li>
+                                                </apex:repeat>
+                                                <apex:repeat value="{!Opportunity.ActivityHistories}" var="open">
+                                                    <!-- Email -->
+                                                    <li>
+                                                        <apex:outputPanel rendered="{!if(BEGINS(open.Subject,'Email'),'true','false')}">
+                                                            <span class="slds-assistive-text">Email</span>
+                                                            <div class="slds-media">
+                                                                <div class="slds-media__body">
+                                                                    <div class="slds-media slds-media--timeline slds-timeline__media--email">
+                                                                        <div class="slds-media__figure slds-timeline__icon">
+                                                                            <div class="slds-icon_container">
+                                                                                <svg aria-hidden="true" class="slds-icon slds-icon--small slds-icon-standard-email">
+                                                                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#email')}"></use>
+                                                                                </svg>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="slds-media__body">
+                                                                            <div class="slds-media">
+                                                                                <div class="slds-media__figure">
+                                                                                </div>
+                                                                                <div class="slds-media__body">
+                                                                                    <h3 class="slds-truncate" title="Task Subject">
+                                                                                        <a href="javascript:void(0);">
+                                                                                            {!open.subject}
+                                                                                        </a>
+                                                                                    </h3>
+                                                                                    <ul class="slds-list--horizontal slds-wrap">
+                                                                                        <li class="slds-m-right--large">
+                                                                                            <span class="slds-text-title">
+                                                                                                Contact:
+                                                                                            </span>
+                                                                                            <span class="slds-text-body--small">
+                                                                                                <a href="javascript:void(0);">
+                                                                                                    <apex:outputField value="{!open.whoid}" />
+                                                                                                </a>
+                                                                                            </span>
+                                                                                        </li>
+                                                                                        <li class="slds-m-right--large">
+                                                                                            <span class="slds-text-title">
+                                                                                                Assigned to:
+                                                                                            </span>
+                                                                                            <span class="slds-text-body--small">
+                                                                                                <a href="javascript:void(0);">
+                                                                                                    <apex:outputField value="{!open.ownerid}" />
+                                                                                                </a>
+                                                                                            </span>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-media__figure slds-media__figure--reverse">
+                                                                    <div class="slds-timeline__actions">
+                                                                        <p class="slds-timeline__date">
+                                                                            <apex:outputText value="{0,date,MMM dd}"><apex:param value="{!open.createddate}" /></apex:outputText>
+                                                                        </p>
+                                                                        <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" aria-haspopup="true">
+                                                                            <svg aria-hidden="true" class="slds-button__icon">
+                                                                                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                                                            </svg>
+                                                                            <span class="slds-assistive-text">More Options</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                        <!-- Event -->
+                                                        <apex:outputPanel rendered="{!if(open.activitysubtype=='Event','true','false')}">
+                                                            <span class="slds-assistive-text">Events</span>
+                                                            <div class="slds-media">
+                                                                <div class="slds-media__body">
+                                                                    <div class="slds-media slds-media--timeline slds-timeline__media--event">
+                                                                        <div class="slds-media__figure slds-timeline__icon">
+                                                                            <div class="slds-icon_container">
+                                                                                <svg aria-hidden="true" class="slds-icon slds-icon--small slds-icon-standard-event">
+                                                                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#event')}"></use>
+                                                                                </svg>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="slds-media__body">
+                                                                            <div class="slds-media">
+                                                                                <div class="slds-media__body">
+                                                                                    <h3 class="slds-truncate" title="Event Subject">
+                                                                                        <a href="javascript:void(0);">
+                                                                                            {!open.subject}
+                                                                                        </a>
+                                                                                    </h3>
+                                                                                    <ul class="slds-list--horizontal slds-wrap">
+                                                                                        <li class="slds-m-right--large">
+                                                                                            <span class="slds-text-body--small">
+                                                                                                <apex:outputField value="{!open.description}" />
+                                                                                            </span>
+                                                                                        </li><br/>
+                                                                                        <li class="slds-m-right--large">
+                                                                                            <span class="slds-text-title">
+                                                                                                Time : 
+                                                                                            </span>
+                                                                                            <span class="slds-text-body--small">
+                                                                                                <a href="javascript:void(0);">
+                                                                                                    <apex:outputText value="{0,date,MMM dd , YYYY HH:mm:ss}"><apex:param value="{!open.startdatetime}" /></apex:outputText>
+                                                                                                </a>
+                                                                                            </span>
+                                                                                        </li>
+                                                                                        <li class="slds-m-right--large">
+                                                                                            <span class="slds-text-title">
+                                                                                                Location :
+                                                                                            </span>
+                                                                                            <span class="slds-text-body--small">
+                                                                                                <a href="javascript:void(0);">
+                                                                                                    <apex:outputField value="{!open.location}" />
+                                                                                                </a>
+                                                                                            </span>
+                                                                                        </li>
+                                                                                        <li class="slds-m-right--large">
+                                                                                            <span class="slds-text-title">
+                                                                                                Name :
+                                                                                            </span>
+                                                                                            <span class="slds-text-body--small">
+                                                                                                <a href="javascript:void(0);">
+                                                                                                    <apex:outputField value="{!open.ownerid}" />
+                                                                                                </a>
+                                                                                            </span>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-media__figure slds-media__figure--reverse">
+                                                                    <div class="slds-timeline__actions">
+                                                                        <p class="slds-timeline__date">
+                                                                            <apex:outputText value="{0,date,MMM dd}"><apex:param value="{!open.createddate}" /></apex:outputText>
+                                                                        </p>
+                                                                        <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" aria-haspopup="true">
+                                                                            <svg aria-hidden="true" class="slds-button__icon">
+                                                                                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                                                            </svg>
+                                                                            <span class="slds-assistive-text">More Options</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                        <!-- Log a call -->
+                                                        <apex:outputPanel rendered="{!if(open.activitysubtype=='Call','true','false')}">
+                                                            <span class="slds-assistive-text">Log A Call</span>
+                                                            <div class="slds-media">
+                                                                <div class="slds-media__body">
+                                                                    <div class="slds-media slds-media--timeline slds-timeline__media--call">
+                                                                        <div class="slds-media__figure slds-timeline__icon">
+                                                                            <div class="slds-icon_container">
+                                                                                <svg aria-hidden="true" class="slds-icon slds-icon--small slds-icon-standard-log-a-call">
+                                                                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#log_a_call')}"></use>
+                                                                                </svg>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="slds-media__body">
+                                                                            <div class="slds-media">
+                                                                                <div class="slds-media__body">
+                                                                                    <h3 class="slds-truncate" title="Event Subject">
+                                                                                        <a href="javascript:void(0);">
+                                                                                            {!open.subject}
+                                                                                        </a>
+                                                                                    </h3>
+                                                                                    <ul class="slds-list--horizontal slds-wrap">
+                                                                                        <li class="slds-m-right--large">
+                                                                                            <span class="slds-text-body--small">
+                                                                                                <apex:outputField value="{!open.description}" />
+                                                                                            </span>
+                                                                                        </li><br/>
+                                                                                        <li class="slds-m-right--large">
+                                                                                            <span class="slds-text-title">
+                                                                                                Time : 
+                                                                                            </span>
+                                                                                            <span class="slds-text-body--small">
+                                                                                                <a href="javascript:void(0);">
+                                                                                                    <apex:outputText value="{0,date,MMM dd , YYYY HH:mm:ss}"><apex:param value="{!open.startdatetime}" /></apex:outputText>
+                                                                                                </a>
+                                                                                            </span>
+                                                                                        </li>
+                                                                                        <li class="slds-m-right--large">
+                                                                                            <span class="slds-text-title">
+                                                                                                Location :
+                                                                                            </span>
+                                                                                            <span class="slds-text-body--small">
+                                                                                                <a href="javascript:void(0);">
+                                                                                                    <apex:outputField value="{!open.location}" />
+                                                                                                </a>
+                                                                                            </span>
+                                                                                        </li>
+                                                                                        <li class="slds-m-right--large">
+                                                                                            <span class="slds-text-title">
+                                                                                                Name :
+                                                                                            </span>
+                                                                                            <span class="slds-text-body--small">
+                                                                                                <a href="javascript:void(0);">
+                                                                                                    <apex:outputField value="{!open.ownerid}" />
+                                                                                                </a>
+                                                                                            </span>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="slds-media__figure slds-media__figure--reverse">
+                                                                    <div class="slds-timeline__actions">
+                                                                        <p class="slds-timeline__date">
+                                                                            <apex:outputText value="{0,date,MMM dd}"><apex:param value="{!open.createddate}" /></apex:outputText>
+                                                                        </p>
+                                                                        <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" aria-haspopup="true">
+                                                                            <svg aria-hidden="true" class="slds-button__icon">
+                                                                                <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                                                            </svg>
+                                                                            <span class="slds-assistive-text">More Options</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </li>
+                                                </apex:repeat>
+                                                
+                                            </ul>      
+                                            
+                                        </div>
+                                    </div>
+                                    <div id="tab-default-2" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">Item Two Content</div>
+                                    <div id="tab-default-3" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-3__item">Item Three Content</div>
+                                </div> 
+                                <!-- /Nested Tab -->            
+                                
+                            </div>
+                            <!-- / MAIN CARD -->
+                            
+                            <!-- COMPACT CARD -->
+                            <div class="slds-col slds-p-left--large slds-size--4-of-12">
+                                <!-- Product Card-->
+                                <div class="slds-card slds-card--narrow">
+                                    <div class="slds-card__header slds-grid">
+                                        <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                                            <div class="slds-media__figure">
+                                                <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small" style="background-color: orange;">
+                                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#product')}"></use>
+                                                </svg>
+                                            </div>
+                                            <div class="slds-media__body slds-truncate">
+                                                <h2>
+                                                    <apex:variable var="count" value="{!0}"/>
+                                                    <apex:repeat value="{!opportunity.opportunityLineItems}">
+                                                        <apex:variable var="count" value="{!count + 1}"/>
+                                                    </apex:repeat>
+                                                    <span class="slds-text-heading--small">Products({!count})</span>
+                                                </h2>
+                                            </div>
+                                        </header>
+                                        <div class="slds-no-flex">
+                                            <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" aria-haspopup="true">
+                                                <svg aria-hidden="true" class="slds-button__icon">
+                                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="slds-card__body">
+                                        <div class="slds-card__body--inner">
+                                            <apex:repeat value="{!opportunity.opportunityLineItems}" var="products">
+                                                <div class="slds-tile">
+                                                    <h3 class="slds-truncate" title="Related Record Title 1"><a href="javascript:void(0);">{!products.name}</a></h3>
+                                                    <div class="slds-tile__detail slds-text-body--small">
+                                                        <dl class="slds-dl--horizontal">
+                                                            <dt class="slds-dl--horizontal__label">
+                                                                <span class="slds-truncate" title="Quantity">Quantity:</span>
+                                                            </dt>
+                                                            <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                                                <span class="slds-truncate" title="Quantity">{!products.quantity}</span>
+                                                            </dd>
+                                                            <dt class="slds-dl--horizontal__label">
+                                                                <span class="slds-truncate" title="SalesPrice">Sales Price:</span>
+                                                            </dt>
+                                                            <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                                                <span class="slds-truncate" title="Salesprice">{!products.UnitPrice}</span>
+                                                            </dd>
+                                                            <dt class="slds-dl--horizontal__label">
+                                                                <span class="slds-truncate" title="Date">Date:</span>
+                                                            </dt>
+                                                            <dd class="slds-dl--horizontal__detail slds-tile__meta">
+                                                                <apex:outputText value="{0,date,MM/dd/yy}" title="Date"><apex:param value="{!products.ServiceDate}" /></apex:outputText>
+                                                            </dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                            </apex:repeat>
+                                        </div>
+                                    </div>
+                                    <div class="slds-card__footer"><a href="javascript:void(0);">View All <span class="slds-assistive-text">entity type</span></a></div>
+                                </div>
+                                <!-- /Product Card-->
+                                <!-- ATTACHMENT CARD -->
+                                <div class="slds-card slds-card--narrow">
+                                    <div class="slds-card__header slds-grid">
+                                        <header class="slds-media slds-media--center slds-has-flexi-truncate">
+                                            <div class="slds-media__figure">
+                                                <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact slds-icon--small" style="background:#98938a;">
+                                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/standard-sprite/svg/symbols.svg#document')}"></use>
+                                                </svg>
+                                            </div>
+                                            <div class="slds-media__body slds-truncate">
+                                                <h2>
+                                                    <a href="javascript:void(0);" class="slds-text-link--reset">
+                                                        <apex:variable var="count" value="{!0}"/>
+                                                        <apex:repeat value="{!opportunity.Attachments}">
+                                                            <apex:variable var="count" value="{!count + 1}"/>
+                                                        </apex:repeat>
+                                                        <apex:repeat value="{!opportunity.notes}">
+                                                            <apex:variable var="count" value="{!count + 1}"/>
+                                                        </apex:repeat>
+                                                        <span class="slds-text-heading--small">Notes &amp; Attachment ({!count})</span>
+                                                    </a>
+                                                </h2>
+                                            </div>
+                                        </header>
+                                        <div class="slds-no-flex">
+                                            <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" aria-haspopup="true">
+                                                <svg aria-hidden="true" class="slds-button__icon">
+                                                    <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="slds-card__body">
+                                        <div class="slds-card__body--inner">
+                                            <apex:repeat value="{!opportunity.attachments}" var="att">
+                                                <div class="slds-tile">
+                                                    <div class="slds-media__figure" style="float:left">
+                                                        <svg aria-hidden="true" class="slds-button__icon">
+                                                            <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/doctype-sprite/svg/symbols.svg#attachment')}"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <h3 class="slds-truncate" title="Attachment"><a href="javascript:void(0);">{!att.name}</a></h3>
+                                                        <div class="slds-tile__detail slds-text-body--small">
+                                                            <dl class="slds-dl--horizontal">
+                                                                <dt class="slds-dl--horizontal__label">
+                                                                    <apex:outputText value="{0,date,MM/dd/yy}" style="margin-left:86px;margin-right: 120px;"><apex:param value="{!att.createdDate}" /></apex:outputText>
+                                                                    <!--<span class="slds-truncate" title="Type">{!att.createdDate}</span> -->
+                                                                </dt>
+                                                            </dl>
+                                                        </div>
+                                                    </div>                
+                                                </div>
+                                            </apex:repeat>
+                                            <apex:repeat value="{!opportunity.notes}" var="nt">
+                                                <div class="slds-tile">
+                                                    <div class="slds-media__figure" style="float:left">
+                                                        <svg aria-hidden="true" class="slds-button__icon">
+                                                            <use xlink:href="{!URLFOR($Resource.assets, '/assets/icons/doctype-sprite/svg/symbols.svg#box_notes')}"></use>
+                                                        </svg>
+                                                    </div>
+                                                    <div>
+                                                        <h3 class="slds-truncate" title="Notes"><a href="javascript:void(0);">{!nt.title}</a></h3>
+                                                        <div class="slds-tile__detail slds-text-body--small">
+                                                            <dl class="slds-dl--horizontal">
+                                                                <dt class="slds-dl--horizontal__label">
+                                                                    <apex:outputText value="{0,date,MM/dd/yy}" style="margin-left:86px;margin-right: 120px;"><apex:param value="{!nt.createdDate}" /></apex:outputText>
+                                                                    <!--<span class="slds-truncate" title="Type">{!nt.createdDate}</span> -->
+                                                                </dt>
+                                                            </dl>
+                                                        </div>
+                                                    </div>  
+                                                </div>
+                                            </apex:repeat>
+                                        </div>
+                                    </div>
+                                    <div class="slds-card__footer"><a href="javascript:void(0);">View All <span class="slds-assistive-text">entity type</span></a></div>
+                                </div>
+                                <!-- /ATTACHMENT CARD -->
+                            </div>
+                            <!-- / COMPACT CARD -->
+                        </div>
+                        <!-- / RELATED LIST CARDS -->
+                    </div>
+                    <!-- / PRIMARY CONTENT WRAPPER -->            
+                    
+                    
+                </div>
+                <!-- Main SLDS End -->  
+            </apex:form>
+        </body>   
+    </html>
+</apex:page>

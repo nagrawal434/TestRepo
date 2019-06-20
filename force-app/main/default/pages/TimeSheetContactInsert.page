@@ -1,0 +1,39 @@
+<apex:page controller="TimeSheetTabController" showHeader="false" sidebar="false" standardStylesheets="true">
+    <head>
+        <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/jquery.min.js')}"></script> 
+        <script src="{!URLFOR($Resource.boot,'BootstrapFiles/js/bootstrap.min.js')}"></script> 
+        <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap.min.css')}" /> 
+        <apex:styleSheet value="{!URLFOR($Resource.boot,'BootstrapFiles/css/bootstrap-theme.min.css')}" />
+        
+    </head>                
+        <apex:form >
+            <div style="width:500px" class="panel panel-info">
+                <div class="panel-heading">Log Hours</div>
+                <div class="panel-body">
+                    <table class ="table table-bordered">
+               <tr>
+                   <td>Select Contact</td>
+                   <td><apex:selectList size="1" multiselect="false" value="{!SelectedContact}" label="Select Contact">
+                       <apex:selectOptions value="{!ContactList}"/>
+                   </apex:selectList></td>
+               </tr>
+               <tr>
+                   <td>DATE</td>
+                   <td><apex:inputfield value="{!contactInsert.Date__c}" label="Date"/></td>
+               </tr>
+               <tr>
+                   <td>Hours</td>
+                   <td><apex:inputText value="{!contactInsert.Hours__c}"/></td>
+               </tr>
+               <tr>
+                   <td colspan="2">
+                       <apex:commandButton value="Log Hours" action="{!Save}" style="background-image:none !important;background-color:red !important;width:250px;"/>
+                   </td>
+               </tr>
+             </table> 
+                </div>
+            </div>
+             
+             
+        </apex:form> 
+</apex:page>
